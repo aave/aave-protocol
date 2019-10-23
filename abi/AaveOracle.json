@@ -1,0 +1,111 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "prophecies",
+    "outputs": [
+      {
+        "name": "timestamp",
+        "type": "uint64"
+      },
+      {
+        "name": "sybilProphecy",
+        "type": "uint96"
+      },
+      {
+        "name": "oracleProphecy",
+        "type": "uint96"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "reputation",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "_sybil",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "_asset",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "_sybilProphecy",
+        "type": "uint96"
+      },
+      {
+        "indexed": false,
+        "name": "_oracleProphecy",
+        "type": "uint96"
+      }
+    ],
+    "name": "ProphecySubmitted",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_asset",
+        "type": "address"
+      }
+    ],
+    "name": "getAssetPrice",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_asset",
+        "type": "address"
+      },
+      {
+        "name": "_sybilProphecy",
+        "type": "uint96"
+      },
+      {
+        "name": "_oracleProphecy",
+        "type": "uint96"
+      }
+    ],
+    "name": "submitProphecy",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

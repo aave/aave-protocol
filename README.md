@@ -5,6 +5,15 @@ Open source implementation of the Aave Decentralized Lending Pools protocol. Ver
 
 ## Documentation
 
+It is possible to find documention to integrate the Aave Protocol on [developers.aave.com](https://developers.aave.com)
+
+## Audits report
+
+- [Trails of Bits Smart Contracts audit](./docs/Decentralized_Lending_Pools_ToB_initial_audit.pdf)
+
+- Open Zeppeling Smart Contracts audit [IN PROGRESS]
+
+- Chain Security Formal Verification [IN PROGRESS]
 
 ## License
 

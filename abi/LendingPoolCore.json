@@ -1,0 +1,1466 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "reservesList",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "isOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "addressesProvider",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "_addressesProvider",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "updateReserveCumulativeIndexes",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "cumulateLiquidityToReserveLiquidityIndex",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "updateReserveInterestRates",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseReserveTotalLiquidity",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseReserveTotalLiquidity",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "name": "_rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseReserveTotalBorrowsFixedAndUpdateAverageRate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "name": "_rate",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseReserveTotalBorrowsFixedAndUpdateAverageRate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseReserveTotalBorrowsVariable",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseReserveTotalBorrowsVariable",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_principalBalance",
+        "type": "uint256"
+      },
+      {
+        "name": "_balanceIncrease",
+        "type": "uint256"
+      },
+      {
+        "name": "_newBorrowRateMode",
+        "type": "uint8"
+      },
+      {
+        "name": "_fixedRate",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateReserveTotalBorrowsByRateMode",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "setReserveLastUpdate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "updateUserLastVariableBorrowCumulativeIndex",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseUserOriginationFee",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseUserOriginationFee",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "increaseUserPrincipalBorrowBalance",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "decreaseUserPrincipalBorrowBalance",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_useAsCollateral",
+        "type": "bool"
+      }
+    ],
+    "name": "setUserUseReserveAsCollateral",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "setUserLastUpdate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "updateUserFixedBorrowRate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "resetUserFixedBorrowRate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveInterestRateStrategyAddress",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveATokenAddress",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveAvailableLiquidity",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveTotalLiquidity",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveNormalizedIncome",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveTotalBorrows",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveTotalBorrowsFixed",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveTotalBorrowsVariable",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveLiquidationThreshold",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveLiquidationDiscount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveCurrentVariableBorrowRate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveCurrentFixedBorrowRate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveCurrentAverageFixedBorrowRate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveCurrentLiquidityRate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveLiquidityCumulativeIndex",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveVariableBorrowsCumulativeIndex",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveConfiguration",
+    "outputs": [
+      {
+        "name": "decimals",
+        "type": "uint256"
+      },
+      {
+        "name": "baseLTVasCollateral",
+        "type": "uint256"
+      },
+      {
+        "name": "liquidationThreshold",
+        "type": "uint256"
+      },
+      {
+        "name": "usageAsCollateralEnabled",
+        "type": "bool"
+      },
+      {
+        "name": "fixedBorrowRateEnabled",
+        "type": "bool"
+      },
+      {
+        "name": "borrowingEnabled",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "isReserveBorrowingEnabled",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "isReserveUsageAsCollateralEnabled",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveIsFixedBorrowRateEnabled",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveIsActive",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveLastUpdate",
+    "outputs": [
+      {
+        "name": "timestamp",
+        "type": "uint40"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "isUserUseReserveAsCollateralEnabled",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserOriginationFee",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserCurrentBorrowRateMode",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserCurrentFixedBorrowRate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserBorrowBalances",
+    "outputs": [
+      {
+        "name": "principalBorrowBalance",
+        "type": "uint256"
+      },
+      {
+        "name": "compoundedBorrowBalance",
+        "type": "uint256"
+      },
+      {
+        "name": "compoundedAmount",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserVariableBorrowCumulativeIndex",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserLastUpdate",
+    "outputs": [
+      {
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveUtilizationRate",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getReserves",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_addressesProvider",
+        "type": "address"
+      }
+    ],
+    "name": "setAddressesProvider",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "refreshConfiguration",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_aTokenAddress",
+        "type": "address"
+      },
+      {
+        "name": "_decimals",
+        "type": "uint256"
+      },
+      {
+        "name": "_interestRateStrategyAddress",
+        "type": "address"
+      }
+    ],
+    "name": "initReserve",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_rateStrategyAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setReserveInterestRateStrategyAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_fixedBorrowRateEnabled",
+        "type": "bool"
+      }
+    ],
+    "name": "enableBorrowingOnReserve",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "disableBorrowingOnReserve",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_baseLTVasCollateral",
+        "type": "uint256"
+      },
+      {
+        "name": "_liquidationThreshold",
+        "type": "uint256"
+      }
+    ],
+    "name": "enableReserveAsCollateral",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "disableReserveAsCollateral",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "enableReserveFixedBorrowRate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "disableReserveFixedBorrowRate",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "activateReserve",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "deactivateReserve",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_ltv",
+        "type": "uint256"
+      }
+    ],
+    "name": "setReserveBaseLTVasCollateral",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_threshold",
+        "type": "uint256"
+      }
+    ],
+    "name": "setReserveLiquidationThreshold",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_discount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setReserveLiquidationDiscount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferToUser",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "name": "destination",
+        "type": "address"
+      }
+    ],
+    "name": "transferToFeeCollectionAddress",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferToReserve",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  }
+]
