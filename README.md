@@ -10,7 +10,7 @@ It is possible to find documention to integrate the Aave Protocol on [developers
 
 ## Source code
 
-The source code will be released under the AGPL-v3 license once the in progress audits are completed.
+The source code will be released in this repository once the in progress audits are completed.
 
 
 ## Audits report
