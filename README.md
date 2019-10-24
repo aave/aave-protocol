@@ -15,7 +15,7 @@ The source code will be released under the AGPL-v3 license once the in progress 
 
 ## Audits report
 
-- [Trails of Bits Smart Contracts audit](./docs/Decentralized_Lending_Pools_ToB_initial_audit.pdf)
+- [Trails of Bits Smart Contracts audit](./docs/ToB_aave_protocol_final_report.pdf)
 
 - Open Zeppeling Smart Contracts audit [IN PROGRESS]
 
