@@ -1,0 +1,2222 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lendingpool/LendingPoolCore.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lendingpool/</a> LendingPoolCore.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.91% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>146/174</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56.82% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>25/44</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">85.71% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>66/77</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">84.57% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>148/175</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">207×</span>
+<span class="cline-any cline-yes">207×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">99×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">99×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">687×</span>
+<span class="cline-any cline-yes">687×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">171×</span>
+<span class="cline-any cline-yes">171×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">155×</span>
+<span class="cline-any cline-yes">155×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">171×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">155×</span>
+<span class="cline-any cline-yes">155×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">155×</span>
+<span class="cline-any cline-yes">155×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">168×</span>
+<span class="cline-any cline-yes">168×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">128×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">153×</span>
+<span class="cline-any cline-yes">153×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">175×</span>
+<span class="cline-any cline-yes">175×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">154×</span>
+<span class="cline-any cline-yes">154×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">153×</span>
+<span class="cline-any cline-yes">153×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">154×</span>
+<span class="cline-any cline-yes">154×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">497×</span>
+<span class="cline-any cline-yes">497×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">497×</span>
+<span class="cline-any cline-yes">497×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">497×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">153×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">240×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.5.0;
+&nbsp;
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-solidity/contracts/utils/Address.sol";
+import "../libraries/CoreLibrary.sol";
+import "../configuration/LendingPoolAddressesProvider.sol";
+import "../interfaces/IPriceOracle.sol";
+import "../interfaces/ILendingRateOracle.sol";
+import "../interfaces/IReserveInterestRateStrategy.sol";
+import "../interfaces/INetworkMetadataProvider.sol";
+import "../libraries/WadRayMath.sol";
+&nbsp;
+&nbsp;
+/*************************************************************************************
+@title LendingPoolCore contract
+@author Aave
+@notice Contains all the data and the funds deposited into a lending pool
+ *************************************************************************************/
+&nbsp;
+contract LendingPoolCore is Ownable {
+&nbsp;
+    using SafeMath for uint256;
+    using WadRayMath for uint256;
+    using CoreLibrary for CoreLibrary.ReserveData;
+    using SafeERC20 for ERC20;
+    using Address for address payable;
+&nbsp;
+   /**
+   @dev ethereumAddress represents a ERC20 contract address with which the pool identifies ETH
+    */
+    address ethereumAddress;
+&nbsp;
+    address lendingPoolAddress;
+&nbsp;
+&nbsp;
+    LendingPoolAddressesProvider addressesProvider;
+&nbsp;
+    /**
+    @dev events
+    */
+    event InterestRatesUpdated(
+        address indexed _reserve,
+        uint256 _currentLiquidityRate,
+        uint256 _currentVariableBorrowRate,
+        uint256 _currentFixedBorrowRate,
+        uint40 _timestamp
+    );
+&nbsp;
+    /**
+    @dev only lending pools can use functions affected by this modifier
+     */
+    modifier onlyLendingPool {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(lendingPoolAddress == msg.sender, "The caller must be a lending pool contract");
+        _;
+    }
+&nbsp;
+    /**
+    @dev only lending pools configurator can use functions affected by this modifier
+     */
+    modifier onlyLendingPoolConfigurator {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(
+            addressesProvider.getLendingPoolConfigurator() == msg.sender,
+            "The caller must be a lending pool configurator contract"
+        );
+        _;
+    }
+&nbsp;
+&nbsp;
+    /**
+    @dev functions affected by this modifier can only be invoked if a reserve is enabled for borrowing and/or collateral
+     */
+    modifier onlyReserveWithEnabledBorrowingOrCollateral(address _reserve) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(
+            reserves[_reserve].borrowingEnabled || reserves[_reserve].usageAsCollateralEnabled,
+            "Reserve is not enabled for borrowing or for being used as collateral"
+        );
+        _;
+    }
+&nbsp;
+    /**
+    @dev functions affected by this modifier can only be invoked if a reserve is enabled for borrowing
+     */
+    modifier onlyReserveWithEnabledBorrowing(address _reserve) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(reserves[_reserve].borrowingEnabled, "Reserve is not enabled for borrowing");
+        _;
+    }
+&nbsp;
+    mapping(address =&gt; CoreLibrary.ReserveData) reserves;
+    mapping(address =&gt; mapping(address =&gt; CoreLibrary.UserReserveData)) usersReserveData;
+    
+    address[] public reservesList;
+&nbsp;
+    constructor(LendingPoolAddressesProvider _addressesProvider) public {
+        addressesProvider = _addressesProvider;
+        refreshConfigInternal();
+    }
+&nbsp;
+    /**
+    @dev functions to update reserves data
+     */
+&nbsp;
+    /**
+    @notice Updates the reserve Liquidity cumulative interest Ci and the Variable borrows cumulative index Bvc. Please refer to the
+    whitepaper for further information.
+     */
+    function updateReserveCumulativeIndexes(address _reserve) external onlyLendingPool {
+        reserves[_reserve].updateCumulativeIndexes();
+    }
+&nbsp;
+    /**
+    @notice cumulates a fixed amount of liquidity to the reserve, considered as a specific interest accrued in one block. Please refer
+    to the whitepaper for further information.
+    */
+&nbsp;
+    function cumulateLiquidityToReserveLiquidityIndex(address _reserve, uint256 _amount) external onlyLendingPool {
+        reserves[_reserve].cumulateToLiquidityIndex(_amount);
+    }
+&nbsp;
+    /**
+    @notice Updates the reserve current fixed borrow rate Rf, the current variable borrow rate Rv and the current liquidity rate Rl.
+    Please refer to the whitepaper for further information.
+     */
+&nbsp;
+    function updateReserveInterestRates(address _reserve) external onlyLendingPool {
+&nbsp;
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        (reserve.currentLiquidityRate,
+        reserve.currentFixedBorrowRate,
+        reserve.currentVariableBorrowRate) = IReserveInterestRateStrategy(reserve.interestRateStrategyAddress).
+            calculateInterestRates(
+            _reserve,
+            reserve.getReserveUtilizationRate(),
+            reserve.totalBorrowsFixed,
+            reserve.totalBorrowsVariable,
+            reserve.currentAverageFixedBorrowRate
+            );
+        emit InterestRatesUpdated(
+            _reserve,
+            reserve.currentLiquidityRate,
+            reserve.currentVariableBorrowRate,
+            reserve.currentFixedBorrowRate,
+            reserve.lastUpdateTimestamp
+        );
+    }
+&nbsp;
+    /**
+    @notice increases the total liquidity Lt of a reserve
+     */
+&nbsp;
+    function increaseReserveTotalLiquidity(address _reserve, uint256 _amount)
+        external
+        onlyLendingPool
+        onlyReserveWithEnabledBorrowingOrCollateral(_reserve)
+    {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        reserve.totalLiquidity = reserve.totalLiquidity.add(_amount);
+&nbsp;
+    }
+&nbsp;
+    /**
+    @notice decreases the total liquidity Lt of a reserve
+     */
+&nbsp;
+    function decreaseReserveTotalLiquidity(address _reserve, uint256 _amount) external onlyLendingPool {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        reserve.totalLiquidity = reserve.totalLiquidity.sub(_amount);
+    }
+&nbsp;
+    /**
+    @notice increases the total borrow fixed of a reserve Bf and updates the average fixed borrow rate Raf. Please refer to the whitepaper
+    for further information.
+     */
+&nbsp;
+    function increaseReserveTotalBorrowsFixedAndUpdateAverageRate(address _reserve, uint256 _amount, uint256 _rate)
+        external
+        onlyLendingPool
+        onlyReserveWithEnabledBorrowingOrCollateral(_reserve)
+    {
+        reserves[_reserve].increaseTotalBorrowsFixedAndUpdateAverageRate(_amount, _rate);
+    }
+&nbsp;
+&nbsp;
+    /**
+    @notice decreases the total borrow fixed of a reserve Bf and updates the average fixed borrow rate Raf. Please refer to the whitepaper
+    for further information.
+     */
+&nbsp;
+&nbsp;
+    function decreaseReserveTotalBorrowsFixedAndUpdateAverageRate(address _reserve, uint256 _amount, uint256 _rate)
+        external
+        onlyLendingPool
+    {
+        reserves[_reserve].decreaseTotalBorrowsFixedAndUpdateAverageRate(_amount, _rate);
+&nbsp;
+    }
+    /**
+    @notice increases the the total borrow variable of a reserve Bv.
+     */
+&nbsp;
+    function increaseReserveTotalBorrowsVariable(address _reserve, uint256 _amount)
+        external
+        onlyLendingPool
+        onlyReserveWithEnabledBorrowingOrCollateral(_reserve)
+    {
+        reserves[_reserve].increaseTotalBorrowsVariable(_amount);
+    }
+&nbsp;
+        /**
+    @notice decreases the the total borrow variable of a reserve Bv.
+     */
+&nbsp;
+&nbsp;
+    function decreaseReserveTotalBorrowsVariable(address _reserve, uint256 _amount) external onlyLendingPool {
+        reserves[_reserve].decreaseTotalBorrowsVariable(_amount);
+    }
+&nbsp;
+    /***************
+    @dev increases the proper total borrows on a reserve depending on the type of interest rate chosen by the user
+     ***************/
+&nbsp;
+    function updateReserveTotalBorrowsByRateMode(
+        address _reserve,
+        address _user,
+        uint256 _principalBalance,
+        uint256 _balanceIncrease,
+        CoreLibrary.InterestRateMode _newBorrowRateMode,
+        uint256 _fixedRate
+    ) external onlyLendingPool {
+        CoreLibrary.InterestRateMode currentRateMode = getUserCurrentBorrowRateMode(_reserve, _user);
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+&nbsp;
+&nbsp;
+        if (currentRateMode == CoreLibrary.InterestRateMode.FIXED) {
+            // there was no previous borrow or previous borrow was fixed
+            CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+            reserve.decreaseTotalBorrowsFixedAndUpdateAverageRate(_principalBalance, user.fixedBorrowRate);
+&nbsp;
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (_newBorrowRateMode == CoreLibrary.InterestRateMode.FIXED) {
+                reserve.increaseTotalBorrowsFixedAndUpdateAverageRate(_principalBalance.add(_balanceIncrease), _fixedRate);
+            }  else <span class="cstat-no" title="statement not covered" >if (_newBorrowRateMode == CoreLibrary.InterestRateMode.VARIABLE) {</span>
+                //switching the whole amount borrowed to variable
+<span class="cstat-no" title="statement not covered" >                reserve.increaseTotalBorrowsVariable(_principalBalance.add(_balanceIncrease))</span>;
+            }
+        } else {
+            // previous borrow was variable
+            if (_newBorrowRateMode == CoreLibrary.InterestRateMode.FIXED) {
+                reserve.decreaseTotalBorrowsVariable(_principalBalance);
+                reserve.increaseTotalBorrowsFixedAndUpdateAverageRate(_principalBalance.add(_balanceIncrease), _fixedRate);
+            } else <span class="missing-if-branch" title="else path not taken" >E</span>if (_newBorrowRateMode == CoreLibrary.InterestRateMode.VARIABLE) {
+                //switching the whole amount borrowed to variable
+                reserve.increaseTotalBorrowsVariable(_balanceIncrease);
+            }
+        }
+    }
+&nbsp;
+    /**
+    @notice refreshes reserve last updated block number Bl
+     */
+    function setReserveLastUpdate(address _reserve) external onlyLendingPool {
+        reserves[_reserve].setLastUpdate();
+    }
+&nbsp;
+&nbsp;
+    /***************
+    @dev functions to update users reserve data
+     */
+&nbsp;
+    function updateUserLastVariableBorrowCumulativeIndex(address _reserve, address _user) external onlyLendingPool {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+&nbsp;
+        user.lastVariableBorrowCumulativeIndex = reserve.lastVariableBorrowCumulativeIndex;
+    }
+&nbsp;
+    function increaseUserOriginationFee(address _reserve, address _user, uint256 _amount) external onlyLendingPool {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        user.originationFee = user.originationFee.add(_amount);
+    }
+&nbsp;
+    function decreaseUserOriginationFee(address _reserve, address _user, uint256 _amount) external onlyLendingPool {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        user.originationFee = user.originationFee.sub(_amount);
+    }
+&nbsp;
+    function increaseUserPrincipalBorrowBalance(address _reserve, address _user, uint256 _amount)
+        external
+        onlyLendingPool
+        onlyReserveWithEnabledBorrowing(_reserve)
+    {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        user.principalBorrowBalance = user.principalBorrowBalance.add(_amount);
+    }
+&nbsp;
+    function decreaseUserPrincipalBorrowBalance(address _reserve, address _user, uint256 _amount)
+        external
+        onlyLendingPool
+    {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(user.principalBorrowBalance &gt;= _amount, "The borrow balance is too low");
+        user.principalBorrowBalance = user.principalBorrowBalance.sub(_amount);
+    }
+&nbsp;
+    function setUserUseReserveAsCollateral(address _reserve, address _user, bool _useAsCollateral) external onlyLendingPool {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        user.useAsCollateral = _useAsCollateral;
+    }
+&nbsp;
+    function setUserLastUpdate(address _reserve, address _user) external onlyLendingPool {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+&nbsp;
+        //solium-disable-next-line
+        user.lastUpdateTimestamp = uint40(block.timestamp);
+    }
+&nbsp;
+    /******************
+    @dev updates the fixed borrow rate for the user
+    *******************/
+    function updateUserFixedBorrowRate(address _reserve, address _user) external onlyLendingPool {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+&nbsp;
+        user.fixedBorrowRate = getReserveCurrentFixedBorrowRate(_reserve);
+    }
+&nbsp;
+    function resetUserFixedBorrowRate(address _reserve, address _user) external onlyLendingPool {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        user.fixedBorrowRate = 0;
+    }
+&nbsp;
+    /*********************
+    @dev reserve accessors
+     *********************/
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function getReserveInterestRateStrategyAddress(address _reserve) public view returns (address</span>) {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        return reserve.interestRateStrategyAddress;</span>
+    }
+&nbsp;
+    function getReserveATokenAddress(address _reserve) public view returns (address) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.aTokenAddress;
+    }
+&nbsp;
+    function getReserveAvailableLiquidity(address _reserve) public view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.totalLiquidity.sub(getReserveTotalBorrows(_reserve));
+    }
+&nbsp;
+    function getReserveTotalLiquidity(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.totalLiquidity;
+    }
+&nbsp;
+    function getReserveNormalizedIncome(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.getNormalizedIncome();
+    }
+&nbsp;
+    function getReserveTotalBorrows(address _reserve) public view returns (uint256) {
+        return reserves[_reserve].getTotalBorrows();
+    }
+&nbsp;
+    function getReserveTotalBorrowsFixed(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.totalBorrowsFixed;
+    }
+&nbsp;
+    function getReserveTotalBorrowsVariable(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.totalBorrowsVariable;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function getReserveLiquidationThreshold(address _reserve) external view returns (uint256</span>) {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        return reserve.liquidationThreshold;</span>
+    }
+&nbsp;
+    function getReserveLiquidationDiscount(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.liquidationDiscount;
+    }
+&nbsp;
+    function getReserveCurrentVariableBorrowRate(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.currentVariableBorrowRate;
+    }
+&nbsp;
+    function getReserveCurrentFixedBorrowRate(address _reserve) public view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        ILendingRateOracle oracle = ILendingRateOracle(addressesProvider.getLendingRateOracle());
+&nbsp;
+        if (reserve.currentFixedBorrowRate == 0) {
+            //no fixed rate borrows yet
+            return oracle.getMarketBorrowRate(_reserve);
+        }
+&nbsp;
+        return reserve.currentFixedBorrowRate;
+    }
+&nbsp;
+    function getReserveCurrentAverageFixedBorrowRate(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.currentAverageFixedBorrowRate;
+    }
+&nbsp;
+    function getReserveCurrentLiquidityRate(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.currentLiquidityRate;
+    }
+&nbsp;
+    function getReserveLiquidityCumulativeIndex(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.lastLiquidityCumulativeIndex;
+    }
+&nbsp;
+    function getReserveVariableBorrowsCumulativeIndex(address _reserve) external view returns (uint256) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.lastVariableBorrowCumulativeIndex;
+    }
+&nbsp;
+    /**
+    * @dev this function aggregates the configuration parameters of the reserve.
+    *      It's used in the LendingPoolDataProvider specifically to save gas, and avoid
+    *      multiple external contract calls to fetch the same data.
+     */
+&nbsp;
+    function getReserveConfiguration(address _reserve)
+        external
+        view
+        returns (uint256 decimals,
+        uint256 baseLTVasCollateral,
+        uint256 liquidationThreshold,
+        bool usageAsCollateralEnabled,
+        bool fixedBorrowRateEnabled,
+        bool borrowingEnabled) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        decimals = reserve.decimals;
+        baseLTVasCollateral = reserve.baseLTVasCollateral;
+        liquidationThreshold = reserve.liquidationThreshold;
+        usageAsCollateralEnabled = reserve.usageAsCollateralEnabled;
+        fixedBorrowRateEnabled = reserve.isFixedBorrowRateEnabled;
+        borrowingEnabled = reserve.borrowingEnabled;
+    }
+&nbsp;
+    function isReserveBorrowingEnabled(address _reserve) external view returns (bool) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.borrowingEnabled;
+    }
+&nbsp;
+    function isReserveUsageAsCollateralEnabled(address _reserve) external view returns (bool) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.usageAsCollateralEnabled;
+    }
+&nbsp;
+    function getReserveIsFixedBorrowRateEnabled(address _reserve) external view returns (bool) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.isFixedBorrowRateEnabled;
+    }
+&nbsp;
+    function getReserveIsActive(address _reserve) external view returns(bool) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        return reserve.isActive;
+    }
+&nbsp;
+&nbsp;
+    function getReserveLastUpdate(address _reserve) external view returns (uint40 timestamp) {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+        timestamp = reserve.lastUpdateTimestamp;
+    }
+&nbsp;
+    /******************
+    @dev user accessors
+     ******************/
+&nbsp;
+    function isUserUseReserveAsCollateralEnabled(address _reserve, address _user) external view returns (bool) {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        return user.useAsCollateral;
+    }
+    function getUserOriginationFee(address _reserve, address _user) external view returns (uint256) {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        return user.originationFee;
+    }
+&nbsp;
+    function getUserCurrentBorrowRateMode(address _reserve, address _user)
+        public
+        view
+        returns (CoreLibrary.InterestRateMode)
+    {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        return user.fixedBorrowRate &gt; 0 ? CoreLibrary.InterestRateMode.FIXED : CoreLibrary.InterestRateMode.VARIABLE;
+    }
+&nbsp;
+    function getUserCurrentFixedBorrowRate(address _reserve, address _user) external view returns (uint256) {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        return user.fixedBorrowRate;
+    }
+&nbsp;
+    function getUserBorrowBalances(
+        address _reserve,
+        address _user)
+        external view returns (
+            uint256 principalBorrowBalance,
+            uint256 compoundedBorrowBalance,
+            uint256 compoundedAmount) {
+&nbsp;
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+&nbsp;
+        principalBorrowBalance = user.principalBorrowBalance;
+        compoundedBorrowBalance = CoreLibrary.getCompoundedBorrowBalance(
+                user,
+                reserve
+            );
+&nbsp;
+        compoundedAmount = compoundedBorrowBalance.sub(principalBorrowBalance);
+    }
+&nbsp;
+    function getUserVariableBorrowCumulativeIndex(address _reserve, address _user) external view returns (uint256) {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        return user.lastVariableBorrowCumulativeIndex;
+    }
+&nbsp;
+    function getUserLastUpdate(address _reserve, address _user)
+        external
+        view
+        returns (uint256 timestamp)
+    {
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
+        timestamp = user.lastUpdateTimestamp;
+    }
+&nbsp;
+    /**
+    @dev utility functions
+     */
+&nbsp;
+    function getReserveUtilizationRate(address _reserve) external view returns (uint256) {
+        return reserves[_reserve].getReserveUtilizationRate();
+    }
+&nbsp;
+    function getReserves() external view returns (address[] memory) {
+        return reservesList;
+    }
+&nbsp;
+    /**
+    @dev Core configuration functions
+     */
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setAddressesProvider(address _addressesProvider ) external onlyLendingPoolConfigurato</span>r {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        addressesProvider = LendingPoolAddressesProvider(_addressesProvider)</span>;
+<span class="cstat-no" title="statement not covered" >        refreshConfigInternal()</span>;
+    }
+&nbsp;
+    function refreshConfiguration() external onlyLendingPoolConfigurator {
+        refreshConfigInternal();
+    }
+&nbsp;
+    function initReserve(address _reserve, address _aTokenAddress, uint256 _decimals, address _interestRateStrategyAddress)
+        external
+        onlyLendingPoolConfigurator
+    {
+        reserves[_reserve].init(_aTokenAddress, _decimals, _interestRateStrategyAddress);
+        addReserveToListInternal(_reserve);
+&nbsp;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveInterestRateStrategyAddress(address _reserve, address _rateStrategyAddress) external onlyLendingPoolConfigurato</span>r {
+<span class="cstat-no" title="statement not covered" >        reserves[_reserve].interestRateStrategyAddress = _rateStrategyAddress</span>;
+    }
+&nbsp;
+    function enableBorrowingOnReserve(
+        address _reserve,
+        bool _fixedBorrowRateEnabled
+    ) external onlyLendingPoolConfigurator {
+        reserves[_reserve].enableBorrowing(_fixedBorrowRateEnabled);
+    }
+&nbsp;
+    function disableBorrowingOnReserve(address _reserve) external onlyLendingPoolConfigurator {
+        reserves[_reserve].disableBorrowing();
+    }
+&nbsp;
+    function enableReserveAsCollateral(address _reserve, uint256 _baseLTVasCollateral, uint256 _liquidationThreshold)
+        external
+        onlyLendingPoolConfigurator
+    {
+        reserves[_reserve].enableAsCollateral(_baseLTVasCollateral, _liquidationThreshold);
+    }
+&nbsp;
+    function disableReserveAsCollateral(address _reserve) external onlyLendingPoolConfigurator {
+        reserves[_reserve].disableAsCollateral();
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function enableReserveFixedBorrowRate(address _reserve) external onlyLendingPoolConfigurato</span>r {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        reserve.isFixedBorrowRateEnabled = true</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function disableReserveFixedBorrowRate(address _reserve) external onlyLendingPoolConfigurato</span>r {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        reserve.isFixedBorrowRateEnabled = false</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function activateReserve(address _reserve) external onlyLendingPoolConfigurato</span>r {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        reserve.isActive = true</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function deactivateReserve(address _reserve) external onlyLendingPoolConfigurato</span>r {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        reserve.isActive = false</span>;
+    }
+&nbsp;
+&nbsp;
+    /***************
+    @dev functions to update available collaterals
+    @dev the interest rate and the ltv are expressed in percentage
+     */
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveBaseLTVasCollateral(address _reserve, uint256 _ltv)</span>
+        external
+        onlyLendingPoolConfigurator {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        reserve.baseLTVasCollateral = _ltv</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveLiquidationThreshold(address _reserve, uint256 _threshold)</span>
+        external
+        onlyLendingPoolConfigurator
+    {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        reserve.liquidationThreshold = _threshold</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveLiquidationDiscount(address _reserve, uint256 _discount)</span>
+        external
+        onlyLendingPoolConfigurator
+    {
+<span class="cstat-no" title="statement not covered" >        CoreLibrary.ReserveData storage reserve = reserves[_reserve];</span>
+<span class="cstat-no" title="statement not covered" >        reserve.liquidationDiscount = _discount</span>;
+    }
+&nbsp;
+    /**
+    @notice ETH/token transfer functions
+     */
+    function() external payable {
+        //only contracts can send ETH to the core
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.sender.isContract(), "Only contracts can send ether to the Lending pool core");
+&nbsp;
+    }
+&nbsp;
+    function transferToUser(address _reserve, address payable _user, uint256 _amount) external onlyLendingPool {
+        if (_reserve != ethereumAddress){
+            ERC20(_reserve).safeTransfer(_user, _amount);
+        }
+        else {
+            _user.transfer(_amount);
+        }
+    }
+&nbsp;
+    function transferToFeeCollectionAddress(address _token, address _user, uint256 _amount, address destination)
+        external
+        payable
+        onlyLendingPool
+    {
+        address payable feeAddress = address(uint160(destination)); //cast the address to payable
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (_token != ethereumAddress) {
+            ERC20(_token).safeTransferFrom(_user, feeAddress, _amount);
+        } else {
+<span class="cstat-no" title="statement not covered" >            require(msg.value &gt;= _amount, "The amount and the value sent to deposit do not match")</span>;
+<span class="cstat-no" title="statement not covered" >            feeAddress.transfer(_amount)</span>;
+        }
+    }
+&nbsp;
+    function transferToReserve(address _reserve, address payable _user, uint256 _amount) external payable onlyLendingPool {
+        CoreLibrary.ReserveData storage reserve = reserves[_reserve];
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(
+            reserve.usageAsCollateralEnabled || reserve.borrowingEnabled,
+            "The reserve isn't enabled for borrowing or as collateral"
+        );
+&nbsp;
+        if (_reserve != ethereumAddress){
+            <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.value == 0, "User is sending ETH along with the ERC20 transfer. Check the value attribute of the transaction");
+            ERC20(_reserve).safeTransferFrom(_user, address(this), _amount);
+&nbsp;
+        }
+        else {
+            <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.value &gt;= _amount, "The amount and the value sent to deposit do not match");
+&nbsp;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if(msg.value &gt; _amount) { //send back excess ETH
+<span class="cstat-no" title="statement not covered" >                uint256 excessAmount = msg.value.sub(_amount);</span>
+<span class="cstat-no" title="statement not covered" >                _user.transfer(excessAmount)</span>;
+            }
+        }
+    }
+&nbsp;
+    /**
+    @notice internal functions
+     */
+&nbsp;
+&nbsp;
+    function refreshConfigInternal() internal {
+&nbsp;
+        ethereumAddress = INetworkMetadataProvider(addressesProvider.getNetworkMetadataProvider()).getEthereumAddress();
+        lendingPoolAddress = addressesProvider.getLendingPool();
+    }
+&nbsp;
+    function addReserveToListInternal(address _reserve) internal {
+        bool reserveAlreadyAdded = false;
+        for (uint256 i = 0; i &lt; reservesList.length; i++)
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (reservesList[i] == _reserve) {
+<span class="cstat-no" title="statement not covered" >                reserveAlreadyAdded = true</span>;
+            }
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (!reserveAlreadyAdded) reservesList.push(_reserve);
+    }
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 06:55:09 GMT+0000 (Coordinated Universal Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for tokenization/AToken.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">tokenization/</a> AToken.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">93.94% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>31/33</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">85.71% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">94.29% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>33/35</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">495×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">504×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">452×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">52×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">52×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.5.0;
+&nbsp;
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
+&nbsp;
+import "../configuration/LendingPoolAddressesProvider.sol";
+import "../lendingpool/LendingPool.sol";
+import "../lendingpool/LendingPoolDataProvider.sol";
+import "../lendingpool/LendingPoolCore.sol";
+import "../libraries/WadRayMath.sol";
+&nbsp;
+/**
+ * @title Aave ERC20 AToken
+ *
+ * @dev Implementation of the interest bearing token for the DLP protocol.
+ */
+contract AToken is ERC20, ERC20Detailed {
+    using WadRayMath for uint256;
+&nbsp;
+    event Redeem(address indexed _aToken, address indexed _user, uint256 _aTokenAmount, uint256 _amountUnderlying);
+&nbsp;
+    event MintOnDeposit(address indexed _account, uint256 _value);
+    event BurnOnRedeem(address indexed _account, uint256 _value);
+&nbsp;
+    address public underlyingAssetAddress;
+    uint256 public underlyingAssetDecimals;
+    uint256 public initialExchangeRate;
+&nbsp;
+    LendingPoolAddressesProvider private addressesProvider;
+    LendingPoolCore private core;
+&nbsp;
+    modifier onlyLendingPool {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(
+            msg.sender == addressesProvider.getLendingPool(),
+            "The caller of this function can only be a lending pool"
+        );
+        _;
+    }
+&nbsp;
+    modifier whenTranferAllowed(address _from, uint256 _amount) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(isTransferAllowed(_from, _amount), "Transfer cannot be allowed.");
+        _;
+    }
+&nbsp;
+    constructor(
+        LendingPoolAddressesProvider _addressesProvider,
+        address _underlyingAsset,
+        uint256 _underlyingAssetDecimals,
+        string memory _name,
+        string memory _symbol,
+        uint8 _decimals,
+        uint256 _initialExchangeRate
+    ) public ERC20Detailed(_name, _symbol, _decimals) {
+        addressesProvider = _addressesProvider;
+        core = LendingPoolCore(addressesProvider.getLendingPoolCore());
+        initialExchangeRate = _initialExchangeRate;
+        underlyingAssetAddress = _underlyingAsset;
+        underlyingAssetDecimals = _underlyingAssetDecimals;
+    }
+&nbsp;
+    /**
+     * @notice ERC20 implementation internal function backing transfer() and transferFrom()
+     * @dev validates the transfer before allowing it. NOTE: This is not standard ERC20 behavior
+     */
+<span class="fstat-no" title="function not covered" >    function _transfer(address from, address to, uint256 amount) internal whenTranferAllowed(from, amount</span>) {
+<span class="cstat-no" title="statement not covered" >        super._transfer(from, to, amount)</span>;
+    }
+&nbsp;
+    /**
+     * @notice redeems aToken for the undelying asset.
+     */
+    function redeem(uint256 _amount) external whenTranferAllowed(msg.sender, _amount) {
+        // calculate underlying to redeem
+        uint256 underlyingAmountToRedeem = aTokenAmountToUnderlyingAmount(_amount);
+&nbsp;
+        // burns tokens equivalent to the amount requested
+        burnOnRedeemInternal(msg.sender, _amount);
+&nbsp;
+        // executes redeem of the underlying asset
+        LendingPool pool = LendingPool(addressesProvider.getLendingPool());
+        pool.redeemUnderlying(underlyingAssetAddress, msg.sender, underlyingAmountToRedeem);
+        emit Redeem(address(this), msg.sender, _amount, underlyingAmountToRedeem);
+    }
+&nbsp;
+    /**
+     * @notice mints token in the event of users depositing the underlying asset into the lending pool
+     * @dev only lending pools can call this function
+     */
+    function mintOnDeposit(address _account, uint256 _underlyingAmount) external onlyLendingPool {
+        uint256 aTokensToMint = underlyingAmountToATokenAmount(_underlyingAmount);
+&nbsp;
+        _mint(_account, aTokensToMint);
+        emit MintOnDeposit(_account, _underlyingAmount);
+    }
+&nbsp;
+    /**
+     * @dev burns token in the event of a borrow being liquidated, in case the liquidators reclaims the underlying asset
+     * @dev only lending pools can call this function
+     */
+<span class="fstat-no" title="function not covered" >    function burnOnLiquidation(address account, uint256 value) external onlyLendingPoo</span>l {
+<span class="cstat-no" title="statement not covered" >        _burn(account, value)</span>;
+    }
+&nbsp;
+    /**
+     * @dev transfers tokens in the event of a borrow being liquidated, in case the liquidators reclaims the aToken
+     * @dev only lending pools can call this function
+     */
+    function transferOnLiquidation(address from, address to, uint256 value) external onlyLendingPool {
+        super._transfer(from, to, value);
+    }
+&nbsp;
+    /**
+     * @dev returns the exchange rate of the aToken to the underlying asset
+     */
+    function getExchangeRate() public view returns (uint256) {
+        uint256 currentNormalizedCumulatedInterest = core.getReserveNormalizedIncome(underlyingAssetAddress);
+&nbsp;
+        return initialExchangeRate.rayDiv(currentNormalizedCumulatedInterest);
+    }
+&nbsp;
+    function balanceOfUnderlying(address _user) public view returns (uint256) {
+        return aTokenAmountToUnderlyingAmount(balanceOf(_user));
+    }
+&nbsp;
+    function aTokenAmountToUnderlyingAmount(uint256 _amount) public view returns (uint256) {
+        if (_amount == 0) {
+            // Optmization
+            return 0;
+        }
+&nbsp;
+        uint256 overlyingDecimals = 10 ** uint256(decimals());
+&nbsp;
+        return
+            _amount
+                .wadToRay()
+                .rayDiv(getExchangeRate())
+                .mul(10 ** underlyingAssetDecimals)
+                .div(overlyingDecimals)
+                .rayToWad();
+    }
+&nbsp;
+    /**
+     * @notice Used to validate transfers before actually executing them.
+     **/
+    function isTransferAllowed(address _from, uint256 _amount) public view returns (bool) {
+        LendingPoolDataProvider dataProvider = LendingPoolDataProvider(addressesProvider.getLendingPoolDataProvider());
+        uint256 amountUnderlying = aTokenAmountToUnderlyingAmount(_amount);
+        return dataProvider.balanceDecreaseAllowed(underlyingAssetAddress, _from, amountUnderlying);
+    }
+&nbsp;
+    function underlyingAmountToATokenAmount(uint256 _amount) public view returns (uint256) {
+        if (_amount == 0) {
+            // Optmization
+            return 0;
+        }
+&nbsp;
+        return _amount.mul(getExchangeRate()).div(10 ** underlyingAssetDecimals).rayToWad();
+    }
+&nbsp;
+    /**
+     * @dev burns token in the event of users redeeming the underlying asset from the lending pool
+     * @dev only lending pools can call this function
+     */
+    function burnOnRedeemInternal(address account, uint256 value) internal {
+        _burn(account, value);
+        emit BurnOnRedeem(account, value);
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 06:55:09 GMT+0000 (Coordinated Universal Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
