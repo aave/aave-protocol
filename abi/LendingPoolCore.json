@@ -1,54 +1,61 @@
 [
   {
-    "constant": true,
+    "anonymous": false,
     "inputs": [
       {
-        "name": "",
+        "indexed": true,
+        "internalType": "address",
+        "name": "reserve",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "liquidityRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "stableBorrowRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "variableBorrowRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "liquidityIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "variableBorrowIndex",
         "type": "uint256"
       }
     ],
-    "name": "reservesList",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    "name": "ReserveUpdated",
+    "type": "event"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "fallback"
   },
   {
     "constant": true,
     "inputs": [],
-    "name": "owner",
+    "name": "CORE_REVISION",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "isOwner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -61,6 +68,43 @@
     "name": "addressesProvider",
     "outputs": [
       {
+        "internalType": "contract LendingPoolAddressesProvider",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "lendingPoolAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "reservesList",
+    "outputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -73,58 +117,12 @@
     "constant": false,
     "inputs": [
       {
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
+        "internalType": "contract LendingPoolAddressesProvider",
         "name": "_addressesProvider",
         "type": "address"
       }
     ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "fallback"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "OwnershipTransferred",
-    "type": "event"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      }
-    ],
-    "name": "updateReserveCumulativeIndexes",
+    "name": "initialize",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -134,180 +132,225 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "cumulateLiquidityToReserveLiquidityIndex",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      }
-    ],
-    "name": "updateReserveInterestRates",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseReserveTotalLiquidity",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "decreaseReserveTotalLiquidity",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "name": "_rate",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseReserveTotalBorrowsFixedAndUpdateAverageRate",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "name": "_rate",
-        "type": "uint256"
-      }
-    ],
-    "name": "decreaseReserveTotalBorrowsFixedAndUpdateAverageRate",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseReserveTotalBorrowsVariable",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "decreaseReserveTotalBorrowsVariable",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
+        "internalType": "address",
         "name": "_user",
         "type": "address"
       },
       {
-        "name": "_principalBalance",
+        "internalType": "uint256",
+        "name": "_amount",
         "type": "uint256"
       },
       {
+        "internalType": "bool",
+        "name": "_isFirstDeposit",
+        "type": "bool"
+      }
+    ],
+    "name": "updateStateOnDeposit",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amountRedeemed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_userRedeemedEverything",
+        "type": "bool"
+      }
+    ],
+    "name": "updateStateOnRedeem",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_availableLiquidityBefore",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_income",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_protocolFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateStateOnFlashLoan",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amountBorrowed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_borrowFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum CoreLibrary.InterestRateMode",
+        "name": "_rateMode",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateStateOnBorrow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_paybackAmountMinusFees",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_originationFeeRepaid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "_balanceIncrease",
         "type": "uint256"
       },
       {
-        "name": "_newBorrowRateMode",
+        "internalType": "bool",
+        "name": "_repaidWholeLoan",
+        "type": "bool"
+      }
+    ],
+    "name": "updateStateOnRepay",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_principalBorrowBalance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_compoundedBorrowBalance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_balanceIncrease",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum CoreLibrary.InterestRateMode",
+        "name": "_currentRateMode",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateStateOnSwapRate",
+    "outputs": [
+      {
+        "internalType": "enum CoreLibrary.InterestRateMode",
+        "name": "",
         "type": "uint8"
       },
       {
-        "name": "_fixedRate",
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "updateReserveTotalBorrowsByRateMode",
-    "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
@@ -316,74 +359,84 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_reserve",
-        "type": "address"
-      }
-    ],
-    "name": "setReserveLastUpdate",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
+        "internalType": "address",
+        "name": "_principalReserve",
         "type": "address"
       },
       {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "updateUserLastVariableBorrowCumulativeIndex",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
+        "internalType": "address",
+        "name": "_collateralReserve",
         "type": "address"
       },
       {
+        "internalType": "address",
         "name": "_user",
         "type": "address"
       },
       {
-        "name": "_amount",
+        "internalType": "uint256",
+        "name": "_amountToLiquidate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_collateralToLiquidate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_feeLiquidated",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liquidatedCollateralForFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_balanceIncrease",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_liquidatorReceivesAToken",
+        "type": "bool"
+      }
+    ],
+    "name": "updateStateOnLiquidation",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_balanceIncrease",
         "type": "uint256"
       }
     ],
-    "name": "increaseUserOriginationFee",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
+    "name": "updateStateOnRebalance",
+    "outputs": [
       {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "decreaseUserOriginationFee",
-    "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
@@ -392,58 +445,17 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "address",
         "name": "_user",
         "type": "address"
       },
       {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseUserPrincipalBorrowBalance",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "decreaseUserPrincipalBorrowBalance",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      },
-      {
+        "internalType": "bool",
         "name": "_useAsCollateral",
         "type": "bool"
       }
@@ -458,15 +470,22 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "address payable",
         "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
       }
     ],
-    "name": "setUserLastUpdate",
+    "name": "transferToUser",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -476,42 +495,185 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_reserve",
+        "internalType": "address",
+        "name": "_token",
         "type": "address"
       },
       {
+        "internalType": "address",
         "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_destination",
         "type": "address"
       }
     ],
-    "name": "updateUserFixedBorrowRate",
+    "name": "transferToFeeCollectionAddress",
     "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
+    "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_destination",
+        "type": "address"
+      }
+    ],
+    "name": "liquidateFee",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "address payable",
         "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
       }
     ],
-    "name": "resetUserFixedBorrowRate",
+    "name": "transferToReserve",
     "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
+    "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserBasicReserveData",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "isUserAllowedToBorrowAtStable",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserUnderlyingAssetBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -519,6 +681,7 @@
     "name": "getReserveInterestRateStrategyAddress",
     "outputs": [
       {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -531,6 +694,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -538,6 +702,7 @@
     "name": "getReserveATokenAddress",
     "outputs": [
       {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -550,6 +715,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -557,6 +723,7 @@
     "name": "getReserveAvailableLiquidity",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -569,6 +736,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -576,6 +744,7 @@
     "name": "getReserveTotalLiquidity",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -588,6 +757,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -595,6 +765,7 @@
     "name": "getReserveNormalizedIncome",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -607,6 +778,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -614,6 +786,7 @@
     "name": "getReserveTotalBorrows",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -626,13 +799,15 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
     ],
-    "name": "getReserveTotalBorrowsFixed",
+    "name": "getReserveTotalBorrowsStable",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -645,6 +820,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -652,6 +828,7 @@
     "name": "getReserveTotalBorrowsVariable",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -664,6 +841,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -671,6 +849,7 @@
     "name": "getReserveLiquidationThreshold",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -683,13 +862,15 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
     ],
-    "name": "getReserveLiquidationDiscount",
+    "name": "getReserveLiquidationBonus",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -702,6 +883,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -709,6 +891,7 @@
     "name": "getReserveCurrentVariableBorrowRate",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -721,13 +904,15 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
     ],
-    "name": "getReserveCurrentFixedBorrowRate",
+    "name": "getReserveCurrentStableBorrowRate",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -740,13 +925,15 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
     ],
-    "name": "getReserveCurrentAverageFixedBorrowRate",
+    "name": "getReserveCurrentAverageStableBorrowRate",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -759,6 +946,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -766,6 +954,7 @@
     "name": "getReserveCurrentLiquidityRate",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -778,6 +967,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -785,6 +975,7 @@
     "name": "getReserveLiquidityCumulativeIndex",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -797,6 +988,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -804,6 +996,7 @@
     "name": "getReserveVariableBorrowsCumulativeIndex",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -816,6 +1009,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -823,27 +1017,23 @@
     "name": "getReserveConfiguration",
     "outputs": [
       {
-        "name": "decimals",
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       },
       {
-        "name": "baseLTVasCollateral",
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       },
       {
-        "name": "liquidationThreshold",
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       },
       {
-        "name": "usageAsCollateralEnabled",
-        "type": "bool"
-      },
-      {
-        "name": "fixedBorrowRateEnabled",
-        "type": "bool"
-      },
-      {
-        "name": "borrowingEnabled",
+        "internalType": "bool",
+        "name": "",
         "type": "bool"
       }
     ],
@@ -855,6 +1045,28 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveDecimals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -862,6 +1074,7 @@
     "name": "isReserveBorrowingEnabled",
     "outputs": [
       {
+        "internalType": "bool",
         "name": "",
         "type": "bool"
       }
@@ -874,6 +1087,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -881,6 +1095,7 @@
     "name": "isReserveUsageAsCollateralEnabled",
     "outputs": [
       {
+        "internalType": "bool",
         "name": "",
         "type": "bool"
       }
@@ -893,13 +1108,15 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
     ],
-    "name": "getReserveIsFixedBorrowRateEnabled",
+    "name": "getReserveIsStableBorrowRateEnabled",
     "outputs": [
       {
+        "internalType": "bool",
         "name": "",
         "type": "bool"
       }
@@ -912,6 +1129,7 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -919,6 +1137,7 @@
     "name": "getReserveIsActive",
     "outputs": [
       {
+        "internalType": "bool",
         "name": "",
         "type": "bool"
       }
@@ -931,6 +1150,28 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "getReserveIsFreezed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -938,6 +1179,7 @@
     "name": "getReserveLastUpdate",
     "outputs": [
       {
+        "internalType": "uint40",
         "name": "timestamp",
         "type": "uint40"
       }
@@ -950,175 +1192,7 @@
     "constant": true,
     "inputs": [
       {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "isUserUseReserveAsCollateralEnabled",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserOriginationFee",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserCurrentBorrowRateMode",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserCurrentFixedBorrowRate",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserBorrowBalances",
-    "outputs": [
-      {
-        "name": "principalBorrowBalance",
-        "type": "uint256"
-      },
-      {
-        "name": "compoundedBorrowBalance",
-        "type": "uint256"
-      },
-      {
-        "name": "compoundedAmount",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserVariableBorrowCumulativeIndex",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserLastUpdate",
-    "outputs": [
-      {
-        "name": "timestamp",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -1126,6 +1200,7 @@
     "name": "getReserveUtilizationRate",
     "outputs": [
       {
+        "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
@@ -1140,6 +1215,7 @@
     "name": "getReserves",
     "outputs": [
       {
+        "internalType": "address[]",
         "name": "",
         "type": "address[]"
       }
@@ -1149,17 +1225,195 @@
     "type": "function"
   },
   {
-    "constant": false,
+    "constant": true,
     "inputs": [
       {
-        "name": "_addressesProvider",
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
         "type": "address"
       }
     ],
-    "name": "setAddressesProvider",
-    "outputs": [],
+    "name": "isUserUseReserveAsCollateralEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserOriginationFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserCurrentBorrowRateMode",
+    "outputs": [
+      {
+        "internalType": "enum CoreLibrary.InterestRateMode",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserCurrentStableBorrowRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserBorrowBalances",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserVariableBorrowCumulativeIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserLastUpdate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1175,18 +1429,22 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "address",
         "name": "_aTokenAddress",
         "type": "address"
       },
       {
+        "internalType": "uint256",
         "name": "_decimals",
         "type": "uint256"
       },
       {
+        "internalType": "address",
         "name": "_interestRateStrategyAddress",
         "type": "address"
       }
@@ -1201,10 +1459,12 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "address",
         "name": "_rateStrategyAddress",
         "type": "address"
       }
@@ -1219,11 +1479,13 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
-        "name": "_fixedBorrowRateEnabled",
+        "internalType": "bool",
+        "name": "_stableBorrowRateEnabled",
         "type": "bool"
       }
     ],
@@ -1237,6 +1499,7 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -1251,15 +1514,23 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "uint256",
         "name": "_baseLTVasCollateral",
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
         "name": "_liquidationThreshold",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liquidationBonus",
         "type": "uint256"
       }
     ],
@@ -1273,6 +1544,7 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -1287,11 +1559,12 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
     ],
-    "name": "enableReserveFixedBorrowRate",
+    "name": "enableReserveStableBorrowRate",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -1301,11 +1574,12 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
     ],
-    "name": "disableReserveFixedBorrowRate",
+    "name": "disableReserveStableBorrowRate",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -1315,6 +1589,7 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -1329,6 +1604,7 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       }
@@ -1343,10 +1619,42 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "freezeReserve",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_reserve",
+        "type": "address"
+      }
+    ],
+    "name": "unfreezeReserve",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "uint256",
         "name": "_ltv",
         "type": "uint256"
       }
@@ -1361,10 +1669,12 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
+        "internalType": "uint256",
         "name": "_threshold",
         "type": "uint256"
       }
@@ -1379,15 +1689,17 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
-        "name": "_discount",
+        "internalType": "uint256",
+        "name": "_bonus",
         "type": "uint256"
       }
     ],
-    "name": "setReserveLiquidationDiscount",
+    "name": "setReserveLiquidationBonus",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -1397,70 +1709,20 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
         "name": "_reserve",
         "type": "address"
       },
       {
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
+        "internalType": "uint256",
+        "name": "_decimals",
         "type": "uint256"
       }
     ],
-    "name": "transferToUser",
+    "name": "setReserveDecimals",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_token",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "name": "destination",
-        "type": "address"
-      }
-    ],
-    "name": "transferToFeeCollectionAddress",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_reserve",
-        "type": "address"
-      },
-      {
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferToReserve",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
     "type": "function"
   }
 ]
