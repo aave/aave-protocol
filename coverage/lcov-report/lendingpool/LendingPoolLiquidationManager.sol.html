@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lendingpool/LendingPoolLiquidationManager.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lendingpool/</a> LendingPoolLiquidationManager.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.66% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>47/59</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">60% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>12/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.66% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>47/59</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.5.0;
+&nbsp;
+&nbsp;
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
+import "openzeppelin-solidity/contracts/utils/Address.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+&nbsp;
+import "../configuration/LendingPoolAddressesProvider.sol";
+import "../configuration/LendingPoolParametersProvider.sol";
+import "../configuration/NetworkMetadataProvider.sol";
+import "../tokenization/AToken.sol";
+import "../libraries/CoreLibrary.sol";
+import "../libraries/WadRayMath.sol";
+import "../interfaces/IFeeProvider.sol";
+import "../flashloan/interfaces/IFlashLoanReceiver.sol";
+import "./LendingPoolCore.sol";
+import "./LendingPoolDataProvider.sol";
+&nbsp;
+&nbsp;
+&nbsp;
+/*************************************************************************************
+@title LiquidationManager contract
+@author Aave
+@notice Implements the actions of the LendingPool, and exposes accessory methods to access the core information
+ *************************************************************************************/
+&nbsp;
+&nbsp;
+contract LendingPoolLiquidationManager is ReentrancyGuard {
+&nbsp;
+    using SafeMath for uint256;
+    using WadRayMath for uint256;
+    using Address for address payable;
+&nbsp;
+    LendingPoolAddressesProvider addressesProvider;
+    LendingPoolCore core;
+    LendingPoolDataProvider dataProvider;
+    LendingPoolParametersProvider parametersProvider;
+&nbsp;
+&nbsp;
+    uint256 constant LIQUIDATION_CLOSE_FACTOR_PERCENT = 50;
+    enum LiquidationErrors {
+        NO_ERROR,
+        NO_COLLATERAL_AVAILABLE,
+        COLLATERAL_CANNOT_BE_LIQUIDATED,
+        CURRRENCY_NOT_BORROWED,
+        HEALTH_FACTOR_ABOVE_THRESHOLD,
+        NOT_ENOUGH_LIQUIDITY
+    }
+&nbsp;
+    event LiquidationCompleted();
+&nbsp;
+    struct LiquidationCallLocalVars{
+        uint256 healthFactor;
+        uint256 userCollateralBalance;
+        uint256 userCompoundedBorrowBalance;
+        uint256 borrowBalanceIncrease;
+        uint256 maxPrincipalAmountToLiquidate;
+        uint256 actualAmountToLiquidate;
+        uint256 liquidationRatio;
+        uint256 collateralPrice;
+        uint256 principalCurrencyPrice;
+        uint256 maxAmountCollateralToLiquidate;
+        bool isCollateralEnabled;
+&nbsp;
+    }
+&nbsp;
+   /**
+    * @notice implements loan liquidation
+    * @dev _receiveAToken allows the liquidators to receive the aTokens, instead of the underlying asset.
+    */
+    function liquidationCall(address _collateral, address _reserve, address _user, uint256 _purchaseAmount, bool _receiveAToken)
+       external
+        payable
+        returns(uint256, string memory)
+    {
+        LiquidationCallLocalVars memory vars;
+&nbsp;
+        (,,,,,vars.healthFactor) = dataProvider.calculateUserGlobalData(_user);
+&nbsp;
+        if(vars.healthFactor &gt;= dataProvider.getHealthFactorLiquidationThreshold()){
+            return (uint256(LiquidationErrors.HEALTH_FACTOR_ABOVE_THRESHOLD), "Health factor is not below the threshold");
+        }
+&nbsp;
+        vars.userCollateralBalance = dataProvider.getUserUnderlyingAssetBalance(_collateral, _user);
+&nbsp;
+        //if _user hasn't deposited this specific collateral, nothing can be liquidated
+        if(vars.userCollateralBalance == 0) {
+            return (uint256(LiquidationErrors.NO_COLLATERAL_AVAILABLE), "Invalid collateral to liquidate");
+        }
+&nbsp;
+        vars.isCollateralEnabled = core.isReserveUsageAsCollateralEnabled(_collateral) ||
+            !core.isUserUseReserveAsCollateralEnabled(_collateral, _user);
+&nbsp;
+        //if _collateral isn't enabled as collateral by _user, it cannot be liquidated
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(!vars.isCollateralEnabled) {
+<span class="cstat-no" title="statement not covered" >            return (uint256(LiquidationErrors.COLLATERAL_CANNOT_BE_LIQUIDATED), "The collateral chosen cannot be liuquidated");</span>
+        }
+&nbsp;
+        //if the user hasn't borrowed the specific currency defined by _reserve, it cannot be liquidated
+        (,vars.userCompoundedBorrowBalance,vars.borrowBalanceIncrease) = core.getUserBorrowBalances(_reserve, _user);
+&nbsp;
+        if(vars.userCompoundedBorrowBalance == 0){
+            return (uint256(LiquidationErrors.CURRRENCY_NOT_BORROWED), "User did not borrow the specified currency");
+        }
+&nbsp;
+        //all clear - calculate the max principal amount that can be liquidated
+        vars.maxPrincipalAmountToLiquidate = vars.userCompoundedBorrowBalance.mul(LIQUIDATION_CLOSE_FACTOR_PERCENT).div(100);
+&nbsp;
+        vars.actualAmountToLiquidate = _purchaseAmount &gt; vars.maxPrincipalAmountToLiquidate
+            ?
+            vars.maxPrincipalAmountToLiquidate
+            :
+            _purchaseAmount;
+&nbsp;
+        (uint256 maxCollateralToLiquidate,
+        uint256 principalAmountNeeded) = calculateAvailableCollateralToLiquidate(_collateral, _reserve, vars.actualAmountToLiquidate, vars.userCollateralBalance);
+&nbsp;
+        //if principalAmountNeeded &lt; vars.ActualAmountToLiquidate, there isn't enough
+        //of _collateral to cover the actual amount that is being liquidated, hence we liquidate
+        //a smaller amount
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(principalAmountNeeded &lt; vars.actualAmountToLiquidate){
+<span class="cstat-no" title="statement not covered" >            vars.actualAmountToLiquidate = principalAmountNeeded</span>;
+        }
+&nbsp;
+        //if liquidator reclaims the underlying asset, we make sure there is enough available collateral in the reserve
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(!_receiveAToken){
+<span class="cstat-no" title="statement not covered" >            uint256 currentAvailableCollateral = core.getReserveAvailableLiquidity(_collateral);</span>
+<span class="cstat-no" title="statement not covered" >            if(currentAvailableCollateral &gt;= maxCollateralToLiquidate){</span>
+<span class="cstat-no" title="statement not covered" >                return (uint256(LiquidationErrors.NOT_ENOUGH_LIQUIDITY), "There isn't enough liquidity available to liquidate");</span>
+            }
+        }
+&nbsp;
+        //update principal reserve data
+        core.updateReserveCumulativeIndexes(_reserve);
+&nbsp;
+        CoreLibrary.InterestRateMode borrowRateMode = core.getUserCurrentBorrowRateMode(_reserve,_user);
+&nbsp;
+        core.increaseReserveTotalLiquidity(_reserve, vars.borrowBalanceIncrease);
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (borrowRateMode == CoreLibrary.InterestRateMode.FIXED) {
+            uint256 currentFixedRate = core.getUserCurrentFixedBorrowRate(_reserve, _user);
+            core.decreaseReserveTotalBorrowsFixedAndUpdateAverageRate(_reserve, vars.actualAmountToLiquidate.sub(vars.borrowBalanceIncrease), currentFixedRate);
+        } else {
+<span class="cstat-no" title="statement not covered" >            core.decreaseReserveTotalBorrowsVariable(_reserve, vars.actualAmountToLiquidate.sub(vars.borrowBalanceIncrease))</span>;
+        }
+&nbsp;
+        core.updateReserveInterestRates(_reserve);
+        core.setReserveLastUpdate(_reserve);
+        //step 3: update user borrow data
+        core.decreaseUserPrincipalBorrowBalance(_reserve, _user, vars.actualAmountToLiquidate.sub(vars.borrowBalanceIncrease));
+        core.setUserLastUpdate(_reserve,_user);
+&nbsp;
+        //update collateral reserve
+        core.updateReserveCumulativeIndexes(_collateral);
+        AToken collateralAtoken = AToken(core.getReserveATokenAddress(_collateral));
+&nbsp;
+        //calculating aToken equivalent amount from vars.
+        uint256 aTokenCollateralToLiquidate = collateralAtoken.underlyingAmountToATokenAmount(maxCollateralToLiquidate);
+&nbsp;
+        //if liquidator reclaims the aToken, he receives the equivalent atoken amount
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(_receiveAToken) {
+            collateralAtoken.transferOnLiquidation(_user, msg.sender, aTokenCollateralToLiquidate);
+        }
+        else { //otherwise receives the underlying asset
+            //burn the equivalent amount of atoken
+<span class="cstat-no" title="statement not covered" >            collateralAtoken.burnOnLiquidation(_user, aTokenCollateralToLiquidate)</span>;
+<span class="cstat-no" title="statement not covered" >            core.decreaseReserveTotalLiquidity(_collateral, maxCollateralToLiquidate)</span>;
+<span class="cstat-no" title="statement not covered" >            core.updateReserveInterestRates(_collateral)</span>;
+<span class="cstat-no" title="statement not covered" >            core.transferToUser(_collateral, msg.sender, maxCollateralToLiquidate)</span>;
+         }
+&nbsp;
+        core.setReserveLastUpdate(_collateral);
+&nbsp;
+        //transfers the principal currency to the pool
+&nbsp;
+        core.transferToReserve.value(msg.value)(_reserve, msg.sender, vars.actualAmountToLiquidate);
+&nbsp;
+        return (uint256(LiquidationErrors.NO_ERROR), "No errors");
+    }
+&nbsp;
+&nbsp;
+&nbsp;
+    struct AvailableCollateralToLiquidateLocalVars{
+        uint256 userCompoundedBorrowBalance;
+        uint256 liquidationDiscount;
+        uint256 collateralPrice;
+        uint256 principalCurrencyPrice;
+        uint256 maxAmountCollateralToLiquidate;
+    }
+&nbsp;
+    /**
+    * @notice calculates how much of a specific collateral can be liquidated, given
+    * a certain amount of principal currency.
+    * @dev this function needs to be called after all the checks to validate the liquidation
+    * have been performed, otherwise it might fail.
+     */
+    function calculateAvailableCollateralToLiquidate(
+        address _collateral,
+        address _principal,
+        uint256 _purchaseAmount,
+        uint256 _userCollateralBalance) internal view returns(uint256 collateralAmount, uint256 principalAmountNeeded) {
+&nbsp;
+        collateralAmount = 0;
+        principalAmountNeeded = 0;
+        IPriceOracle oracle = IPriceOracle(addressesProvider.getPriceOracle());
+&nbsp;
+        AvailableCollateralToLiquidateLocalVars memory vars;
+&nbsp;
+        vars.collateralPrice = oracle.getAssetPrice(_collateral);
+        vars.principalCurrencyPrice = oracle.getAssetPrice(_principal);
+        vars.liquidationDiscount = core.getReserveLiquidationDiscount(_collateral);
+&nbsp;
+        //this is the maximum possible amount of the selected collateral that can be liquidated, given the
+        //max amount of principal currency that is available for liquidation.
+        vars.maxAmountCollateralToLiquidate = vars.principalCurrencyPrice.mul(_purchaseAmount)
+            .div(vars.collateralPrice)
+            .mul(vars.liquidationDiscount)
+            .div(100);
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(vars.maxAmountCollateralToLiquidate &gt; _userCollateralBalance) {
+<span class="cstat-no" title="statement not covered" >            collateralAmount = _userCollateralBalance</span>;
+<span class="cstat-no" title="statement not covered" >            principalAmountNeeded = vars.collateralPrice</span>
+                .mul(collateralAmount)
+                .div(vars.principalCurrencyPrice)
+                .mul(100)
+                .div(vars.liquidationDiscount);
+        }
+        else{
+            collateralAmount = vars.maxAmountCollateralToLiquidate;
+            principalAmountNeeded = _purchaseAmount;
+        }
+&nbsp;
+        return (collateralAmount, principalAmountNeeded);
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 06:55:09 GMT+0000 (Coordinated Universal Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

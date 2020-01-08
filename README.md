@@ -12,7 +12,7 @@ For a deep explanation of the Aave Protocol, read the [White Paper](./docs/Aave_
 
 ## Source code
 
-The source code will be released in this repository once the in progress audits are completed.
+The source code included is subjected to changes as the security audits are still in progress.
 
 
 ## Audits report

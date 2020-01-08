@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lendingpool/LendingPoolConfigurator.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lendingpool/</a> LendingPoolConfigurator.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">39.13% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>18/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">38.89% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">40.43% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>19/47</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.5.0;
+&nbsp;
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
+import "../libraries/CoreLibrary.sol";
+import "../configuration/LendingPoolAddressesProvider.sol";
+import "./LendingPoolCore.sol";
+import "../interfaces/IFeeProvider.sol";
+import "../tokenization/AToken.sol";
+&nbsp;
+&nbsp;
+&nbsp;
+/*************************************************************************************
+@title LendingPoolConfigurator contract
+@author Aave
+@notice Executes configuration methods on the LendingPoolCore contract. Allows to enable/disable reserves,
+and set different protocol parameters.
+ *************************************************************************************/
+&nbsp;
+contract LendingPoolConfigurator is Ownable {
+&nbsp;
+    using SafeMath for uint256;
+&nbsp;
+    event ReserveInitialized(
+    address indexed _reserve,
+    address indexed _aToken,
+    uint256 _initialExchangeRate,
+    address _interestRateStrategyAddress);
+&nbsp;
+    event BorrowingEnabledOnReserve(
+        address _reserve,
+        bool _fixedRateEnabled
+    );
+&nbsp;
+    /**
+    @dev events
+     */
+    event BorrowingDisabledOnReserve(address indexed _reserve);
+    event ReserveEnabledAsCollateral(address indexed _reserve, uint256 _ltv, uint256 _liquidationThreshold);
+    event ReserveDisabledAsCollateral(address indexed _reserve);
+    event FixedRateEnabledOnReserve(address indexed _reserve);
+    event FixedRateDisabledOnReserve(address indexed _reserve);
+    event ReserveActivated(address indexed _reserve);
+    event ReserveDeactivated(address indexed _reserve);
+&nbsp;
+    LendingPoolAddressesProvider poolAddressesProvider;
+    /**
+    @dev only lending pools can use functions affected by this modifier
+     */
+    modifier onlyLendingPoolManager {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(
+            poolAddressesProvider.getLendingPoolManager() == msg.sender,
+            "The caller must be a lending pool manager"
+        );
+        _;
+    }
+&nbsp;
+    constructor(LendingPoolAddressesProvider _poolAddressesProvider)
+        public
+    {
+        poolAddressesProvider = _poolAddressesProvider;
+    }
+&nbsp;
+    /******************************************
+    @dev pool core managment functions
+     ******************************************/
+&nbsp;
+    function initReserve(
+        address _reserve,
+        uint256 _aTokenInitialExchangeRate,
+        uint256 _underlyingAssetDecimals,
+        address _interestRateStrategyAddress)
+        external
+        onlyLendingPoolManager
+    {
+        ERC20Detailed asset = ERC20Detailed(_reserve);
+&nbsp;
+        string memory aTokenName = string(abi.encodePacked("Aave Interest bearing ", asset.name()));
+        string memory aTokenSymbol = string(abi.encodePacked("a", asset.symbol()));
+&nbsp;
+        initReserveWithData(
+            _reserve,
+            aTokenName,
+            aTokenSymbol,
+            _aTokenInitialExchangeRate,
+            _underlyingAssetDecimals,
+            _interestRateStrategyAddress);
+&nbsp;
+    }
+&nbsp;
+&nbsp;
+    /**
+    @notice initialises the reserve and instantiates the specific aToken with the specified initial exchange rate.
+     */
+    function initReserveWithData(
+        address _reserve,
+        string memory aTokenName,
+        string memory aTokenSymbol,
+        uint256 _aTokenInitialExchangeRate,
+        uint256 _underlyingAssetDecimals,
+        address _interestRateStrategyAddress)
+        public
+        onlyLendingPoolManager
+    {
+        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
+&nbsp;
+        AToken aTokenInstance = new AToken(
+            poolAddressesProvider,
+            _reserve,
+            _underlyingAssetDecimals,
+            aTokenName,
+            aTokenSymbol,
+            18,
+            _aTokenInitialExchangeRate
+        );
+        core.initReserve(_reserve, address(aTokenInstance), _underlyingAssetDecimals, _interestRateStrategyAddress);
+&nbsp;
+        emit ReserveInitialized(_reserve, address(aTokenInstance), _aTokenInitialExchangeRate, _interestRateStrategyAddress);
+    }
+&nbsp;
+&nbsp;
+    /**
+    @notice functions to enable/disable borrowing on reserve.
+     */
+    function enableBorrowingOnReserve(
+        address _reserve,
+        bool _fixedBorrowRateEnabled
+    ) external onlyLendingPoolManager {
+        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
+        core.enableBorrowingOnReserve(_reserve, _fixedBorrowRateEnabled);
+        emit BorrowingEnabledOnReserve(_reserve, _fixedBorrowRateEnabled);
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function disableBorrowingOnReserve(address _reserve) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.disableBorrowingOnReserve(_reserve)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit BorrowingDisabledOnReserve(_reserve);</span>
+    }
+&nbsp;
+    /**
+    @notice functions to enable/disable usage of the reserve as collateral.
+     */
+&nbsp;
+&nbsp;
+    function enableReserveAsCollateral(address _reserve, uint256 _baseLTVasCollateral, uint256 _liquidationThreshold)
+        external
+        onlyLendingPoolManager
+    {
+        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
+        core.enableReserveAsCollateral(_reserve, _baseLTVasCollateral, _liquidationThreshold);
+        emit ReserveEnabledAsCollateral(_reserve, _baseLTVasCollateral, _liquidationThreshold);
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function disableReserveAsCollateral(address _reserve) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.disableReserveAsCollateral(_reserve)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit ReserveDisabledAsCollateral(_reserve);</span>
+    }
+&nbsp;
+    /**
+    @notice functions to enable/disable fixed borrow rate mode on a reserve.
+     */
+&nbsp;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function enableReserveFixedBorrowRate(address _reserve) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.enableReserveFixedBorrowRate(_reserve)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit FixedRateEnabledOnReserve(_reserve);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function disableReserveFixedBorrowRate(address _reserve) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.disableReserveFixedBorrowRate(_reserve)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit FixedRateDisabledOnReserve(_reserve);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function activateReserve(address _reserve) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.activateReserve(_reserve)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit ReserveActivated(_reserve);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function deactivateReserve(address _reserve) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.deactivateReserve(_reserve)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit ReserveDeactivated(_reserve);</span>
+    }
+&nbsp;
+&nbsp;
+    /***************
+    @dev functions to update available collaterals
+    @dev the interest rate and the ltv are expressed in percentage
+     ***************/
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveBaseLTVasCollateral(address _reserve, uint256 _ltv) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.setReserveBaseLTVasCollateral(_reserve, _ltv)</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveLiquidationThreshold(address _reserve, uint256 _threshold)</span>
+        external
+        onlyLendingPoolManager
+    {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.setReserveLiquidationThreshold(_reserve, _threshold)</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveLiquidationDiscount(address _reserve, uint256 _threshold)</span>
+        external
+        onlyLendingPoolManager
+    {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.setReserveLiquidationDiscount(_reserve, _threshold)</span>;
+    }
+&nbsp;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setReserveInterestRateStrategyAddress( address _reserve, address _rateStrategyAddress) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.setReserveInterestRateStrategyAddress(_reserve, _rateStrategyAddress)</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setLendingPoolCoreAddressesProvider(address _provider) external onlyLendingPoolManage</span>r {
+<span class="cstat-no" title="statement not covered" >        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());</span>
+<span class="cstat-no" title="statement not covered" >        core.setAddressesProvider(_provider)</span>;
+    }
+&nbsp;
+    function refreshLendingPoolCoreConfiguration() external onlyLendingPoolManager {
+        LendingPoolCore core = LendingPoolCore(poolAddressesProvider.getLendingPoolCore());
+        core.refreshConfiguration();
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 06:55:09 GMT+0000 (Coordinated Universal Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

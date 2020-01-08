@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for libraries/CoreLibrary.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">libraries/</a> CoreLibrary.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">98.57% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>69/70</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>21/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>17/17</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>67/67</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">206×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">497×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">171×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.5.0;
+&nbsp;
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "./WadRayMath.sol";
+&nbsp;
+/*************************************************************************************
+@title CoreLibrary library
+@author Aave
+@notice Defines the data structures of the reserves and the user data
+ *************************************************************************************/
+&nbsp;
+library CoreLibrary {
+    using SafeMath for uint256;
+    using WadRayMath for uint256;
+&nbsp;
+    enum InterestRateMode {FIXED, VARIABLE}
+&nbsp;
+    uint256 constant SECONDS_PER_YEAR = 365 days;
+&nbsp;
+    struct UserReserveData {
+        //principal amount borrowed by the user
+        uint256 principalBorrowBalance;
+        //cumulated variable borrow index for the user Bvcu. Refer to the whitepaper for more information
+        uint256 lastVariableBorrowCumulativeIndex;
+        //origination fee cumulated by the user
+        uint256 originationFee;
+        // fixed borrow rate at which the user has borrowed
+        uint256 fixedBorrowRate;
+&nbsp;
+        uint40 lastUpdateTimestamp;
+&nbsp;
+        /**
+        @dev defines if a specific deposit should or not be used as a collateral in borrows
+         */
+        bool useAsCollateral;
+    }
+&nbsp;
+    struct ReserveData {
+        /**
+        @dev refer to the whitepaper, section 1.1 basic concepts for a formal description of these properties.
+         */
+        uint256 totalLiquidity;
+        uint256 lastLiquidityCumulativeIndex;
+        uint256 currentLiquidityRate;
+        uint256 totalBorrowsFixed;
+        uint256 totalBorrowsVariable;
+        uint256 currentVariableBorrowRate;
+        uint256 currentFixedBorrowRate;
+        uint256 currentAverageFixedBorrowRate;
+        uint256 lastVariableBorrowCumulativeIndex;
+        uint256 baseLTVasCollateral;
+        uint256 liquidationThreshold;
+        uint256 liquidationDiscount;
+        uint256 decimals;
+        /**
+        * @dev address of the aToken representing the asset
+         */
+        address aTokenAddress;
+&nbsp;
+        /**
+        * @dev address of the interest rate strategy contract
+         */
+&nbsp;
+        address interestRateStrategyAddress;
+&nbsp;
+        uint40 lastUpdateTimestamp;
+&nbsp;
+        /**
+        @dev borrowingEnabled = true means users can borrow from this reserve
+        @dev usageAsCollateral = true means users can use this reserve as collateral
+         */
+        bool borrowingEnabled;
+        bool usageAsCollateralEnabled;
+        bool isFixedBorrowRateEnabled;
+        bool isActive;
+    }
+&nbsp;
+    /**
+    @notice returns the utilization rate U of a specific reserve
+    @dev the utilization rate is in ray (27 decimals precision)
+     */
+&nbsp;
+    function getReserveUtilizationRate(ReserveData storage _self) internal view returns (uint256) {
+&nbsp;
+        if (_self.totalLiquidity == 0) return 0;
+&nbsp;
+        uint256 totalBorrows = _self.totalBorrowsFixed.add(_self.totalBorrowsVariable);
+&nbsp;
+        return totalBorrows.rayDiv(_self.totalLiquidity);
+    }
+&nbsp;
+    /**
+    @notice returns the utilization rate U of a specific reserve
+    @dev the utilization rate is in ray (27 decimals precision)
+     */
+    function getNormalizedIncome(CoreLibrary.ReserveData storage _reserve)
+        internal
+        view
+        returns (uint256)
+    {
+&nbsp;
+        uint256 cumulated = calculateCumulatedInterest(
+            _reserve.currentLiquidityRate,
+            _reserve.lastUpdateTimestamp)
+            .rayMul(_reserve.lastLiquidityCumulativeIndex);
+&nbsp;
+        return cumulated;
+&nbsp;
+    }
+&nbsp;
+    /**
+    @notice Updates the liquidity cumulative index Ci and variable borrow cumulative index Bvc. Refer to the whitepaper for
+    a formal specification.
+    @dev Ci and Bvc are in ray (27 decimals precision)
+     */
+&nbsp;
+    function updateCumulativeIndexes(ReserveData storage _self) internal{
+&nbsp;
+        uint256 utilizationRate = getReserveUtilizationRate(_self);
+&nbsp;
+        if (utilizationRate &gt; 0) {
+            //only cumulating if there is any income being produced
+            uint256 cumulatedLiquidityInterest = calculateCumulatedInterest(_self.currentLiquidityRate, _self.lastUpdateTimestamp);
+&nbsp;
+            _self.lastLiquidityCumulativeIndex = cumulatedLiquidityInterest.rayMul(
+                _self.lastLiquidityCumulativeIndex
+            );
+&nbsp;
+            uint256 cumulatedVariableBorrowInterest = calculateCumulatedInterest(_self.currentVariableBorrowRate, _self.lastUpdateTimestamp);
+            _self.lastVariableBorrowCumulativeIndex = cumulatedVariableBorrowInterest.rayMul(
+                _self.lastVariableBorrowCumulativeIndex
+            );
+        }
+    }
+&nbsp;
+    function cumulateToLiquidityIndex(ReserveData storage _self, uint256 _amount) internal{
+&nbsp;
+        uint256 amountToLiquidityRatio = _amount.wadToRay().rayDiv(_self.totalLiquidity.wadToRay());
+&nbsp;
+        uint256 cumulatedLiquidity = amountToLiquidityRatio.add(WadRayMath.ray());
+&nbsp;
+        _self.lastLiquidityCumulativeIndex = cumulatedLiquidity.rayMul(
+            _self.lastLiquidityCumulativeIndex
+        );
+    }
+&nbsp;
+     /**
+    @notice inits a reserve
+    */
+&nbsp;
+    function init(ReserveData storage _self, address _aTokenAddress, uint256 _decimals, address _interestRateStrategyAddress) external{
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_self.aTokenAddress == address(0), "Reserve has already been initialized");
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (_self.lastLiquidityCumulativeIndex == 0) {
+            //if the reserve has not been initialized yet
+            _self.lastLiquidityCumulativeIndex = WadRayMath.ray();
+        }
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (_self.lastVariableBorrowCumulativeIndex == 0){
+            _self.lastVariableBorrowCumulativeIndex = WadRayMath.ray();
+        }
+&nbsp;
+        _self.aTokenAddress = _aTokenAddress;
+        _self.decimals = _decimals;
+&nbsp;
+        _self.interestRateStrategyAddress = _interestRateStrategyAddress;
+        _self.isActive = true;
+&nbsp;
+&nbsp;
+    }
+&nbsp;
+    function enableBorrowing(
+        ReserveData storage _self,
+        bool _fixedBorrowRateEnabled
+    ) external{
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_self.borrowingEnabled == false, "Reserve is already enabled");
+&nbsp;
+        _self.borrowingEnabled = true;
+        _self.isFixedBorrowRateEnabled = _fixedBorrowRateEnabled;
+&nbsp;
+&nbsp;
+    }
+&nbsp;
+    function disableBorrowing(ReserveData storage _self) external{
+        _self.borrowingEnabled = false;
+    }
+&nbsp;
+    function enableAsCollateral(ReserveData storage _self, uint256 _baseLTVasCollateral, uint256 _liquidationThreshold)
+        external
+    {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_self.usageAsCollateralEnabled == false, "Reserve is already enabled as collateral");
+&nbsp;
+        _self.usageAsCollateralEnabled = true;
+        _self.baseLTVasCollateral = _baseLTVasCollateral;
+        _self.liquidationThreshold = _liquidationThreshold;
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (_self.lastLiquidityCumulativeIndex == 0) <span class="cstat-no" title="statement not covered" >_self.lastLiquidityCumulativeIndex = WadRayMath.ray()</span>;
+&nbsp;
+    }
+&nbsp;
+    function disableAsCollateral(ReserveData storage _self) external{
+        _self.usageAsCollateralEnabled = false;
+    }
+&nbsp;
+    /**
+    @dev user specific functions
+    */
+&nbsp;
+    function getCompoundedBorrowBalance(
+        CoreLibrary.UserReserveData storage _self,
+        CoreLibrary.ReserveData storage _reserve)
+        internal
+        view
+        returns(uint256) {
+&nbsp;
+        if (_self.principalBorrowBalance == 0) return 0;
+&nbsp;
+        uint256 principalBorrowBalanceRay = _self.principalBorrowBalance.wadToRay();
+        uint256 compoundedBalance = 0;
+        uint256 cumulatedInterest = 0;
+&nbsp;
+        if (_self.fixedBorrowRate &gt; 0) {
+            cumulatedInterest = calculateCumulatedInterest(_self.fixedBorrowRate, _self.lastUpdateTimestamp);
+        }
+        else {
+        //variable interest
+            cumulatedInterest = calculateCumulatedInterest(_reserve.currentVariableBorrowRate, _reserve.lastUpdateTimestamp)
+                .rayMul(_reserve.lastVariableBorrowCumulativeIndex)
+                .rayDiv(_self.lastVariableBorrowCumulativeIndex);
+        }
+&nbsp;
+        compoundedBalance = principalBorrowBalanceRay
+            .rayMul(cumulatedInterest)
+            .rayToWad();
+&nbsp;
+        if(compoundedBalance == _self.principalBorrowBalance) {
+&nbsp;
+            //no interest cumulation because of the rounding - we add 1 wei
+            //as symbolic cumulated interest to avoid interest free loans.
+&nbsp;
+            return _self.principalBorrowBalance.add(1 wei);
+        }
+&nbsp;
+        return compoundedBalance;
+    }
+&nbsp;
+    function increaseTotalBorrowsFixedAndUpdateAverageRate(ReserveData storage _reserve, uint256 _amount, uint256 _rate) internal{
+        uint256 previousTotalBorrowFixed = _reserve.totalBorrowsFixed;
+        //updating reserve borrows fixed
+        _reserve.totalBorrowsFixed = _reserve.totalBorrowsFixed.add(_amount);
+&nbsp;
+        //update the average fixed rate
+        //weighted average of all the borrows
+        uint256 weightedLastBorrow = _amount.wadToRay().rayMul(_rate);
+        uint256 weightedPreviousTotalBorrows = previousTotalBorrowFixed.wadToRay().rayMul(_reserve.currentAverageFixedBorrowRate);
+&nbsp;
+        _reserve.currentAverageFixedBorrowRate = weightedLastBorrow.add(weightedPreviousTotalBorrows).rayDiv(
+            _reserve.totalBorrowsFixed.wadToRay()
+        );
+    }
+&nbsp;
+    function decreaseTotalBorrowsFixedAndUpdateAverageRate(ReserveData storage _reserve, uint256 _amount, uint256 _rate) internal{
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_reserve.totalBorrowsFixed &gt;= _amount, "Invalid amount to decrease");
+&nbsp;
+        uint256 previousTotalBorrowFixed = _reserve.totalBorrowsFixed;
+&nbsp;
+        //updating reserve borrows fixed
+        _reserve.totalBorrowsFixed = _reserve.totalBorrowsFixed.sub(_amount);
+&nbsp;
+        if (_reserve.totalBorrowsFixed == 0) {
+            _reserve.currentAverageFixedBorrowRate = 0; //no income if there are no fixed rate borrows
+            return;
+        }
+&nbsp;
+        //update the average fixed rate
+        //weighted average of all the borrows
+        uint256 weightedLastBorrow = _amount.wadToRay().rayMul(_rate);
+        uint256 weightedPreviousTotalBorrows = previousTotalBorrowFixed.wadToRay().rayMul(_reserve.currentAverageFixedBorrowRate);
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(weightedPreviousTotalBorrows &gt;= weightedLastBorrow, "The amounts to substract don't match");
+&nbsp;
+        _reserve.currentAverageFixedBorrowRate = weightedPreviousTotalBorrows.sub(weightedLastBorrow).rayDiv(
+            _reserve.totalBorrowsFixed.wadToRay()
+        );
+    }
+&nbsp;
+    function increaseTotalBorrowsVariable(ReserveData storage _reserve, uint256 _amount) internal{
+        _reserve.totalBorrowsVariable = _reserve.totalBorrowsVariable.add(_amount);
+    }
+&nbsp;
+    function decreaseTotalBorrowsVariable(ReserveData storage _reserve, uint256 _amount) internal{
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_reserve.totalBorrowsVariable &gt;= _amount, "The amount that is being substracted from the variable total borrows is incorrect");
+        _reserve.totalBorrowsVariable = _reserve.totalBorrowsVariable.sub(_amount);
+    }
+&nbsp;
+    function setLastUpdate(ReserveData storage _reserve) internal{
+        //solium-disable-next-line
+        _reserve.lastUpdateTimestamp = uint40(block.timestamp);
+    }
+&nbsp;
+    function getTotalBorrows(CoreLibrary.ReserveData storage reserve) internal view returns (uint256) {
+        return reserve.totalBorrowsFixed.add(reserve.totalBorrowsVariable);
+    }
+&nbsp;
+&nbsp;
+    /**
+    @dev function to calculate cumulated interest
+     */
+&nbsp;
+    function calculateCumulatedInterest(uint256 _rate,uint40 _lastUpdateTimestamp) internal view returns(uint256) {
+&nbsp;
+        //solium-disable-next-line
+        uint256 timeDifference = block.timestamp.sub(_lastUpdateTimestamp);
+&nbsp;
+        uint256 timeDelta = timeDifference.wadToRay().rayDiv(SECONDS_PER_YEAR.wadToRay());
+&nbsp;
+&nbsp;
+        return _rate.rayMul(timeDelta).add(WadRayMath.ray());
+    }
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 06:55:09 GMT+0000 (Coordinated Universal Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
