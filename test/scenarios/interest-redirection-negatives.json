@@ -1,0 +1,102 @@
+{
+  "title": "AToken: interest rate redirection negative test cases",
+  "description": "Test cases for the aToken interest rate redirection.",
+  "stories": [
+    {
+      "description": "User 0 deposits 1000 DAI, tries to give allowance to redirect interest to himself (revert expected)",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "allowInterestRedirectionTo",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "to": "0"
+          },
+          "expected": "revert",
+          "revertMessage": "User cannot give allowance to himself"
+        }
+      ]
+    },
+    {
+      "description": "User 1 tries to redirect the interest of user 0 without allowance (revert expected)",
+      "actions": [
+        {
+          "name": "redirectInterestStreamOf",
+          "args": {
+            "reserve": "DAI",
+            "user": "1",
+            "from": "0",
+            "to": "2"
+          },
+          "expected": "revert",
+          "revertMessage": "Caller is not allowed to redirect the interest of the user"
+        }
+      ]
+    },
+    {
+      "description": "User 0 tries to redirect the interest to user 2 twice (revert expected)",
+      "actions": [
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "to": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "to": "2"
+          },
+          "expected": "revert",
+          "revertMessage": "Interest is already redirected to the user"
+        }
+      ]
+    },
+    {
+      "description": "User 3 with 0 balance tries to redirect the interest to user 2 (revert expected)",
+      "actions": [
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "3",
+            "to": "2"
+          },
+          "expected": "revert",
+          "revertMessage" : "Interest stream can only be redirected if there is a valid balance"
+        }
+      ]
+    }
+  ]
+}

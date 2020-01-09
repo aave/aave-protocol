@@ -5,14 +5,14 @@ import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 import "../interfaces/IFlashLoanReceiver.sol";
 import "../../interfaces/ILendingPoolAddressesProvider.sol";
-import "../../interfaces/INetworkMetadataProvider.sol";
+import "../../libraries/EthAddressLib.sol";
 
 contract FlashLoanReceiverBase is IFlashLoanReceiver {
 
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
-    ILendingPoolAddressesProvider addressesProvider;
+    ILendingPoolAddressesProvider public addressesProvider;
 
     constructor(ILendingPoolAddressesProvider _provider) public {
         addressesProvider = _provider;
@@ -21,16 +21,17 @@ contract FlashLoanReceiverBase is IFlashLoanReceiver {
     function () external payable {
     }
 
-    function transferFundsBackToPoolInternal(address _reserve, uint _amount) internal {
+    function transferFundsBackToPoolInternal(address _reserve, uint256 _amount) internal {
 
         address payable core = addressesProvider.getLendingPoolCore();
 
         transferInternal(core,_reserve, _amount);
     }
 
-    function transferInternal(address payable _destination, address _reserve, uint  _amount) internal {
-        if(_reserve == INetworkMetadataProvider(addressesProvider.getNetworkMetadataProvider()).getEthereumAddress()) {
-            _destination.transfer(_amount);
+    function transferInternal(address payable _destination, address _reserve, uint256  _amount) internal {
+        if(_reserve == EthAddressLib.ethAddress()) {
+            //solium-disable-next-line
+            _destination.call.value(_amount)("");
             return;
         }
 
@@ -40,7 +41,7 @@ contract FlashLoanReceiverBase is IFlashLoanReceiver {
     }
 
     function getBalanceInternal(address _target, address _reserve) internal view returns(uint256) {
-        if(_reserve == INetworkMetadataProvider(addressesProvider.getNetworkMetadataProvider()).getEthereumAddress()) {
+        if(_reserve == EthAddressLib.ethAddress()) {
 
             return _target.balance;
         }

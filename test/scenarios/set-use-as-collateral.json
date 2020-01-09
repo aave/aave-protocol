@@ -1,0 +1,133 @@
+{
+  "title": "LendingPool: Usage as collateral",
+  "description": "Test cases for the setUserUseReserveAsCollateral() function.",
+  "stories": [
+    {
+      "description": "User 0 Deposits 1000 DAI, disables DAI as collateral",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "setUseAsCollateral",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "useAsCollateral": "false"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 1 Deposits 2 ETH, disables ETH as collateral, borrows 400 DAI (revert expected)",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "2",
+            "user": "1",
+            "sendValue": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "setUseAsCollateral",
+          "args": {
+            "reserve": "ETH",
+            "user": "1",
+            "useAsCollateral": "false"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "400",
+            "borrowRateMode": "variable",
+            "user": "1"
+          },
+          "expected": "revert",
+          "revertMessage": "The collateral balance is 0"
+        }
+      ]
+    },
+    {
+      "description": "User 1 enables ETH as collateral, borrows 400 DAI",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "2",
+            "user": "1",
+            "sendValue": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "setUseAsCollateral",
+          "args": {
+            "reserve": "ETH",
+            "user": "1",
+            "useAsCollateral": "true"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "400",
+            "borrowRateMode": "variable",
+            "user": "1"
+          },
+          "expected": "success"
+        }
+      
+      ]
+    },
+    {
+      "description": "User 1 disables ETH as collateral (revert expected)",
+      "actions": [
+        {
+          "name": "setUseAsCollateral",
+          "args": {
+            "reserve": "ETH",
+            "user": "1",
+            "useAsCollateral": "false"
+          },
+          "expected": "revert",
+          "revertMessage" : "User deposit is already being used as collateral"
+        }
+      ]
+    }
+  ]
+}
+ 
+

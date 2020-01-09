@@ -1,0 +1,386 @@
+{
+  "title": "AToken: interest rate redirection",
+  "description": "Test cases for the aToken interest rate redirection.",
+  "stories": [
+    {
+      "description": "User 0 deposits 1000 DAI, redirects the interest to user 2",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "to": "2"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 1 deposits 1 ETH, borrows 100 DAI, repays after one year. Users 0 deposits another 1000 DAI. Redirected balance of user 2 is updated",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "2",
+            "user": "1",
+            "sendValue": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "stable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 1 borrows another 100 DAI, repay the whole amount. Users 0 and User 2 redeem",
+      "actions": [
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "stable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "repay",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "1",
+            "onBehalfOf": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "2"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 deposits 1000 DAI, redirects interest to user 2, user 1 borrows 100 DAI. After one year, user 0 redirects interest back to himself, user 1 borrows another 100 DAI and after another year repays the whole amount. Users 0 and User 2 redeem",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "to": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "stable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "to": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "stable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "repay",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "1",
+            "onBehalfOf": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "2"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 deposits 1000 DAI, redirects interest to user 2, user 1 borrows 100 DAI. After one year, user 2 redirects interest to user 3. user 1 borrows another 100 DAI, user 0 deposits another 100 DAI. User 1 repays the whole amount. Users 0, 2 first 1 DAI, then everything. User 3 redeems",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "to": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "stable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redirectInterestStream",
+          "args": {
+            "reserve": "DAI",
+            "user": "2",
+            "to": "3"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "stable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "repay",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "1",
+            "onBehalfOf": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1",
+            "user": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "3"
+          },
+          "expected": "success"
+        }
+
+      ]
+    }
+  ]
+}

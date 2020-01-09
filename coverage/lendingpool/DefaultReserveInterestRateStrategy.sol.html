@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">82.61% </span>
+        <span class="strong">86.96% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>19/23</span>
+        <span class='fraction'>20/23</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.86% </span>
+        <span class="strong">57.14% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/7</span>
+        <span class='fraction'>4/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">81.82% </span>
+        <span class="strong">86.36% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/22</span>
+        <span class='fraction'>19/22</span>
       </div>
     </div>
   </div>
@@ -225,7 +225,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">260×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -253,19 +253,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-yes">97×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
-<span class="cline-any cline-yes">3×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-yes">97×</span>
+<span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">97×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">97×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -280,19 +278,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">97×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">97×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">24×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.5.0;
@@ -318,30 +318,30 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
     using WadRayMath for uint256;
     using SafeMath for uint256;
 &nbsp;
-    uint256 constant FIXED_RATE_INCREASE_THRESHOLD = (1e27)/2; // half ray
+    uint256 constant STABLE_RATE_INCREASE_THRESHOLD = (1e27)/4; // 0.25 ray, 25% of the utilization rate
 &nbsp;
-    LendingPoolCore core;
-    ILendingRateOracle lendingRateOracle;
+    LendingPoolCore public core;
+    ILendingRateOracle public lendingRateOracle;
 &nbsp;
-    uint256 baseVariableBorrowRate;
-    uint256 variableBorrowRateScaling;
-    uint256 fixedBorrowRateScaling;
-    uint256 borrowToLiquidityRateDelta;
-    address reserve;
+    uint256 public baseVariableBorrowRate;
+    uint256 public variableBorrowRateScaling;
+    uint256 public stableBorrowRateScaling;
+    uint256 public borrowToLiquidityRateDelta;
+    address public reserve;
 &nbsp;
     constructor(
         address _reserve,
         LendingPoolAddressesProvider _provider,
         uint256 _baseVariableBorrowRate,
         uint256 _variableBorrowRateScaling,
-        uint256 _fixedBorrowRateScaling,
+        uint256 _stableBorrowRateScaling,
         uint256 _borrowToLiquidityRateDelta) public {
 &nbsp;
         core = LendingPoolCore(_provider.getLendingPoolCore());
         lendingRateOracle = ILendingRateOracle(_provider.getLendingRateOracle());
         baseVariableBorrowRate = _baseVariableBorrowRate;
         variableBorrowRateScaling = _variableBorrowRateScaling;
-        fixedBorrowRateScaling = _fixedBorrowRateScaling;
+        stableBorrowRateScaling = _stableBorrowRateScaling;
         borrowToLiquidityRateDelta = _borrowToLiquidityRateDelta;
         reserve = _reserve;
     }
@@ -350,16 +350,16 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
     @dev accessors
      */
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function getBaseVariableBorrowRate() external view returns(uint256</span>) {
-<span class="cstat-no" title="statement not covered" >        return baseVariableBorrowRate;</span>
+    function getBaseVariableBorrowRate() external view returns(uint256) {
+        return baseVariableBorrowRate;
     }
 &nbsp;
 <span class="fstat-no" title="function not covered" >    function getVariableBorrowRateScaling() external view returns(uint256</span>) {
 <span class="cstat-no" title="statement not covered" >        return variableBorrowRateScaling;</span>
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function getFixedBorrowRateScaling() external view returns(uint256</span>) {
-<span class="cstat-no" title="statement not covered" >        return fixedBorrowRateScaling;</span>
+<span class="fstat-no" title="function not covered" >    function getStableBorrowRateScaling() external view returns(uint256</span>) {
+<span class="cstat-no" title="statement not covered" >        return stableBorrowRateScaling;</span>
     }
 &nbsp;
 <span class="fstat-no" title="function not covered" >    function getBorrowToLiquidityRateDelta() external view returns(uint256</span>) {
@@ -374,15 +374,15 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
     function calculateInterestRates(
         address _reserve,
         uint256 _utilizationRate,
-        uint256 _totalBorrowsFixed,
+        uint256 _totalBorrowsStable,
         uint256 _totalBorrowsVariable,
-        uint256 _averageFixedBorrowRate
-        ) external view returns (uint256 currentLiquidityRate, uint256 currentFixedBorrowRate, uint256 currentVariableBorrowRate) {
+        uint256 _averageStableBorrowRate
+        ) external view returns (uint256 currentLiquidityRate, uint256 currentStableBorrowRate, uint256 currentVariableBorrowRate) {
 &nbsp;
-        currentFixedBorrowRate = lendingRateOracle.getMarketBorrowRate(_reserve);
+        currentStableBorrowRate = lendingRateOracle.getMarketBorrowRate(_reserve);
 &nbsp;
-        if(_utilizationRate &gt; FIXED_RATE_INCREASE_THRESHOLD){
-            currentFixedBorrowRate = currentFixedBorrowRate.add(fixedBorrowRateScaling.rayMul(_utilizationRate.sub(FIXED_RATE_INCREASE_THRESHOLD)));
+        if(_utilizationRate &gt; STABLE_RATE_INCREASE_THRESHOLD){
+            currentStableBorrowRate = currentStableBorrowRate.add(stableBorrowRateScaling.rayMul(_utilizationRate.sub(STABLE_RATE_INCREASE_THRESHOLD)));
         }
 &nbsp;
         currentVariableBorrowRate = _utilizationRate.rayMul(variableBorrowRateScaling).add(
@@ -390,23 +390,23 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
         );
 &nbsp;
         currentLiquidityRate = getOverallBorrowRateInternal(
-            _totalBorrowsFixed,
+            _totalBorrowsStable,
             _totalBorrowsVariable,
             currentVariableBorrowRate,
-            _averageFixedBorrowRate).rayMul(_utilizationRate);
+            _averageStableBorrowRate).rayMul(_utilizationRate);
 &nbsp;
     }
 &nbsp;
     /**
-    @dev the weighted average between the fixed interest part and the variable interest part
+    @dev the weighted average between the stable interest part and the variable interest part
      */
     function getOverallBorrowRateInternal(
-        uint256 _totalBorrowsFixed,
+        uint256 _totalBorrowsStable,
         uint256 _totalBorrowsVariable,
         uint256 _currentVariableBorrowRate,
-        uint256 _currentAverageFixedBorrowRate) internal pure returns (uint256) {
+        uint256 _currentAverageStableBorrowRate) internal pure returns (uint256) {
 &nbsp;
-        uint256 totalBorrows = _totalBorrowsFixed.add(_totalBorrowsVariable);
+        uint256 totalBorrows = _totalBorrowsStable.add(_totalBorrowsVariable);
 &nbsp;
         if (totalBorrows == 0) return 0;
 &nbsp;
@@ -414,9 +414,9 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
             _currentVariableBorrowRate
         );
 &nbsp;
-        uint256 weightedFixedRate = _totalBorrowsFixed.wadToRay().rayMul(_currentAverageFixedBorrowRate);
+        uint256 weightedStableRate = _totalBorrowsStable.wadToRay().rayMul(_currentAverageStableBorrowRate);
 &nbsp;
-        uint256 overallBorrowRate = weightedVariableRate.add(weightedFixedRate).rayDiv(totalBorrows.wadToRay());
+        uint256 overallBorrowRate = weightedVariableRate.add(weightedStableRate).rayDiv(totalBorrows.wadToRay());
 &nbsp;
         return overallBorrowRate;
     }
@@ -427,7 +427,7 @@ contract DefaultReserveInterestRateStrategy is IReserveInterestRateStrategy {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Oct 06 2019 06:55:09 GMT+0000 (Coordinated Universal Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Nov 22 2019 00:43:01 GMT+0000 (Coordinated Universal Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

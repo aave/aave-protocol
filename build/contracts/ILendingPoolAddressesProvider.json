@@ -7,6 +7,7 @@
       "name": "getLendingPool",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -19,11 +20,12 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_pool",
           "type": "address"
         }
       ],
-      "name": "setLendingPool",
+      "name": "setLendingPoolImpl",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -35,6 +37,7 @@
       "name": "getLendingPoolCore",
       "outputs": [
         {
+          "internalType": "address payable",
           "name": "",
           "type": "address"
         }
@@ -47,11 +50,12 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_lendingPoolCore",
           "type": "address"
         }
       ],
-      "name": "setLendingPoolCore",
+      "name": "setLendingPoolCoreImpl",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -63,6 +67,7 @@
       "name": "getLendingPoolConfigurator",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -75,11 +80,162 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_configurator",
           "type": "address"
         }
       ],
-      "name": "setLendingPoolConfigurator",
+      "name": "setLendingPoolConfiguratorImpl",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getLendingPoolDataProvider",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_provider",
+          "type": "address"
+        }
+      ],
+      "name": "setLendingPoolDataProviderImpl",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getLendingPoolParametersProvider",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_parametersProvider",
+          "type": "address"
+        }
+      ],
+      "name": "setLendingPoolParametersProviderImpl",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getTokenDistributor",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_tokenDistributor",
+          "type": "address"
+        }
+      ],
+      "name": "setTokenDistributor",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getFeeProvider",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_feeProvider",
+          "type": "address"
+        }
+      ],
+      "name": "setFeeProviderImpl",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getLendingPoolLiquidationManager",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_manager",
+          "type": "address"
+        }
+      ],
+      "name": "setLendingPoolLiquidationManager",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -91,6 +247,7 @@
       "name": "getLendingPoolManager",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -103,6 +260,7 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_lendingPoolManager",
           "type": "address"
         }
@@ -116,93 +274,10 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "getLendingPoolDataProvider",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_provider",
-          "type": "address"
-        }
-      ],
-      "name": "setLendingPoolDataProvider",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "getNetworkMetadataProvider",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_networkMetadataProvider",
-          "type": "address"
-        }
-      ],
-      "name": "setNetworkMetadataProvider",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "getLendingPoolParametersProvider",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_parametersProvider",
-          "type": "address"
-        }
-      ],
-      "name": "setLendingPoolParametersProvider",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
       "name": "getPriceOracle",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -215,6 +290,7 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_priceOracle",
           "type": "address"
         }
@@ -231,6 +307,7 @@
       "name": "getLendingRateOracle",
       "outputs": [
         {
+          "internalType": "address",
           "name": "",
           "type": "address"
         }
@@ -243,6 +320,7 @@
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_lendingRateOracle",
           "type": "address"
         }
@@ -252,83 +330,27 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "getFeeProvider",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_feeProvider",
-          "type": "address"
-        }
-      ],
-      "name": "setFeeProvider",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [],
-      "name": "getLendingPoolLiquidationManager",
-      "outputs": [
-        {
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "_manager",
-          "type": "address"
-        }
-      ],
-      "name": "setLendingPoolLiquidationManager",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.6+commit.b259423e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPool\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_parametersProvider\",\"type\":\"address\"}],\"name\":\"setLendingPoolParametersProvider\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolParametersProvider\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_pool\",\"type\":\"address\"}],\"name\":\"setLendingPool\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolDataProvider\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolManager\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingRateOracle\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_lendingPoolManager\",\"type\":\"address\"}],\"name\":\"setLendingPoolManager\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"setLendingPoolLiquidationManager\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_priceOracle\",\"type\":\"address\"}],\"name\":\"setPriceOracle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolLiquidationManager\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_networkMetadataProvider\",\"type\":\"address\"}],\"name\":\"setNetworkMetadataProvider\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_lendingRateOracle\",\"type\":\"address\"}],\"name\":\"setLendingRateOracle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolConfigurator\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_lendingPoolCore\",\"type\":\"address\"}],\"name\":\"setLendingPoolCore\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_configurator\",\"type\":\"address\"}],\"name\":\"setLendingPoolConfigurator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getNetworkMetadataProvider\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_feeProvider\",\"type\":\"address\"}],\"name\":\"setFeeProvider\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_provider\",\"type\":\"address\"}],\"name\":\"setLendingPoolDataProvider\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolCore\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getFeeProvider\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getPriceOracle\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{},\"title\":\"ILendingPoolAddressesProvider interface\"},\"userdoc\":{\"methods\":{},\"notice\":\"provides the interface to fetch the LendingPoolCore address\"}},\"settings\":{\"compilationTarget\":{\"/src/contracts/interfaces/ILendingPoolAddressesProvider.sol\":\"ILendingPoolAddressesProvider\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/src/contracts/interfaces/ILendingPoolAddressesProvider.sol\":{\"keccak256\":\"0x911d879835bcaaaa2a20deceeab04deefef4e7f003f35e31835a85fce1db28d9\",\"urls\":[\"bzzr://733f4b4a6f0423a212d08d6a05ee20959827e7d57f91be515dd28919a6fd6f90\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.14+commit.01f1aaa4\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getFeeProvider\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPool\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolConfigurator\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolCore\",\"outputs\":[{\"internalType\":\"address payable\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolDataProvider\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolLiquidationManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingPoolParametersProvider\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getLendingRateOracle\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getPriceOracle\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getTokenDistributor\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeProvider\",\"type\":\"address\"}],\"name\":\"setFeeProviderImpl\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_configurator\",\"type\":\"address\"}],\"name\":\"setLendingPoolConfiguratorImpl\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_lendingPoolCore\",\"type\":\"address\"}],\"name\":\"setLendingPoolCoreImpl\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_provider\",\"type\":\"address\"}],\"name\":\"setLendingPoolDataProviderImpl\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_pool\",\"type\":\"address\"}],\"name\":\"setLendingPoolImpl\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_manager\",\"type\":\"address\"}],\"name\":\"setLendingPoolLiquidationManager\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_lendingPoolManager\",\"type\":\"address\"}],\"name\":\"setLendingPoolManager\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_parametersProvider\",\"type\":\"address\"}],\"name\":\"setLendingPoolParametersProviderImpl\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_lendingRateOracle\",\"type\":\"address\"}],\"name\":\"setLendingRateOracle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_priceOracle\",\"type\":\"address\"}],\"name\":\"setPriceOracle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_tokenDistributor\",\"type\":\"address\"}],\"name\":\"setTokenDistributor\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{},\"title\":\"ILendingPoolAddressesProvider interface\"},\"userdoc\":{\"methods\":{},\"notice\":\"provides the interface to fetch the LendingPoolCore address\"}},\"settings\":{\"compilationTarget\":{\"/src/contracts/interfaces/ILendingPoolAddressesProvider.sol\":\"ILendingPoolAddressesProvider\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/src/contracts/interfaces/ILendingPoolAddressesProvider.sol\":{\"keccak256\":\"0xff6bbb9e7fa67ac67f807e4986863fae87d623266b2970cd102b892b5ed185af\",\"urls\":[\"bzz-raw://bd3978e384688d2fb0295ab42b3fe74c331b12d63a0d8c8f70b35d2d99c6c0f4\",\"dweb:/ipfs/QmaLfhk99FPfPNfLvJER9QtrpEKeBzgHVGjRNDYvrqXyWN\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity ^0.5.0;\n\n/**\n@title ILendingPoolAddressesProvider interface\n@notice provides the interface to fetch the LendingPoolCore address\n */\n\ncontract ILendingPoolAddressesProvider {\n\n    function getLendingPool() public view returns (address);\n    function setLendingPool(address _pool) public;\n\n    function getLendingPoolCore() public view returns (address payable);\n    function setLendingPoolCore(address _lendingPoolCore) public;\n\n    function getLendingPoolConfigurator() public view returns (address);\n    function setLendingPoolConfigurator(address _configurator) public;\n\n    function getLendingPoolManager() public view returns (address);\n    function setLendingPoolManager(address _lendingPoolManager) public;\n\n\n    function getLendingPoolDataProvider() public view returns (address);\n    function setLendingPoolDataProvider(address _provider) public;\n\n    function getNetworkMetadataProvider() public view returns (address);\n    function setNetworkMetadataProvider(address _networkMetadataProvider) public;\n\n    function getLendingPoolParametersProvider() public view returns (address);\n    function setLendingPoolParametersProvider(address _parametersProvider) public;\n\n    function getPriceOracle() public view returns (address);\n    function setPriceOracle(address _priceOracle) public;\n\n    function getLendingRateOracle() public view returns (address);\n    function setLendingRateOracle(address _lendingRateOracle) public;\n\n    function getFeeProvider() public view returns (address);\n    function setFeeProvider(address _feeProvider) public;\n\n    function getLendingPoolLiquidationManager() public view returns (address);\n    function setLendingPoolLiquidationManager(address _manager) public;\n\n}",
+  "source": "pragma solidity ^0.5.0;\n\n/**\n@title ILendingPoolAddressesProvider interface\n@notice provides the interface to fetch the LendingPoolCore address\n */\n\ncontract ILendingPoolAddressesProvider {\n\n    function getLendingPool() public view returns (address);\n    function setLendingPoolImpl(address _pool) public;\n\n    function getLendingPoolCore() public view returns (address payable);\n    function setLendingPoolCoreImpl(address _lendingPoolCore) public;\n\n    function getLendingPoolConfigurator() public view returns (address);\n    function setLendingPoolConfiguratorImpl(address _configurator) public;\n\n    function getLendingPoolDataProvider() public view returns (address);\n    function setLendingPoolDataProviderImpl(address _provider) public;\n\n    function getLendingPoolParametersProvider() public view returns (address);\n    function setLendingPoolParametersProviderImpl(address _parametersProvider) public;\n\n    function getTokenDistributor() public view returns (address);\n    function setTokenDistributor(address _tokenDistributor) public;\n\n\n    function getFeeProvider() public view returns (address);\n    function setFeeProviderImpl(address _feeProvider) public;\n\n    function getLendingPoolLiquidationManager() public view returns (address);\n    function setLendingPoolLiquidationManager(address _manager) public;\n\n    function getLendingPoolManager() public view returns (address);\n    function setLendingPoolManager(address _lendingPoolManager) public;\n\n    function getPriceOracle() public view returns (address);\n    function setPriceOracle(address _priceOracle) public;\n\n    function getLendingRateOracle() public view returns (address);\n    function setLendingRateOracle(address _lendingRateOracle) public;\n\n}",
   "sourcePath": "/src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
   "ast": {
     "absolutePath": "/src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
     "exportedSymbols": {
       "ILendingPoolAddressesProvider": [
-        1014
+        1627
       ]
     },
-    "id": 1015,
+    "id": 1628,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 903,
+        "id": 1516,
         "literals": [
           "solidity",
           "^",
@@ -336,7 +358,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:10"
+        "src": "0:23:13"
       },
       {
         "baseContracts": [],
@@ -344,9 +366,9 @@
         "contractKind": "contract",
         "documentation": "@title ILendingPoolAddressesProvider interface\n@notice provides the interface to fetch the LendingPoolCore address",
         "fullyImplemented": false,
-        "id": 1014,
+        "id": 1627,
         "linearizedBaseContracts": [
-          1014
+          1627
         ],
         "name": "ILendingPoolAddressesProvider",
         "nodeType": "ContractDefinition",
@@ -354,29 +376,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 908,
+            "id": 1521,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 904,
+              "id": 1517,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "218:2:10"
+              "src": "218:2:13"
             },
             "returnParameters": {
-              "id": 907,
+              "id": 1520,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 906,
+                  "id": 1519,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 908,
-                  "src": "242:7:10",
+                  "scope": 1521,
+                  "src": "242:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -384,10 +406,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 905,
+                    "id": 1518,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "242:7:10",
+                    "src": "242:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -398,10 +420,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "241:9:10"
+              "src": "241:9:13"
             },
-            "scope": 1014,
-            "src": "195:56:10",
+            "scope": 1627,
+            "src": "195:56:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -409,23 +431,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 913,
+            "id": 1526,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPool",
+            "name": "setLendingPoolImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 911,
+              "id": 1524,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 910,
+                  "id": 1523,
                   "name": "_pool",
                   "nodeType": "VariableDeclaration",
-                  "scope": 913,
-                  "src": "280:13:10",
+                  "scope": 1526,
+                  "src": "284:13:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -433,10 +455,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 909,
+                    "id": 1522,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "280:7:10",
+                    "src": "284:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -447,16 +469,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "279:15:10"
+              "src": "283:15:13"
             },
             "returnParameters": {
-              "id": 912,
+              "id": 1525,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "301:0:10"
+              "src": "305:0:13"
             },
-            "scope": 1014,
-            "src": "256:46:10",
+            "scope": 1627,
+            "src": "256:50:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -464,29 +486,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 918,
+            "id": 1531,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolCore",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 914,
+              "id": 1527,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "335:2:10"
+              "src": "339:2:13"
             },
             "returnParameters": {
-              "id": 917,
+              "id": 1530,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 916,
+                  "id": 1529,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 918,
-                  "src": "359:15:10",
+                  "scope": 1531,
+                  "src": "363:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -494,10 +516,10 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 915,
+                    "id": 1528,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "359:15:10",
+                    "src": "363:15:13",
                     "stateMutability": "payable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address_payable",
@@ -508,10 +530,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "358:17:10"
+              "src": "362:17:13"
             },
-            "scope": 1014,
-            "src": "308:68:10",
+            "scope": 1627,
+            "src": "312:68:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -519,23 +541,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 923,
+            "id": 1536,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolCore",
+            "name": "setLendingPoolCoreImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 921,
+              "id": 1534,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 920,
+                  "id": 1533,
                   "name": "_lendingPoolCore",
                   "nodeType": "VariableDeclaration",
-                  "scope": 923,
-                  "src": "409:24:10",
+                  "scope": 1536,
+                  "src": "417:24:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -543,10 +565,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 919,
+                    "id": 1532,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "409:7:10",
+                    "src": "417:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -557,16 +579,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "408:26:10"
+              "src": "416:26:13"
             },
             "returnParameters": {
-              "id": 922,
+              "id": 1535,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "441:0:10"
+              "src": "449:0:13"
             },
-            "scope": 1014,
-            "src": "381:61:10",
+            "scope": 1627,
+            "src": "385:65:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -574,29 +596,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 928,
+            "id": 1541,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolConfigurator",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 924,
+              "id": 1537,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "483:2:10"
+              "src": "491:2:13"
             },
             "returnParameters": {
-              "id": 927,
+              "id": 1540,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 926,
+                  "id": 1539,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 928,
-                  "src": "507:7:10",
+                  "scope": 1541,
+                  "src": "515:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -604,10 +626,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 925,
+                    "id": 1538,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "507:7:10",
+                    "src": "515:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -618,10 +640,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "506:9:10"
+              "src": "514:9:13"
             },
-            "scope": 1014,
-            "src": "448:68:10",
+            "scope": 1627,
+            "src": "456:68:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -629,23 +651,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 933,
+            "id": 1546,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolConfigurator",
+            "name": "setLendingPoolConfiguratorImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 931,
+              "id": 1544,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 930,
+                  "id": 1543,
                   "name": "_configurator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 933,
-                  "src": "557:21:10",
+                  "scope": 1546,
+                  "src": "569:21:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -653,10 +675,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 929,
+                    "id": 1542,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "557:7:10",
+                    "src": "569:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -667,16 +689,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "556:23:10"
+              "src": "568:23:13"
             },
             "returnParameters": {
-              "id": 932,
+              "id": 1545,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "586:0:10"
+              "src": "598:0:13"
             },
-            "scope": 1014,
-            "src": "521:66:10",
+            "scope": 1627,
+            "src": "529:70:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -684,139 +706,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 938,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getLendingPoolManager",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 934,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "623:2:10"
-            },
-            "returnParameters": {
-              "id": 937,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 936,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 938,
-                  "src": "647:7:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 935,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "647:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "646:9:10"
-            },
-            "scope": 1014,
-            "src": "593:63:10",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 943,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "setLendingPoolManager",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 941,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 940,
-                  "name": "_lendingPoolManager",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 943,
-                  "src": "692:27:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 939,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "692:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "691:29:10"
-            },
-            "returnParameters": {
-              "id": 942,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "727:0:10"
-            },
-            "scope": 1014,
-            "src": "661:67:10",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 948,
+            "id": 1551,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolDataProvider",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 944,
+              "id": 1547,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "770:2:10"
+              "src": "640:2:13"
             },
             "returnParameters": {
-              "id": 947,
+              "id": 1550,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 946,
+                  "id": 1549,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 948,
-                  "src": "794:7:10",
+                  "scope": 1551,
+                  "src": "664:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -824,10 +736,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 945,
+                    "id": 1548,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "794:7:10",
+                    "src": "664:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -838,10 +750,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "793:9:10"
+              "src": "663:9:13"
             },
-            "scope": 1014,
-            "src": "735:68:10",
+            "scope": 1627,
+            "src": "605:68:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -849,23 +761,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 953,
+            "id": 1556,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolDataProvider",
+            "name": "setLendingPoolDataProviderImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 951,
+              "id": 1554,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 950,
+                  "id": 1553,
                   "name": "_provider",
                   "nodeType": "VariableDeclaration",
-                  "scope": 953,
-                  "src": "844:17:10",
+                  "scope": 1556,
+                  "src": "718:17:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -873,10 +785,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 949,
+                    "id": 1552,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "844:7:10",
+                    "src": "718:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -887,16 +799,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "843:19:10"
+              "src": "717:19:13"
             },
             "returnParameters": {
-              "id": 952,
+              "id": 1555,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "869:0:10"
+              "src": "743:0:13"
             },
-            "scope": 1014,
-            "src": "808:62:10",
+            "scope": 1627,
+            "src": "678:66:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -904,139 +816,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 958,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getNetworkMetadataProvider",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 954,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "911:2:10"
-            },
-            "returnParameters": {
-              "id": 957,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 956,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 958,
-                  "src": "935:7:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 955,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "935:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "934:9:10"
-            },
-            "scope": 1014,
-            "src": "876:68:10",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 963,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "setNetworkMetadataProvider",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 961,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 960,
-                  "name": "_networkMetadataProvider",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 963,
-                  "src": "985:32:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 959,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "985:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "984:34:10"
-            },
-            "returnParameters": {
-              "id": 962,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1025:0:10"
-            },
-            "scope": 1014,
-            "src": "949:77:10",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 968,
+            "id": 1561,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolParametersProvider",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 964,
+              "id": 1557,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1073:2:10"
+              "src": "791:2:13"
             },
             "returnParameters": {
-              "id": 967,
+              "id": 1560,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 966,
+                  "id": 1559,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 968,
-                  "src": "1097:7:10",
+                  "scope": 1561,
+                  "src": "815:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1044,10 +846,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 965,
+                    "id": 1558,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1097:7:10",
+                    "src": "815:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1058,10 +860,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1096:9:10"
+              "src": "814:9:13"
             },
-            "scope": 1014,
-            "src": "1032:74:10",
+            "scope": 1627,
+            "src": "750:74:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1069,23 +871,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 973,
+            "id": 1566,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolParametersProvider",
+            "name": "setLendingPoolParametersProviderImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 971,
+              "id": 1564,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 970,
+                  "id": 1563,
                   "name": "_parametersProvider",
                   "nodeType": "VariableDeclaration",
-                  "scope": 973,
-                  "src": "1153:27:10",
+                  "scope": 1566,
+                  "src": "875:27:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1093,10 +895,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 969,
+                    "id": 1562,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1153:7:10",
+                    "src": "875:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1107,16 +909,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1152:29:10"
+              "src": "874:29:13"
             },
             "returnParameters": {
-              "id": 972,
+              "id": 1565,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1188:0:10"
+              "src": "910:0:13"
             },
-            "scope": 1014,
-            "src": "1111:78:10",
+            "scope": 1627,
+            "src": "829:82:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1124,29 +926,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 978,
+            "id": 1571,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "getPriceOracle",
+            "name": "getTokenDistributor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 974,
+              "id": 1567,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1218:2:10"
+              "src": "945:2:13"
             },
             "returnParameters": {
-              "id": 977,
+              "id": 1570,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 976,
+                  "id": 1569,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 978,
-                  "src": "1242:7:10",
+                  "scope": 1571,
+                  "src": "969:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1154,10 +956,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 975,
+                    "id": 1568,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1242:7:10",
+                    "src": "969:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1168,10 +970,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1241:9:10"
+              "src": "968:9:13"
             },
-            "scope": 1014,
-            "src": "1195:56:10",
+            "scope": 1627,
+            "src": "917:61:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1179,23 +981,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 983,
+            "id": 1576,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setPriceOracle",
+            "name": "setTokenDistributor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 981,
+              "id": 1574,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 980,
-                  "name": "_priceOracle",
+                  "id": 1573,
+                  "name": "_tokenDistributor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 983,
-                  "src": "1280:20:10",
+                  "scope": 1576,
+                  "src": "1012:25:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1203,10 +1005,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 979,
+                    "id": 1572,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1280:7:10",
+                    "src": "1012:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1217,16 +1019,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1279:22:10"
+              "src": "1011:27:13"
             },
             "returnParameters": {
-              "id": 982,
+              "id": 1575,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1308:0:10"
+              "src": "1045:0:13"
             },
-            "scope": 1014,
-            "src": "1256:53:10",
+            "scope": 1627,
+            "src": "983:63:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1234,139 +1036,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 988,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getLendingRateOracle",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 984,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1344:2:10"
-            },
-            "returnParameters": {
-              "id": 987,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 986,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 988,
-                  "src": "1368:7:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 985,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1368:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1367:9:10"
-            },
-            "scope": 1014,
-            "src": "1315:62:10",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 993,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "setLendingRateOracle",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 991,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 990,
-                  "name": "_lendingRateOracle",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 993,
-                  "src": "1412:26:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 989,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1412:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1411:28:10"
-            },
-            "returnParameters": {
-              "id": 992,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1446:0:10"
-            },
-            "scope": 1014,
-            "src": "1382:65:10",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 998,
+            "id": 1581,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getFeeProvider",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 994,
+              "id": 1577,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1476:2:10"
+              "src": "1076:2:13"
             },
             "returnParameters": {
-              "id": 997,
+              "id": 1580,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 996,
+                  "id": 1579,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 998,
-                  "src": "1500:7:10",
+                  "scope": 1581,
+                  "src": "1100:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1374,10 +1066,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 995,
+                    "id": 1578,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1500:7:10",
+                    "src": "1100:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1388,10 +1080,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1499:9:10"
+              "src": "1099:9:13"
             },
-            "scope": 1014,
-            "src": "1453:56:10",
+            "scope": 1627,
+            "src": "1053:56:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1399,23 +1091,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1003,
+            "id": 1586,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setFeeProvider",
+            "name": "setFeeProviderImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1001,
+              "id": 1584,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1000,
+                  "id": 1583,
                   "name": "_feeProvider",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1003,
-                  "src": "1538:20:10",
+                  "scope": 1586,
+                  "src": "1142:20:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1423,10 +1115,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 999,
+                    "id": 1582,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1538:7:10",
+                    "src": "1142:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1437,16 +1129,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1537:22:10"
+              "src": "1141:22:13"
             },
             "returnParameters": {
-              "id": 1002,
+              "id": 1585,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1566:0:10"
+              "src": "1170:0:13"
             },
-            "scope": 1014,
-            "src": "1514:53:10",
+            "scope": 1627,
+            "src": "1114:57:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1454,29 +1146,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1008,
+            "id": 1591,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolLiquidationManager",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1004,
+              "id": 1587,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1614:2:10"
+              "src": "1218:2:13"
             },
             "returnParameters": {
-              "id": 1007,
+              "id": 1590,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1006,
+                  "id": 1589,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1008,
-                  "src": "1638:7:10",
+                  "scope": 1591,
+                  "src": "1242:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1484,10 +1176,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1005,
+                    "id": 1588,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1638:7:10",
+                    "src": "1242:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1498,10 +1190,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1637:9:10"
+              "src": "1241:9:13"
             },
-            "scope": 1014,
-            "src": "1573:74:10",
+            "scope": 1627,
+            "src": "1177:74:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1509,23 +1201,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1013,
+            "id": 1596,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setLendingPoolLiquidationManager",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1011,
+              "id": 1594,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1010,
+                  "id": 1593,
                   "name": "_manager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1013,
-                  "src": "1694:16:10",
+                  "scope": 1596,
+                  "src": "1298:16:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1533,10 +1225,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1009,
+                    "id": 1592,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1694:7:10",
+                    "src": "1298:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1547,39 +1239,369 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1693:18:10"
+              "src": "1297:18:13"
             },
             "returnParameters": {
-              "id": 1012,
+              "id": 1595,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1718:0:10"
+              "src": "1322:0:13"
             },
-            "scope": 1014,
-            "src": "1652:67:10",
+            "scope": 1627,
+            "src": "1256:67:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1601,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLendingPoolManager",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1597,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1359:2:13"
+            },
+            "returnParameters": {
+              "id": 1600,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1599,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1601,
+                  "src": "1383:7:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1598,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1383:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1382:9:13"
+            },
+            "scope": 1627,
+            "src": "1329:63:13",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1606,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setLendingPoolManager",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1604,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1603,
+                  "name": "_lendingPoolManager",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1606,
+                  "src": "1428:27:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1602,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1428:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1427:29:13"
+            },
+            "returnParameters": {
+              "id": 1605,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1463:0:13"
+            },
+            "scope": 1627,
+            "src": "1397:67:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1611,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPriceOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1607,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1493:2:13"
+            },
+            "returnParameters": {
+              "id": 1610,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1609,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1611,
+                  "src": "1517:7:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1608,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1517:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1516:9:13"
+            },
+            "scope": 1627,
+            "src": "1470:56:13",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1616,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setPriceOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1614,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1613,
+                  "name": "_priceOracle",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1616,
+                  "src": "1555:20:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1612,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1555:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1554:22:13"
+            },
+            "returnParameters": {
+              "id": 1615,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1583:0:13"
+            },
+            "scope": 1627,
+            "src": "1531:53:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1621,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLendingRateOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1617,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1619:2:13"
+            },
+            "returnParameters": {
+              "id": 1620,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1619,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1621,
+                  "src": "1643:7:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1618,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1643:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1642:9:13"
+            },
+            "scope": 1627,
+            "src": "1590:62:13",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1626,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setLendingRateOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1624,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1623,
+                  "name": "_lendingRateOracle",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1626,
+                  "src": "1687:26:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1622,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1687:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1686:28:13"
+            },
+            "returnParameters": {
+              "id": 1625,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1721:0:13"
+            },
+            "scope": 1627,
+            "src": "1657:65:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1015,
-        "src": "149:1573:10"
+        "scope": 1628,
+        "src": "149:1576:13"
       }
     ],
-    "src": "0:1722:10"
+    "src": "0:1725:13"
   },
   "legacyAST": {
     "absolutePath": "/src/contracts/interfaces/ILendingPoolAddressesProvider.sol",
     "exportedSymbols": {
       "ILendingPoolAddressesProvider": [
-        1014
+        1627
       ]
     },
-    "id": 1015,
+    "id": 1628,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 903,
+        "id": 1516,
         "literals": [
           "solidity",
           "^",
@@ -1587,7 +1609,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:10"
+        "src": "0:23:13"
       },
       {
         "baseContracts": [],
@@ -1595,9 +1617,9 @@
         "contractKind": "contract",
         "documentation": "@title ILendingPoolAddressesProvider interface\n@notice provides the interface to fetch the LendingPoolCore address",
         "fullyImplemented": false,
-        "id": 1014,
+        "id": 1627,
         "linearizedBaseContracts": [
-          1014
+          1627
         ],
         "name": "ILendingPoolAddressesProvider",
         "nodeType": "ContractDefinition",
@@ -1605,29 +1627,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 908,
+            "id": 1521,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 904,
+              "id": 1517,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "218:2:10"
+              "src": "218:2:13"
             },
             "returnParameters": {
-              "id": 907,
+              "id": 1520,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 906,
+                  "id": 1519,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 908,
-                  "src": "242:7:10",
+                  "scope": 1521,
+                  "src": "242:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1635,10 +1657,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 905,
+                    "id": 1518,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "242:7:10",
+                    "src": "242:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1649,10 +1671,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "241:9:10"
+              "src": "241:9:13"
             },
-            "scope": 1014,
-            "src": "195:56:10",
+            "scope": 1627,
+            "src": "195:56:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1660,23 +1682,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 913,
+            "id": 1526,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPool",
+            "name": "setLendingPoolImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 911,
+              "id": 1524,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 910,
+                  "id": 1523,
                   "name": "_pool",
                   "nodeType": "VariableDeclaration",
-                  "scope": 913,
-                  "src": "280:13:10",
+                  "scope": 1526,
+                  "src": "284:13:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1684,10 +1706,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 909,
+                    "id": 1522,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "280:7:10",
+                    "src": "284:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1698,16 +1720,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "279:15:10"
+              "src": "283:15:13"
             },
             "returnParameters": {
-              "id": 912,
+              "id": 1525,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "301:0:10"
+              "src": "305:0:13"
             },
-            "scope": 1014,
-            "src": "256:46:10",
+            "scope": 1627,
+            "src": "256:50:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1715,29 +1737,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 918,
+            "id": 1531,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolCore",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 914,
+              "id": 1527,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "335:2:10"
+              "src": "339:2:13"
             },
             "returnParameters": {
-              "id": 917,
+              "id": 1530,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 916,
+                  "id": 1529,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 918,
-                  "src": "359:15:10",
+                  "scope": 1531,
+                  "src": "363:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1745,10 +1767,10 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 915,
+                    "id": 1528,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "359:15:10",
+                    "src": "363:15:13",
                     "stateMutability": "payable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address_payable",
@@ -1759,10 +1781,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "358:17:10"
+              "src": "362:17:13"
             },
-            "scope": 1014,
-            "src": "308:68:10",
+            "scope": 1627,
+            "src": "312:68:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1770,23 +1792,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 923,
+            "id": 1536,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolCore",
+            "name": "setLendingPoolCoreImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 921,
+              "id": 1534,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 920,
+                  "id": 1533,
                   "name": "_lendingPoolCore",
                   "nodeType": "VariableDeclaration",
-                  "scope": 923,
-                  "src": "409:24:10",
+                  "scope": 1536,
+                  "src": "417:24:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1794,10 +1816,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 919,
+                    "id": 1532,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "409:7:10",
+                    "src": "417:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1808,16 +1830,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "408:26:10"
+              "src": "416:26:13"
             },
             "returnParameters": {
-              "id": 922,
+              "id": 1535,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "441:0:10"
+              "src": "449:0:13"
             },
-            "scope": 1014,
-            "src": "381:61:10",
+            "scope": 1627,
+            "src": "385:65:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1825,29 +1847,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 928,
+            "id": 1541,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolConfigurator",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 924,
+              "id": 1537,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "483:2:10"
+              "src": "491:2:13"
             },
             "returnParameters": {
-              "id": 927,
+              "id": 1540,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 926,
+                  "id": 1539,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 928,
-                  "src": "507:7:10",
+                  "scope": 1541,
+                  "src": "515:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1855,10 +1877,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 925,
+                    "id": 1538,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "507:7:10",
+                    "src": "515:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1869,10 +1891,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "506:9:10"
+              "src": "514:9:13"
             },
-            "scope": 1014,
-            "src": "448:68:10",
+            "scope": 1627,
+            "src": "456:68:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1880,23 +1902,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 933,
+            "id": 1546,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolConfigurator",
+            "name": "setLendingPoolConfiguratorImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 931,
+              "id": 1544,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 930,
+                  "id": 1543,
                   "name": "_configurator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 933,
-                  "src": "557:21:10",
+                  "scope": 1546,
+                  "src": "569:21:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1904,10 +1926,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 929,
+                    "id": 1542,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "557:7:10",
+                    "src": "569:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1918,16 +1940,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "556:23:10"
+              "src": "568:23:13"
             },
             "returnParameters": {
-              "id": 932,
+              "id": 1545,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "586:0:10"
+              "src": "598:0:13"
             },
-            "scope": 1014,
-            "src": "521:66:10",
+            "scope": 1627,
+            "src": "529:70:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -1935,139 +1957,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 938,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getLendingPoolManager",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 934,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "623:2:10"
-            },
-            "returnParameters": {
-              "id": 937,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 936,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 938,
-                  "src": "647:7:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 935,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "647:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "646:9:10"
-            },
-            "scope": 1014,
-            "src": "593:63:10",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 943,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "setLendingPoolManager",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 941,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 940,
-                  "name": "_lendingPoolManager",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 943,
-                  "src": "692:27:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 939,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "692:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "691:29:10"
-            },
-            "returnParameters": {
-              "id": 942,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "727:0:10"
-            },
-            "scope": 1014,
-            "src": "661:67:10",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 948,
+            "id": 1551,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolDataProvider",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 944,
+              "id": 1547,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "770:2:10"
+              "src": "640:2:13"
             },
             "returnParameters": {
-              "id": 947,
+              "id": 1550,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 946,
+                  "id": 1549,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 948,
-                  "src": "794:7:10",
+                  "scope": 1551,
+                  "src": "664:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2075,10 +1987,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 945,
+                    "id": 1548,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "794:7:10",
+                    "src": "664:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2089,10 +2001,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "793:9:10"
+              "src": "663:9:13"
             },
-            "scope": 1014,
-            "src": "735:68:10",
+            "scope": 1627,
+            "src": "605:68:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2100,23 +2012,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 953,
+            "id": 1556,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolDataProvider",
+            "name": "setLendingPoolDataProviderImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 951,
+              "id": 1554,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 950,
+                  "id": 1553,
                   "name": "_provider",
                   "nodeType": "VariableDeclaration",
-                  "scope": 953,
-                  "src": "844:17:10",
+                  "scope": 1556,
+                  "src": "718:17:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2124,10 +2036,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 949,
+                    "id": 1552,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "844:7:10",
+                    "src": "718:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2138,16 +2050,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "843:19:10"
+              "src": "717:19:13"
             },
             "returnParameters": {
-              "id": 952,
+              "id": 1555,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "869:0:10"
+              "src": "743:0:13"
             },
-            "scope": 1014,
-            "src": "808:62:10",
+            "scope": 1627,
+            "src": "678:66:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -2155,139 +2067,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 958,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getNetworkMetadataProvider",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 954,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "911:2:10"
-            },
-            "returnParameters": {
-              "id": 957,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 956,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 958,
-                  "src": "935:7:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 955,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "935:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "934:9:10"
-            },
-            "scope": 1014,
-            "src": "876:68:10",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 963,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "setNetworkMetadataProvider",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 961,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 960,
-                  "name": "_networkMetadataProvider",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 963,
-                  "src": "985:32:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 959,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "985:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "984:34:10"
-            },
-            "returnParameters": {
-              "id": 962,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1025:0:10"
-            },
-            "scope": 1014,
-            "src": "949:77:10",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 968,
+            "id": 1561,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolParametersProvider",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 964,
+              "id": 1557,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1073:2:10"
+              "src": "791:2:13"
             },
             "returnParameters": {
-              "id": 967,
+              "id": 1560,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 966,
+                  "id": 1559,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 968,
-                  "src": "1097:7:10",
+                  "scope": 1561,
+                  "src": "815:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2295,10 +2097,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 965,
+                    "id": 1558,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1097:7:10",
+                    "src": "815:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2309,10 +2111,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1096:9:10"
+              "src": "814:9:13"
             },
-            "scope": 1014,
-            "src": "1032:74:10",
+            "scope": 1627,
+            "src": "750:74:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2320,23 +2122,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 973,
+            "id": 1566,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setLendingPoolParametersProvider",
+            "name": "setLendingPoolParametersProviderImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 971,
+              "id": 1564,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 970,
+                  "id": 1563,
                   "name": "_parametersProvider",
                   "nodeType": "VariableDeclaration",
-                  "scope": 973,
-                  "src": "1153:27:10",
+                  "scope": 1566,
+                  "src": "875:27:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2344,10 +2146,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 969,
+                    "id": 1562,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1153:7:10",
+                    "src": "875:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2358,16 +2160,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1152:29:10"
+              "src": "874:29:13"
             },
             "returnParameters": {
-              "id": 972,
+              "id": 1565,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1188:0:10"
+              "src": "910:0:13"
             },
-            "scope": 1014,
-            "src": "1111:78:10",
+            "scope": 1627,
+            "src": "829:82:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -2375,29 +2177,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 978,
+            "id": 1571,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "getPriceOracle",
+            "name": "getTokenDistributor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 974,
+              "id": 1567,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1218:2:10"
+              "src": "945:2:13"
             },
             "returnParameters": {
-              "id": 977,
+              "id": 1570,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 976,
+                  "id": 1569,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 978,
-                  "src": "1242:7:10",
+                  "scope": 1571,
+                  "src": "969:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2405,10 +2207,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 975,
+                    "id": 1568,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1242:7:10",
+                    "src": "969:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2419,10 +2221,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1241:9:10"
+              "src": "968:9:13"
             },
-            "scope": 1014,
-            "src": "1195:56:10",
+            "scope": 1627,
+            "src": "917:61:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2430,23 +2232,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 983,
+            "id": 1576,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setPriceOracle",
+            "name": "setTokenDistributor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 981,
+              "id": 1574,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 980,
-                  "name": "_priceOracle",
+                  "id": 1573,
+                  "name": "_tokenDistributor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 983,
-                  "src": "1280:20:10",
+                  "scope": 1576,
+                  "src": "1012:25:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2454,10 +2256,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 979,
+                    "id": 1572,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1280:7:10",
+                    "src": "1012:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2468,16 +2270,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1279:22:10"
+              "src": "1011:27:13"
             },
             "returnParameters": {
-              "id": 982,
+              "id": 1575,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1308:0:10"
+              "src": "1045:0:13"
             },
-            "scope": 1014,
-            "src": "1256:53:10",
+            "scope": 1627,
+            "src": "983:63:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -2485,139 +2287,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 988,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getLendingRateOracle",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 984,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1344:2:10"
-            },
-            "returnParameters": {
-              "id": 987,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 986,
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 988,
-                  "src": "1368:7:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 985,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1368:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1367:9:10"
-            },
-            "scope": 1014,
-            "src": "1315:62:10",
-            "stateMutability": "view",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 993,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "setLendingRateOracle",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 991,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 990,
-                  "name": "_lendingRateOracle",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 993,
-                  "src": "1412:26:10",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
-                  },
-                  "typeName": {
-                    "id": 989,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1412:7:10",
-                    "stateMutability": "nonpayable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1411:28:10"
-            },
-            "returnParameters": {
-              "id": 992,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1446:0:10"
-            },
-            "scope": 1014,
-            "src": "1382:65:10",
-            "stateMutability": "nonpayable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 998,
+            "id": 1581,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getFeeProvider",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 994,
+              "id": 1577,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1476:2:10"
+              "src": "1076:2:13"
             },
             "returnParameters": {
-              "id": 997,
+              "id": 1580,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 996,
+                  "id": 1579,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 998,
-                  "src": "1500:7:10",
+                  "scope": 1581,
+                  "src": "1100:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2625,10 +2317,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 995,
+                    "id": 1578,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1500:7:10",
+                    "src": "1100:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2639,10 +2331,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1499:9:10"
+              "src": "1099:9:13"
             },
-            "scope": 1014,
-            "src": "1453:56:10",
+            "scope": 1627,
+            "src": "1053:56:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2650,23 +2342,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1003,
+            "id": 1586,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
-            "name": "setFeeProvider",
+            "name": "setFeeProviderImpl",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1001,
+              "id": 1584,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1000,
+                  "id": 1583,
                   "name": "_feeProvider",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1003,
-                  "src": "1538:20:10",
+                  "scope": 1586,
+                  "src": "1142:20:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2674,10 +2366,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 999,
+                    "id": 1582,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1538:7:10",
+                    "src": "1142:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2688,16 +2380,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1537:22:10"
+              "src": "1141:22:13"
             },
             "returnParameters": {
-              "id": 1002,
+              "id": 1585,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1566:0:10"
+              "src": "1170:0:13"
             },
-            "scope": 1014,
-            "src": "1514:53:10",
+            "scope": 1627,
+            "src": "1114:57:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
@@ -2705,29 +2397,29 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1008,
+            "id": 1591,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLendingPoolLiquidationManager",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1004,
+              "id": 1587,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1614:2:10"
+              "src": "1218:2:13"
             },
             "returnParameters": {
-              "id": 1007,
+              "id": 1590,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1006,
+                  "id": 1589,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1008,
-                  "src": "1638:7:10",
+                  "scope": 1591,
+                  "src": "1242:7:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2735,10 +2427,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1005,
+                    "id": 1588,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1638:7:10",
+                    "src": "1242:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2749,10 +2441,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1637:9:10"
+              "src": "1241:9:13"
             },
-            "scope": 1014,
-            "src": "1573:74:10",
+            "scope": 1627,
+            "src": "1177:74:13",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2760,23 +2452,23 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1013,
+            "id": 1596,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "setLendingPoolLiquidationManager",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1011,
+              "id": 1594,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1010,
+                  "id": 1593,
                   "name": "_manager",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1013,
-                  "src": "1694:16:10",
+                  "scope": 1596,
+                  "src": "1298:16:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2784,10 +2476,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1009,
+                    "id": 1592,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1694:7:10",
+                    "src": "1298:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2798,34 +2490,364 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1693:18:10"
+              "src": "1297:18:13"
             },
             "returnParameters": {
-              "id": 1012,
+              "id": 1595,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1718:0:10"
+              "src": "1322:0:13"
             },
-            "scope": 1014,
-            "src": "1652:67:10",
+            "scope": 1627,
+            "src": "1256:67:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1601,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLendingPoolManager",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1597,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1359:2:13"
+            },
+            "returnParameters": {
+              "id": 1600,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1599,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1601,
+                  "src": "1383:7:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1598,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1383:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1382:9:13"
+            },
+            "scope": 1627,
+            "src": "1329:63:13",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1606,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setLendingPoolManager",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1604,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1603,
+                  "name": "_lendingPoolManager",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1606,
+                  "src": "1428:27:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1602,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1428:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1427:29:13"
+            },
+            "returnParameters": {
+              "id": 1605,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1463:0:13"
+            },
+            "scope": 1627,
+            "src": "1397:67:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1611,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPriceOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1607,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1493:2:13"
+            },
+            "returnParameters": {
+              "id": 1610,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1609,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1611,
+                  "src": "1517:7:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1608,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1517:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1516:9:13"
+            },
+            "scope": 1627,
+            "src": "1470:56:13",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1616,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setPriceOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1614,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1613,
+                  "name": "_priceOracle",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1616,
+                  "src": "1555:20:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1612,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1555:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1554:22:13"
+            },
+            "returnParameters": {
+              "id": 1615,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1583:0:13"
+            },
+            "scope": 1627,
+            "src": "1531:53:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1621,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLendingRateOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1617,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1619:2:13"
+            },
+            "returnParameters": {
+              "id": 1620,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1619,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1621,
+                  "src": "1643:7:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1618,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1643:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1642:9:13"
+            },
+            "scope": 1627,
+            "src": "1590:62:13",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 1626,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setLendingRateOracle",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1624,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1623,
+                  "name": "_lendingRateOracle",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1626,
+                  "src": "1687:26:13",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1622,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1687:7:13",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1686:28:13"
+            },
+            "returnParameters": {
+              "id": 1625,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1721:0:13"
+            },
+            "scope": 1627,
+            "src": "1657:65:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1015,
-        "src": "149:1573:10"
+        "scope": 1628,
+        "src": "149:1576:13"
       }
     ],
-    "src": "0:1722:10"
+    "src": "0:1725:13"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.5.6+commit.b259423e.Emscripten.clang"
+    "version": "0.5.14+commit.01f1aaa4.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.15",
-  "updatedAt": "2019-11-02T17:57:48.631Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2020-01-09T12:41:06.649Z",
   "devdoc": {
     "methods": {},
     "title": "ILendingPoolAddressesProvider interface"

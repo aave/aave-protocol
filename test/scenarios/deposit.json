@@ -1,0 +1,232 @@
+{
+    "title" : "LendingPool: Deposit",
+    "description" : "Test cases for the deposit function.",
+    "stories": [
+        {
+            "description" : "User 0 Deposits 1000 DAI in an empty reserve",
+            "actions" : [
+                {
+                    "name" : "mint",
+                    "args" : {
+                        "reserve" : "DAI",
+                        "amount" : "1000",
+                        "user" : "0"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "approve",
+                    "args" : {
+                        "reserve" : "DAI",
+                        "user" : "0"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "DAI",
+                        "amount" : "1000",
+                        "user" : "0"
+                    },
+                    "expected": "success"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 1 deposits 1000 DAI after user 1",
+            "actions" : [
+                {
+                    "name" : "mint",
+                    "args" : {
+                        "reserve" : "DAI",
+                        "amount" : "1000",
+                        "user" : "1"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "approve",
+                    "args" : {
+                        "reserve" : "DAI",
+                        "user" : "1"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "DAI",
+                        "amount" : "1000",
+                        "user" : "1"
+                    },
+                    "expected": "success"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 0 deposits 1000 USDC in an empty reserve",
+            "actions" : [
+                {
+                    "name" : "mint",
+                    "args" : {
+                        "reserve" : "USDC",
+                        "amount" : "1000",
+                        "user" : "0"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "approve",
+                    "args" : {
+                        "reserve" : "USDC",
+                        "user" : "0"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "USDC",
+                        "amount" : "1000",
+                        "user" : "0"
+                    },
+                    "expected": "success"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 1 deposits 1000 USDC after user 0",
+            "actions" : [
+                {
+                    "name" : "mint",
+                    "args" : {
+                        "reserve" : "USDC",
+                        "amount" : "1000",
+                        "user" : "1"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "approve",
+                    "args" : {
+                        "reserve" : "USDC",
+                        "user" : "1"
+                    },
+                    "expected": "success"
+                },
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "USDC",
+                        "amount" : "1000",
+                        "user" : "1"
+                    },
+                    "expected": "success"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 0 deposits 1 ETH in an empty reserve",
+            "actions" : [
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "ETH",
+                        "amount" : "1",
+                        "user" : "0",
+                        "sendValue" : "1"
+                    },
+                    "expected": "success"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 1 deposits 1 ETH after user 0",
+            "actions" : [
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "ETH",
+                        "amount" : "1",
+                        "user" : "1",
+                        "sendValue" : "1"
+                    },
+                    "expected": "success"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 1 deposits 0 ETH (revert expected)",
+            "actions" : [
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "ETH",
+                        "amount" : "0",
+                        "user" : "1"
+                    },
+                    "expected": "revert",
+                    "revertMessage" : "Amount must be greater than 0"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 1 deposits 0 DAI",
+            "actions" : [
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "DAI",
+                        "amount" : "0",
+                        "user" : "1"
+                    },
+                    "expected": "revert",
+                    "revertMessage" : "Amount must be greater than 0"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 1 tries to deposit ETH without sending any value",
+            "actions" : [
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "ETH",
+                        "amount" : "1",
+                        "user" : "1",
+                        "sendValue" : "0"
+                    },
+                    "expected": "revert",
+                    "revertMessage" : "The amount and the value sent to deposit do not match"
+                }
+            ]
+    
+        },
+        {
+            "description" : "User 1 tries to deposit ETH by sending less value than required",
+            "actions" : [
+                {
+                    "name" : "deposit",
+                    "args" : {
+                        "reserve" : "ETH",
+                        "amount" : "1",
+                        "user" : "1",
+                        "sendValue" : "0.5"
+                    },
+                    "expected": "revert",
+                    "revertMessage" : "The amount and the value sent to deposit do not match"
+                }
+            ]
+    
+        }
+    ]
+}

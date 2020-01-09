@@ -1,0 +1,175 @@
+{
+  "title": "LendingPool: Rebalance stable rate",
+  "description": "Test cases for the rebalanceStableBorrowRate() function.",
+  "stories": [
+    {
+      "description": "User 0 tries to rebalance user 1 who has no borrows in progress (revert expected)",
+      "actions": [
+        {
+          "name": "rebalanceStableBorrowRate",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "target": "1"
+          },
+          "expected": "revert",
+          "revertMessage": "User does not have any borrow for this reserve"
+        }
+      ]
+    },
+    {
+      "description": "User 0 deposits 1000 DAI, user 1 deposits 1 ETH, borrows 100 DAI at a variable rate, user 0 rebalances user 1 (revert expected)",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "1",
+            "user": "1",
+            "sendValue": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "variable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "rebalanceStableBorrowRate",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "target": "1"
+          },
+          "expected": "revert",
+          "revertMessage": "The user borrow is variable and cannot be rebalanced"
+        }
+      ]
+    },
+    {
+      "description": "User 1 swaps to stable, user 0 tries to rebalance but the conditions are not met (revert expected)",
+      "actions": [
+        {
+          "name": "swapBorrowRateMode",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "rebalanceStableBorrowRate",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "target": "1"
+          },
+          "expected": "revert",
+          "revertMessage": "Interest rate rebalance conditions were not met"
+        }
+      ]
+    },
+    {
+      "description": "User 2 deposits ETH and borrows the remaining DAI, causing the stable rates to rise (liquidity rate < user 1 borrow rate). User 0 tries to rebalance user 1 (revert expected)",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "5",
+            "user": "2",
+            "sendValue": "5"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "variable",
+            "user": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "rebalanceStableBorrowRate",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "target": "1"
+          },
+          "expected": "revert",
+          "revertMessage": "Interest rate rebalance conditions were not met"
+        }
+      ]
+    },
+    {
+      "description": "User 2 borrows more DAI, causing the liquidity rate to rise above user 1 stable borrow rate User 0 rebalances user 1",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "3",
+            "user": "2",
+            "sendValue": "3"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "600",
+            "borrowRateMode": "variable",
+            "user": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "rebalanceStableBorrowRate",
+          "args": {
+            "reserve": "DAI",
+            "user": "0",
+            "target": "1"
+          },
+          "expected": "success"
+        }
+      ]
+    }
+  ]
+}

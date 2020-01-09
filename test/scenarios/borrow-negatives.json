@@ -1,0 +1,111 @@
+{
+    "title": "LendingPool: Borrow negatives (reverts)",
+    "description": "Test cases for the deposit function.",
+    "stories": [
+      {
+        "description": "User 0 deposits 1000 DAI, user 1 deposits 1 ETH as collateral and tries to borrow 100 DAI with rate mode NONE (revert expected)",
+        "actions": [
+          {
+            "name": "mint",
+            "args": {
+              "reserve": "DAI",
+              "amount": "1000",
+              "user": "0"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "approve",
+            "args": {
+              "reserve": "DAI",
+              "user": "0"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "deposit",
+            "args": {
+              "reserve": "DAI",
+              "amount": "1000",
+              "user": "0"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "deposit",
+            "args": {
+              "reserve": "ETH",
+              "amount": "1",
+              "user": "1",
+              "sendValue": "1"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "borrow",
+            "args": {
+              "reserve": "DAI",
+              "amount": "100",
+              "borrowRateMode": "none",
+              "user": "1"
+                        },
+            "expected": "revert",
+            "revertMessage" : "Invalid interest rate mode selected"
+          }
+        ]
+      },
+      {
+        "description": "User 0 deposits 1000 DAI, user 1 deposits 1 ETH as collateral and tries to borrow 100 DAI with an invalid rate mode (revert expected)",
+        "actions": [
+          {
+            "name": "mint",
+            "args": {
+              "reserve": "DAI",
+              "amount": "1000",
+              "user": "0"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "approve",
+            "args": {
+              "reserve": "DAI",
+              "user": "0"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "deposit",
+            "args": {
+              "reserve": "DAI",
+              "amount": "1000",
+              "user": "0"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "deposit",
+            "args": {
+              "reserve": "ETH",
+              "amount": "1",
+              "user": "1",
+              "sendValue": "1"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "borrow",
+            "args": {
+              "reserve": "DAI",
+              "amount": "100",
+              "borrowRateMode": "invalid",
+              "user": "1"
+                        },
+            "expected": "revert",
+            "revertMessage" : "Invalid interest rate mode selected"
+          }
+        ]
+      }
+    ]
+  }
+  

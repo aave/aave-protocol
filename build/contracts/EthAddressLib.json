@@ -1,0 +1,276 @@
+{
+  "contractName": "EthAddressLib",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.14+commit.01f1aaa4\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/src/contracts/libraries/EthAddressLib.sol\":\"EthAddressLib\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/src/contracts/libraries/EthAddressLib.sol\":{\"keccak256\":\"0x6d13f10408208ebff44123254f6db03121a8fb5a73d84c2d94f4e9651932b70d\",\"urls\":[\"bzz-raw://50b64d66e1544fcef496cc68e98cee61cfbab58685dfc4d57f73a1308e3aec2a\",\"dweb:/ipfs/QmQwJ5ZpaNjrfREruW7RzppzbEv8Mxxj5Ln87DX1i1iXW5\"]}},\"version\":1}",
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820ebb7e2f7f0c21d8f3ed56b2c725032e056e880e72c08cf9cf3df46f95cb266ce64736f6c634300050e0032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820ebb7e2f7f0c21d8f3ed56b2c725032e056e880e72c08cf9cf3df46f95cb266ce64736f6c634300050e0032",
+  "sourceMap": "25:280:25:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
+  "deployedSourceMap": "25:280:25:-;;;;;;;;",
+  "source": "pragma solidity ^0.5.0;\n\nlibrary EthAddressLib {\n\n    /**\n    * @dev returns the address used within the protocol to identify ETH\n    * @return the address assigned to ETH\n     */\n    function ethAddress() internal pure returns(address) {\n        return 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;\n    }\n}",
+  "sourcePath": "/src/contracts/libraries/EthAddressLib.sol",
+  "ast": {
+    "absolutePath": "/src/contracts/libraries/EthAddressLib.sol",
+    "exportedSymbols": {
+      "EthAddressLib": [
+        10266
+      ]
+    },
+    "id": 10267,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10257,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:25"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 10266,
+        "linearizedBaseContracts": [
+          10266
+        ],
+        "name": "EthAddressLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 10264,
+              "nodeType": "Block",
+              "src": "237:66:25",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "307845656565654565656545654565654565456545656545454565656565456565656565656545456545",
+                    "id": 10262,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "254:42:25",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    },
+                    "value": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                  },
+                  "functionReturnParameters": 10261,
+                  "id": 10263,
+                  "nodeType": "Return",
+                  "src": "247:49:25"
+                }
+              ]
+            },
+            "documentation": "@dev returns the address used within the protocol to identify ETH\n@return the address assigned to ETH",
+            "id": 10265,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "ethAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10258,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "203:2:25"
+            },
+            "returnParameters": {
+              "id": 10261,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10260,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10265,
+                  "src": "228:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10259,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "228:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "227:9:25"
+            },
+            "scope": 10266,
+            "src": "184:119:25",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 10267,
+        "src": "25:280:25"
+      }
+    ],
+    "src": "0:305:25"
+  },
+  "legacyAST": {
+    "absolutePath": "/src/contracts/libraries/EthAddressLib.sol",
+    "exportedSymbols": {
+      "EthAddressLib": [
+        10266
+      ]
+    },
+    "id": 10267,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10257,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:25"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 10266,
+        "linearizedBaseContracts": [
+          10266
+        ],
+        "name": "EthAddressLib",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 10264,
+              "nodeType": "Block",
+              "src": "237:66:25",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "307845656565654565656545654565654565456545656545454565656565456565656565656545456545",
+                    "id": 10262,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "254:42:25",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    },
+                    "value": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+                  },
+                  "functionReturnParameters": 10261,
+                  "id": 10263,
+                  "nodeType": "Return",
+                  "src": "247:49:25"
+                }
+              ]
+            },
+            "documentation": "@dev returns the address used within the protocol to identify ETH\n@return the address assigned to ETH",
+            "id": 10265,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "ethAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10258,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "203:2:25"
+            },
+            "returnParameters": {
+              "id": 10261,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10260,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10265,
+                  "src": "228:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10259,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "228:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "227:9:25"
+            },
+            "scope": 10266,
+            "src": "184:119:25",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 10267,
+        "src": "25:280:25"
+      }
+    ],
+    "src": "0:305:25"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.14+commit.01f1aaa4.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2020-01-09T12:41:06.740Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

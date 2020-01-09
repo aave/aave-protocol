@@ -1,0 +1,132 @@
+{
+  "title": "LendingPool: Swap rate mode",
+  "description": "Test cases for the swapBorrowRateMode() function.",
+  "stories": [
+    {
+      "description": "User 0 tries to swap rate mode without any borrow in progress (revert expected)",
+      "actions": [
+        {
+          "name": "swapBorrowRateMode",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "revert",
+          "revertMessage": "User does not have a borrow in progress on this reserve"
+        }
+      ]
+    },
+    {
+      "description": "User 0 deposits 1000 DAI, user 1 deposits 2 ETH as collateral, borrows 100 DAI at variable rate and swaps to stable after one year",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "2",
+            "user": "1",
+            "sendValue": "2"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "variable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "swapBorrowRateMode",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 1 borrows another 100 DAI, and swaps back to variable after one year, repays the loan",
+      "actions": [
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "DAI",
+            "amount": "100",
+            "borrowRateMode": "stable",
+            "user": "1",
+            "timeTravel": "365"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "swapBorrowRateMode",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "mint",
+          "description": "Mint 50 DAI to cover the interest",
+          "args": {
+            "reserve": "DAI",
+            "amount": "50",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "repay",
+          "args": {
+            "reserve": "DAI",
+            "amount": "-1",
+            "user": "1",
+            "onBehalfOf": "1"
+          },
+          "expected": "success"
+        }
+      ]
+    }
+  ]
+}

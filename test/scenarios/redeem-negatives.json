@@ -1,0 +1,98 @@
+{
+  "title": "LendingPool: Redeem negative test cases",
+  "description": "Redeem function.",
+  "stories": [
+    {
+      "description": "Users 0 Deposits 1000 DAI and tries to redeem 0 DAI (revert expected)",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "DAI",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "0",
+            "user": "0"
+          },
+          "expected": "revert",
+          "revertMessage": "Amount to redeem needs to be > 0"
+        }
+      ]
+    },
+    {
+      "description": "Users 0 tries to redeem 1100 DAI from the 1000 DAI deposited (revert expected)",
+      "actions": [
+        {
+          "name": "redeem",
+          "args": {
+            "reserve": "DAI",
+            "amount": "1100",
+            "user": "0"
+          },
+          "expected": "revert",
+          "revertMessage": "User cannot redeem more than the available balance"
+        }
+      ]
+    },
+    {
+      "description": "Users 1 deposits 1 ETH, borrows 100 DAI, tries to redeem the 1 ETH deposited (revert expected)",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "ETH",
+            "amount": "1",
+            "user": "1",
+            "sendValue": "1"
+          },
+          "expected": "success"
+        },
+        {
+            "name": "borrow",
+            "args": {
+              "reserve": "DAI",
+              "amount": "100",
+              "user": "1",
+              "borrowRateMode": "stable"
+            },
+            "expected": "success"
+          },
+          {
+            "name": "redeem",
+            "args": {
+              "reserve": "ETH",
+              "amount": "-1",
+              "user": "1"
+            },
+            "expected": "revert",
+            "revertMessage" : "Transfer cannot be allowed."
+          }
+      ]
+    }
+  ]
+}
