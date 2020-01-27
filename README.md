@@ -7,7 +7,7 @@ Open source implementation of the Aave Decentralized Lending Pools protocol. Ver
 
 It is possible to find documention to integrate the Aave Protocol on [developers.aave.com](https://developers.aave.com)
 
-For a deep explanation of the Aave Protocol, read the [White Paper](./docs/Aave_Protocol_Whitepaper_v1_0.pdf)
+For a deep explanation of the Aave Protocol, read the [White Paper](./docs/Aave_Protocol_Whitepaper_v1_0_0.pdf)
 
 
 ## Source code
