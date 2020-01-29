@@ -1,0 +1,8 @@
+{
+    "type": "{{type}}",
+    "network": "ropsten",
+    "addressProviderAddress": "0x1c8756FD2B28e9426CDBDcC7E3c4d64fa9A54728",
+    "addressProviderStartBlock": 7079740,
+    "proxyPriceProviderAddress": "0x657372A559c30d236F011239fF9fbB6D76718271",
+    "proxyPriceProviderStartBlock": 7079740
+  }

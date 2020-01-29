@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "moduleResolution": "node",
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "lib": ["es2015", "esnext.asynciterable"],
+    "sourceMap": true,
+    "typeRoots": ["./node_modules/@types", "./typechain-types/"],
+    "types": ["node", "jest"],
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin"
+      }
+    ],
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "build", "dist"]
+}

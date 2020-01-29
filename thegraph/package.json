@@ -1,0 +1,61 @@
+{
+  "name": "aave-protocol-subgraph",
+  "version": "1.0.0",
+  "description": "This package contains subgraph of the Aave protocol",
+  "scripts": {
+    "test": "jest",
+    "dev-environment": "npm i && tail -f /dev/null",
+    "build": "graph build",
+    "prepare": "mustache ./config/${TYPE:-formatted}.json ./config/${NETWORK:-dev}.json | mustache  - subgraph.template.yaml > subgraph.yaml",
+    "codegen": "npm run prepare && graph codegen --output-dir ./formatted/generated",
+    "codegen-raw": "TYPE=raw npm run prepare && graph codegen --output-dir ./raw/generated",
+    "create-local": "graph create aave/protocol --node http://graph-node:8020",
+    "deploy-local": "npm run prepare && graph deploy aave/protocol --ipfs http://graph-ipfs:5001 --node http://graph-node:8020",
+    "deploy-local-raw": "TYPE=raw npm run prepare && graph deploy aave/protocol --ipfs http://graph-ipfs:5001 --node http://graph-node:8020",
+    "deploy-remote": "npm run prepare && graph deploy aave/${NAME:-null} --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-ropsten": "NETWORK=ropsten NAME=protocol-ropsten npm run deploy-remote",
+    "deploy-ropsten-raw": "NETWORK=ropsten TYPE=raw NAME=protocol-ropsten-raw npm run deploy-remote",
+    "deploy-mainnet": "NETWORK=mainnet NAME=protocol npm run deploy-remote",
+    "deploy-mainnet-raw": "NETWORK=mainnet TYPE=raw NAME=protocol-raw npm run deploy-remote"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:aave/aave-protocol.git"
+  },
+  "author": "AAVE <tech@aave.com>",
+  "contributors": [
+    {
+      "name": "Andrey Kozlov",
+      "email": "andrey@aave.com"
+    },
+    {
+      "name": "Emilio Frangella",
+      "email": "emilio@aave.com"
+    },
+    {
+      "name": "Ernesto Boado",
+      "email": "ernesto@aave.com"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "12.6.8",
+    "ethers": "^4.0.40",
+    "ts-node": "8.3.0",
+    "typescript": "3.5.3"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.16.2",
+    "@graphprotocol/graph-ts": "^0.16.0",
+    "@types/jest": "^24.0.23",
+    "@types/web3": "^1.0.20",
+    "jest": "^24.9.0",
+    "ganache-cli": "^6.7.0",
+    "mustache": "^3.1.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.2.0",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1"
+  }
+}

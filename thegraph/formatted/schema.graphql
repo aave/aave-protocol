@@ -1,0 +1,392 @@
+interface LendingPoolAddressProvider {
+  lendingPool: Bytes
+  lendingPoolCore: Bytes
+  lendingPoolParametersProvider: Bytes
+  lendingPoolManager: Bytes
+  lendingPoolConfigurator: Bytes
+  lendingPoolLiquidationManager: Bytes
+  lendingPoolDataProvider: Bytes
+  proxyPriceProvider: Bytes
+  lendingRateOracle: Bytes
+  feeProvider: Bytes
+}
+
+type LendingPoolConfigurationHistoryItem implements LendingPoolAddressProvider @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  provider: LendingPoolConfiguration!
+  lendingPool: Bytes
+  lendingPoolCore: Bytes
+  lendingPoolParametersProvider: Bytes
+  lendingPoolManager: Bytes
+  lendingPoolConfigurator: Bytes
+  lendingPoolLiquidationManager: Bytes
+  lendingPoolDataProvider: Bytes
+  proxyPriceProvider: Bytes
+  lendingRateOracle: Bytes
+  feeProvider: Bytes
+  timestamp: Int!
+}
+type LendingPoolConfiguration implements LendingPoolAddressProvider @entity {
+  id: ID!
+  lendingPool: Bytes
+  lendingPoolCore: Bytes
+  lendingPoolParametersProvider: Bytes
+  lendingPoolManager: Bytes
+  lendingPoolConfigurator: Bytes
+  lendingPoolLiquidationManager: Bytes
+  lendingPoolDataProvider: Bytes
+  proxyPriceProvider: Bytes
+  lendingRateOracle: Bytes
+  feeProvider: Bytes
+  history: [LendingPoolConfigurationHistoryItem!]!  @derivedFrom(field: "provider")
+  lastUpdateTimestamp: Int!
+
+  reserves: [Reserve!]! @derivedFrom(field: "pool")
+  depositHistory: [Deposit!]! @derivedFrom(field: "pool")
+  redeemUnderlyingHistory: [RedeemUnderlying!]! @derivedFrom(field: "pool")
+  borrowHistory: [Borrow!]! @derivedFrom(field: "pool")
+  swapHistory: [Swap!]! @derivedFrom(field: "pool")
+  rebalanceStableBorrowRateHistory: [RebalanceStableBorrowRate!]! @derivedFrom(field: "pool")
+  repayHistory: [Repay!]! @derivedFrom(field: "pool")
+  flashLoanHistory: [FlashLoan!]! @derivedFrom(field: "pool")
+  liquidationCallHistory: [LiquidationCall!]! @derivedFrom(field: "pool")
+  originationFeeLiquidationHistory: [OriginationFeeLiquidation!]! @derivedFrom(field: "pool")
+}
+
+type PriceHistoryItem @entity {
+  id: ID!
+  asset: PriceOracleAsset!
+  price: BigDecimal!
+  timestamp: Int!
+}
+
+type UsdEthPriceHistoryItem @entity {
+  id: ID!
+  oracle: PriceOracle!
+  price: BigDecimal!
+  timestamp: Int!
+}
+
+type ChainlinkAggregator @entity {
+  # aggregator address
+  id: ID!
+  oracleAsset: PriceOracleAsset!
+}
+
+type PriceOracleAsset @entity {
+  id: ID!
+  oracle: PriceOracle!
+  priceInEth: BigDecimal!
+  priceSource: Bytes!
+  isFallbackRequired: Boolean!
+  lastUpdateTimestamp: Int!
+  priceHistory: [PriceHistoryItem!]! @derivedFrom(field: "asset")
+}
+
+type PriceOracle @entity {
+  id: ID!
+  usdPriceEth: BigDecimal!
+  fallbackPriceOracle: Bytes!
+  tokens: [PriceOracleAsset!]! @derivedFrom(field: "oracle")
+  usdPriceEthHistory: [UsdEthPriceHistoryItem!]! @derivedFrom(field: "oracle")
+  tokensWithFallback: [PriceOracleAsset!]!
+  lastUpdateTimestamp: Int!
+}
+
+type AToken @entity {
+  """AToken address"""
+  id: ID!
+  underlyingAssetAddress: Bytes!
+  underlyingAssetDecimals: Int!
+}
+
+enum ReserveOperationType {
+  Deposit
+  Borrow
+  RedeemUnderlying
+  Repay
+  LiquidationCall
+  Swap
+  FlashLoan
+  ReserveUsedAsCollateralEnabled
+  ReserveUsedAsCollateralDisabled
+}
+
+enum BorrowRateMode {
+  None
+  Stable
+  Variable
+}
+
+type Referrer @entity {
+  id: ID!
+  deposits: [Deposit!]! @derivedFrom(field: "referrer")
+  borrows: [Borrow!]! @derivedFrom(field: "referrer")
+}
+
+type Deposit @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  reserve: Reserve!
+  userReserve: UserReserve!
+  amount: BigDecimal!
+  referrer: Referrer
+  timestamp: Int!
+}
+
+type RedeemUnderlying @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  reserve: Reserve!
+  userReserve: UserReserve!
+  amount: BigDecimal!
+  timestamp: Int!
+}
+
+type Borrow @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  reserve: Reserve!
+  userReserve: UserReserve!
+  amount: BigDecimal!
+  borrowRate: BigDecimal!
+  borrowRateMode: BorrowRateMode!
+  accruedBorrowInterest: BigDecimal!
+  referrer: Referrer
+  timestamp: Int!
+}
+
+type Swap @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  reserve: Reserve!
+  userReserve: UserReserve!
+  borrowRateFrom: BigDecimal!
+  borrowRateModeFrom: BorrowRateMode!
+  borrowRateTo: BigDecimal!
+  borrowRateModeTo: BorrowRateMode!
+  accruedBorrowInterest: BigDecimal!
+  timestamp: Int!
+}
+
+type RebalanceStableBorrowRate @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  reserve: Reserve!
+  userReserve: UserReserve!
+  borrowRateFrom: BigDecimal!
+  borrowRateTo: BigDecimal!
+  accruedBorrowInterest: BigDecimal!
+  timestamp: Int!
+}
+
+type Repay @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  reserve: Reserve!
+  userReserve: UserReserve!
+  amountAfterFee: BigDecimal!
+  fee: BigDecimal!
+  timestamp: Int!
+}
+
+type FlashLoan @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  reserve: Reserve!
+  target: Bytes!
+  amount: BigDecimal!
+  totalFee: BigDecimal!
+  protocolFee: BigDecimal!
+  timestamp: Int!
+}
+
+type LiquidationCall @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  collateralReserve: Reserve!
+  collateralUserReserve: UserReserve!
+  collateralAmount: BigDecimal!
+  principalReserve: Reserve!
+  principalUserReserve: UserReserve!
+  principalAmount: BigDecimal!
+  liquidator: Bytes!
+  timestamp: Int!
+}
+
+type OriginationFeeLiquidation @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  pool: LendingPoolConfiguration!
+  user: User!
+  collateralReserve: Reserve!
+  collateralUserReserve: UserReserve!
+  principalReserve: Reserve!
+  principalUserReserve: UserReserve!
+  feeLiquidated: BigDecimal!
+  timestamp: Int!
+}
+
+type ReserveConfigurationHistoryItem @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  reserve: Reserve!
+  usageAsCollateralEnabled: Boolean!
+  borrowingEnabled: Boolean!
+  stableBorrowRateEnabled: Boolean!
+  isActive: Boolean!
+  reserveInterestRateStrategy: Bytes!
+  baseLTVasCollateral: BigDecimal!
+  reserveLiquidationThreshold: BigDecimal!
+  reserveLiquidationBonus: BigInt!
+  timestamp: Int!
+}
+
+type ReserveParamsHistoryItem @entity {
+  """tx hash"""  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  reserve: Reserve!
+  variableBorrowRate: BigDecimal!
+  variableBorrowIndex: BigDecimal!
+  utilizationRate: BigDecimal!
+  stableBorrowRate: BigDecimal!
+  liquidityIndex: BigDecimal!
+  liquidityRate: BigDecimal!
+  totalLiquidity: BigDecimal!
+  availableLiquidity: BigDecimal!
+  totalBorrows: BigDecimal!
+  totalBorrowsVariable: BigDecimal!
+  totalBorrowsStable: BigDecimal!
+  timestamp: Int!
+}
+
+type Reserve @entity {
+  """Reserve address"""
+  id: ID!
+  pool: LendingPoolConfiguration!
+  symbol: String!
+  name: String!
+  #uiColor: String! #TODO MOVE: move to the frontend
+  #currencyType: CurrencyType! #TODO MOVE: move to the frontend
+  decimals: Int!
+  usageAsCollateralEnabled: Boolean! # defalt false
+  borrowingEnabled: Boolean! # defalt false
+  stableBorrowRateEnabled: Boolean! # defalt false
+  isActive: Boolean! # defalt false
+  price: PriceOracleAsset!
+  reserveInterestRateStrategy: Bytes!
+  baseLTVasCollateral: BigDecimal!
+  reserveLiquidationThreshold: BigDecimal!
+  reserveLiquidationBonus: BigInt!
+  utilizationRate: BigDecimal! # default: 0
+  totalLiquidity: BigDecimal!  # default: 0
+  availableLiquidity: BigDecimal!  # default: 0
+  totalBorrows: BigDecimal!  # default: 0
+  totalBorrowsStable: BigDecimal!  # default: 0
+  totalBorrowsVariable: BigDecimal!  # default: 0
+  liquidityRate: BigDecimal! # depositors interest
+  variableBorrowRate: BigDecimal!
+  stableBorrowRate: BigDecimal!
+  liquidityIndex: BigDecimal!
+  variableBorrowIndex: BigDecimal!
+  aToken: AToken!
+  lastUpdateTimestamp: Int!
+  userReserves: [UserReserve!]! @derivedFrom(field: "reserve")
+  depositHistory: [Deposit!]! @derivedFrom(field: "reserve")
+  redeemUnderlyingHistory: [RedeemUnderlying!]! @derivedFrom(field: "reserve")
+  borrowHistory: [Borrow!]! @derivedFrom(field: "reserve")
+  swapHistory: [Swap!]! @derivedFrom(field: "reserve")
+  rebalanceStableBorrowRateHistory: [RebalanceStableBorrowRate!]! @derivedFrom(field: "reserve")
+  repayHistory: [Repay!]! @derivedFrom(field: "reserve")
+  flashLoanHistory: [FlashLoan!]! @derivedFrom(field: "reserve")
+  liquidationCallHistory: [LiquidationCall!]! @derivedFrom(field: "collateralReserve")
+  originationFeeLiquidationHistory: [OriginationFeeLiquidation!]! @derivedFrom(field: "collateralReserve")
+  paramsHistory: [ReserveParamsHistoryItem!]!  @derivedFrom(field: "reserve")
+  configurationHistory: [ReserveConfigurationHistoryItem!]! @derivedFrom(field: "reserve")
+  deposits: [Deposit!]!  @derivedFrom(field: "reserve")
+}
+
+type ATokenBalanceHistoryItem @entity {
+  """ userReserve + txHash """  # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  userReserve: UserReserve!
+  balance: BigDecimal!
+  userBalanceIndex: BigDecimal!
+  interestRedirectionAddress: Bytes!
+  redirectedBalance: BigDecimal!
+  timestamp: Int!
+}
+
+type UserBorrowHistoryItem @entity {
+  """ userReserve + txHash """ # TODO: replace with blockNumber/timestamp + blockPosition
+  id: ID!
+  userReserve: UserReserve!
+  totalBorrows: BigDecimal!
+  borrowRate: BigDecimal!
+  borrowRateMode: BorrowRateMode!
+  originationFee: BigDecimal!
+  timestamp: Int!
+}
+
+type UserReserve @entity {
+  """user address + reserve address"""
+  id: ID!
+  reserve: Reserve!
+  user: User!
+  usageAsCollateralEnabledOnUser: Boolean!
+  userBalanceIndex: BigDecimal!
+  principalATokenBalance: BigDecimal!
+  redirectedBalance:BigDecimal!
+  interestRedirectionAddress: Bytes!
+  interestRedirectionAllowance: Bytes!
+  #principalDeposits: BigDecimal! # we should get rid of it, because of fields merge
+  #totalDeposits: BigDecimal! # TODO: add, and also totalWithdrawals
+  principalBorrows: BigDecimal!
+  borrowRate: BigDecimal!
+  borrowRateMode: BorrowRateMode!
+  variableBorrowIndex: BigDecimal!
+  """Amount in currency units included as fee"""
+  originationFee: BigDecimal!
+  lastUpdateTimestamp: Int!
+  aTokenBalanceHistory: [ATokenBalanceHistoryItem!]! @derivedFrom(field: "userReserve")
+  borrowStateHistory: [UserBorrowHistoryItem!]! @derivedFrom(field: "userReserve")
+
+  depositHistory: [Deposit!]! @derivedFrom(field: "userReserve")
+  redeemUnderlyingHistory: [RedeemUnderlying!]! @derivedFrom(field: "userReserve")
+  borrowHistory: [Borrow!]! @derivedFrom(field: "userReserve")
+  swapHistory: [Swap!]! @derivedFrom(field: "userReserve")
+  rebalanceStableBorrowRateHistory: [RebalanceStableBorrowRate!]! @derivedFrom(field: "userReserve")
+  repayHistory: [Repay!]! @derivedFrom(field: "userReserve")
+  liquidationCallHistory: [LiquidationCall!]! @derivedFrom(field: "collateralUserReserve")
+  originationFeeLiquidationHistory: [OriginationFeeLiquidation!]! @derivedFrom(field: "collateralUserReserve")
+}
+
+type User @entity {
+  """user address"""
+  id: ID!
+  reserves: [UserReserve!]! @derivedFrom(field: "user")
+  depositHistory: [Deposit!]! @derivedFrom(field: "user")
+  redeemUnderlyingHistory: [RedeemUnderlying!]! @derivedFrom(field: "user")
+  borrowHistory: [Borrow!]! @derivedFrom(field: "user")
+  swapHistory: [Swap!]! @derivedFrom(field: "user")
+  rebalanceStableBorrowRateHistory: [RebalanceStableBorrowRate!]! @derivedFrom(field: "user")
+  repayHistory: [Repay!]! @derivedFrom(field: "user")
+  liquidationCallHistory: [LiquidationCall!]! @derivedFrom(field: "user")
+  originationFeeLiquidationHistory: [OriginationFeeLiquidation!]! @derivedFrom(field: "user")
+}

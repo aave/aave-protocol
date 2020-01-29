@@ -1,0 +1,8 @@
+{
+  "type": "{{type}}",
+  "network": "mainnet",
+  "addressProviderAddress": "0x438D1B38fa612EB254278C8a9796F7777F5197f1",
+  "addressProviderStartBlock": 0,
+  "proxyPriceProviderAddress": "0xdAd85D6416D166870258000b81536B82E2C9e07A",
+  "proxyPriceProviderStartBlock": 0
+}

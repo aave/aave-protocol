@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "tslint-config-prettier"
+  ],
+  "rulesDirectory": [
+    "tslint-plugin-prettier"
+  ],
+  "rules": {
+    "prettier": true,
+    "max-line-length": [true, 120],
+    "import-name": false
+  }
+}
