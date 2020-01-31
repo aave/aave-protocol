@@ -12,8 +12,7 @@ For a deep explanation of the Aave Protocol, read the [White Paper](./docs/Aave_
 
 ## Source code
 
-The source code included is subjected to changes as the security audits are still in progress.
-
+The source code included is the final production version of the protocol. Eventual changes (smart contracts updates, bug fixes, etc.) will be applied through subsequent merge requests.
 
 ## Audits report
 
