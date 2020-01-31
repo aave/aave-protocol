@@ -19,11 +19,15 @@ The source code included is subjected to changes as the security audits are stil
 
 - [Trails of Bits Smart Contracts audit](./docs/ToB_aave_protocol_final_report.pdf)
 
-- Open Zeppeling Smart Contracts audit [IN PROGRESS]
+- [Open Zeppelin Smart Contracts](https://blog.openzeppelin.com/aave-protocol-audit/)
 
 ## Bug bounty
 
-A bug bounty program will be announced in the upcoming days. Even though the official program is not started yet, we offer significant bounties for any critical vulnerability. Please strictly follow the responsible disclosure procedure.
+The bug bounty program is live! 
+
+ We want Aave protocol to be the best it can be, so we’re calling on our community to help us find any bugs or     vulnerabilities. Submit a bug here and earn a reward of up to USD 25,000$.
+ 
+ More details about the bounty program and how to apply can be found here https://aave.com/bug-bounty.
 
 ## Responsible disclosure
 
