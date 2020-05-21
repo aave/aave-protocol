@@ -67,7 +67,7 @@ contract ChainlinkProxyPriceProvider is IPriceOracleGetter, Ownable {
     /// @param _asset The asset address
     function getAssetPrice(address _asset) public view returns(uint256) {
         IChainlinkAggregator source = assetsSources[_asset];
-        if (_asset == EthAddressLib.ethAddress()) {
+        if (_asset == EthAddressLib.ethAddress() || _asset == EthAddressLib.wethAddress()) {
             return 1 ether;
         } else {
             // If there is no registered source for the asset, call the fallbackOracle
