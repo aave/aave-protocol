@@ -1,8 +1,12 @@
 {
   "type": "{{type}}",
   "network": "mainnet",
-  "addressProviderAddress": "0x24a42fD28C976A61Df5D00D0599C34c4f90748c8",
-  "addressProviderStartBlock": 9240625,
+  "aavePoolRegistrarAddress": "0x3B21e57baC22dAE875C497974EC78B8B4FaD93E7",
+  "aavePoolRegistrarStartBlock": 9227663,
+  "addressesProviderRegistryAddress": "0xd09f34960c37da3a8602f0847ce5ac8f7b393d99",
+  "addressesProviderRegistryStartBlock": 10012435,
   "proxyPriceProviderAddress": "0x76B47460d7F7c5222cFb6b6A75615ab10895DDe4",
-  "proxyPriceProviderStartBlock": 9240625
+  "proxyPriceProviderStartBlock": 9240625,
+  "chainlinkUSDETHOracleAddress": "0x79febf6b9f76853edbcbc913e6aae8232cfb9de9",
+  "chainlinkUSDETHOracleStartBlock": 9240625
 }

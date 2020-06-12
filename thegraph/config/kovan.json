@@ -1,0 +1,12 @@
+{
+    "type": "{{type}}",
+    "network": "kovan",
+    "aavePoolRegistrarAddress": "0x5562FB5ECCF5D1e7117Aa43D17eE1fb11f1A48A4",
+    "aavePoolRegistrarStartBlock": 15555600,
+    "addressesProviderRegistryAddress": "0xcd9Dae41Cc8b7433c045D3D7C4C555315EF0DDDE",
+    "addressesProviderRegistryStartBlock": 18504100,
+    "proxyPriceProviderAddress": "0x276C4793F2EE3D5Bf18C5b879529dD4270BA4814",
+    "proxyPriceProviderStartBlock": 16532472,
+    "chainlinkUSDETHOracleAddress": "0x0000000000000000000000000000000000000000",
+    "chainlinkUSDETHOracleStartBlock": 16532472
+}

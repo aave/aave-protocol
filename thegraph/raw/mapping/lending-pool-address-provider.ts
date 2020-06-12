@@ -1,48 +1,51 @@
-import { BigInt, Value, EthereumEvent } from '@graphprotocol/graph-ts';
+import { BigInt, ethereum, Value, Address, log } from '@graphprotocol/graph-ts';
 
 import {
   FeeProviderUpdated,
-  LendingRateOracleUpdated,
-  PriceOracleUpdated,
   LendingPoolDataProviderUpdated,
   LendingPoolLiquidationManagerUpdated,
-  LendingPoolParametersProviderUpdated,
   LendingPoolManagerUpdated,
+  LendingPoolParametersProviderUpdated,
+  LendingRateOracleUpdated,
+  PriceOracleUpdated,
   ProxyCreated,
-} from '../generated/LendingPoolAddressesProvider/LendingPoolAddressesProvider';
+} from '../generated/templates/LendingPoolAddressesProvider/LendingPoolAddressesProvider';
 import {
   LendingPool as LendingPoolContract,
   LendingPoolConfigurator as LendingPoolConfiguratorContract,
-  // PriceOracle as PriceOracleContract,
   LendingPoolCore as LendingPoolCoreContract,
 } from '../generated/templates';
-import { getOrInitLendingPoolConfiguration } from '../initializers';
-import { LendingPoolConfiguration, LendingPoolConfigurationHistoryItem } from '../generated/schema';
-import { getHistoryId } from './id-generation';
+import { createMapContractToPool, getOrInitPriceOracle } from '../initializers';
+import { Pool, PoolConfigurationHistoryItem } from '../generated/schema';
+import { EventTypeRef, getHistoryId } from '../../utils/id-generation';
+import { zeroAddress } from '../../utils/converters';
+
+let POOL_COMPONENTS = [
+  'lendingPoolConfigurator',
+  'lendingPool',
+  'lendingPoolCore',
+  'lendingPoolParametersProvider',
+  'lendingPoolManager',
+  'lendingPoolLiquidationManager',
+  'lendingPoolDataProvider',
+  'proxyPriceProvider',
+  'lendingRateOracle',
+  'feeProvider',
+] as string[];
 
 function saveAddressProvider(
-  poolConfiguration: LendingPoolConfiguration,
+  poolConfiguration: Pool,
   timestamp: BigInt,
-  event: EthereumEvent
+  event: ethereum.Event
 ): void {
   poolConfiguration.lastUpdateTimestamp = timestamp.toI32();
   poolConfiguration.save();
 
-  let configurationHistoryItem = new LendingPoolConfigurationHistoryItem(getHistoryId(event));
-  let paramsToUpdate = [
-    'lendingPool',
-    'lendingPoolCore',
-    'lendingPoolParametersProvider',
-    'lendingPoolManager',
-    'lendingPoolConfigurator',
-    'lendingPoolLiquidationManager',
-    'lendingPoolDataProvider',
-    'proxyPriceProvider',
-    'lendingRateOracle',
-    'feeProvider',
-  ] as string[];
-  for (let i = 0; i < paramsToUpdate.length; i++) {
-    let param = paramsToUpdate[i];
+  let configurationHistoryItem = new PoolConfigurationHistoryItem(
+    getHistoryId(event, EventTypeRef.NoType)
+  );
+  for (let i = 0; i < POOL_COMPONENTS.length; i++) {
+    let param = POOL_COMPONENTS[i];
     let value = poolConfiguration.get(param);
     if (!value) {
       return;
@@ -50,70 +53,88 @@ function saveAddressProvider(
     configurationHistoryItem.set(param, value as Value);
   }
   configurationHistoryItem.timestamp = timestamp.toI32();
-  configurationHistoryItem.provider = poolConfiguration.id;
+  configurationHistoryItem.pool = poolConfiguration.id;
   configurationHistoryItem.save();
 }
 
+function genericAddressProviderUpdate(
+  component: string,
+  newAddress: Address,
+  event: ethereum.Event,
+  createMapContract: boolean = true
+): void {
+  if (!POOL_COMPONENTS.includes(component)) {
+    throw new Error('wrong pool component name' + component);
+  }
+  let poolAddress = event.address.toHexString();
+  let lendingPoolConfiguration = Pool.load(poolAddress);
+  if (lendingPoolConfiguration == null) {
+    log.error('pool {} is not registered!', [poolAddress]);
+    throw new Error('pool' + poolAddress + 'is not registered!');
+  }
+
+  lendingPoolConfiguration.set(component, Value.fromAddress(newAddress));
+  if (createMapContract) {
+    createMapContractToPool(newAddress, lendingPoolConfiguration.id);
+  }
+  saveAddressProvider(lendingPoolConfiguration as Pool, event.block.timestamp, event);
+}
+
 export function handleProxyCreated(event: ProxyCreated): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
+  let newProxyAddress = event.params.newAddress;
   let contactId = event.params.id.toString();
+  let poolComponent: string;
+
   if (contactId == 'LENDING_POOL_CONFIGURATOR') {
-    lendingPoolConfiguration.lendingPoolConfigurator = event.params.newAddress;
-    LendingPoolConfiguratorContract.create(event.params.newAddress);
+    poolComponent = 'lendingPoolConfigurator';
+    LendingPoolConfiguratorContract.create(newProxyAddress);
   } else if (contactId == 'LENDING_POOL') {
-    lendingPoolConfiguration.lendingPool = event.params.newAddress;
-    LendingPoolContract.create(event.params.newAddress);
+    poolComponent = 'lendingPool';
+    LendingPoolContract.create(newProxyAddress);
   } else if (contactId == 'LENDING_POOL_CORE') {
-    lendingPoolConfiguration.lendingPoolCore = event.params.newAddress;
-    LendingPoolCoreContract.create(event.params.newAddress);
+    poolComponent = 'lendingPoolCore';
+    LendingPoolCoreContract.create(newProxyAddress);
   } else {
     return;
   }
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate(poolComponent, newProxyAddress, event);
 }
 
 export function handleLendingPoolParametersProviderUpdated(
   event: LendingPoolParametersProviderUpdated
 ): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
-  lendingPoolConfiguration.lendingPoolParametersProvider = event.params.newAddress;
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate('lendingPoolParametersProvider', event.params.newAddress, event);
 }
 
 export function handleLendingPoolManagerUpdated(event: LendingPoolManagerUpdated): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
-  lendingPoolConfiguration.lendingPoolManager = event.params.newAddress;
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate('lendingPoolManager', event.params.newAddress, event);
 }
 
 export function handleLendingPoolLiquidationManagerUpdated(
   event: LendingPoolLiquidationManagerUpdated
 ): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
-  lendingPoolConfiguration.lendingPoolLiquidationManager = event.params.newAddress;
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate('lendingPoolLiquidationManager', event.params.newAddress, event);
 }
 
 export function handleLendingPoolDataProviderUpdated(event: LendingPoolDataProviderUpdated): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
-  lendingPoolConfiguration.lendingPoolDataProvider = event.params.newAddress;
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate('lendingPoolDataProvider', event.params.newAddress, event);
 }
 
 export function handlePriceOracleUpdated(event: PriceOracleUpdated): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
-  lendingPoolConfiguration.proxyPriceProvider = event.params.newAddress;
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate('proxyPriceProvider', event.params.newAddress, event, false);
+
+  // TODO: should be more general
+  let priceOracle = getOrInitPriceOracle();
+  if (priceOracle.proxyPriceProvider.equals(zeroAddress())) {
+    priceOracle.proxyPriceProvider = event.params.newAddress;
+    priceOracle.save();
+  }
 }
 
 export function handleLendingRateOracleUpdated(event: LendingRateOracleUpdated): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
-  lendingPoolConfiguration.lendingRateOracle = event.params.newAddress;
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate('lendingRateOracle', event.params.newAddress, event, false);
 }
 
 export function handleFeeProviderUpdated(event: FeeProviderUpdated): void {
-  let lendingPoolConfiguration = getOrInitLendingPoolConfiguration();
-  lendingPoolConfiguration.feeProvider = event.params.newAddress;
-  saveAddressProvider(lendingPoolConfiguration, event.block.timestamp, event);
+  genericAddressProviderUpdate('feeProvider', event.params.newAddress, event);
 }

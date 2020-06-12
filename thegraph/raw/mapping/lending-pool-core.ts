@@ -1,25 +1,30 @@
-import { ReserveUpdated } from '../generated/templates/LendingPoolCore/LendingPoolCore';
-import { getOrInitReserve, getOrInitReserveParamsHistoryItem } from '../initializers';
+import {
+  ReserveUpdated,
+  ReserveDataUpdated,
+} from '../generated/templates/LendingPoolCore/LendingPoolCore';
+import { getOrInitReserve } from '../initializers';
+import { saveReserve } from './lending-pool';
 
+//DEV: DEPRECATED HANDLER
 export function handleReserveUpdated(event: ReserveUpdated): void {
-  let poolReserve = getOrInitReserve(event.params.reserve);
+  let poolReserve = getOrInitReserve(event.params.reserve, event);
   poolReserve.variableBorrowRate = event.params.variableBorrowRate;
   poolReserve.variableBorrowIndex = event.params.variableBorrowIndex;
   poolReserve.stableBorrowRate = event.params.stableBorrowRate;
   poolReserve.liquidityIndex = event.params.liquidityIndex;
   poolReserve.liquidityRate = event.params.liquidityRate;
   poolReserve.lastUpdateTimestamp = event.block.timestamp.toI32();
-  poolReserve.save();
+  saveReserve(poolReserve, event);
+}
 
-  let reserveParamsHistoryItem = getOrInitReserveParamsHistoryItem(
-    event.transaction.hash,
-    poolReserve
-  );
-  reserveParamsHistoryItem.variableBorrowRate = poolReserve.variableBorrowRate;
-  reserveParamsHistoryItem.variableBorrowIndex = poolReserve.variableBorrowIndex;
-  reserveParamsHistoryItem.stableBorrowRate = poolReserve.stableBorrowRate;
-  reserveParamsHistoryItem.liquidityIndex = poolReserve.liquidityIndex;
-  reserveParamsHistoryItem.liquidityRate = poolReserve.liquidityRate;
-  reserveParamsHistoryItem.timestamp = event.block.timestamp.toI32();
-  reserveParamsHistoryItem.save();
+export function handleReserveDataUpdated(event: ReserveDataUpdated): void {
+  let poolReserve = getOrInitReserve(event.params.reserve, event);
+  poolReserve.variableBorrowRate = event.params.variableBorrowRate;
+  poolReserve.variableBorrowIndex = event.params.variableBorrowIndex;
+  poolReserve.stableBorrowRate = event.params.stableBorrowRate;
+  poolReserve.averageStableBorrowRate = event.params.averageStableBorrowRate;
+  poolReserve.liquidityIndex = event.params.liquidityIndex;
+  poolReserve.liquidityRate = event.params.liquidityRate;
+  poolReserve.lastUpdateTimestamp = event.block.timestamp.toI32();
+  saveReserve(poolReserve, event);
 }

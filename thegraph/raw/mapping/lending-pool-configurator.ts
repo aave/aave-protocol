@@ -1,4 +1,4 @@
-import { BigInt, Bytes } from '@graphprotocol/graph-ts';
+import { Bytes, Address, ethereum } from '@graphprotocol/graph-ts';
 
 import {
   BorrowingDisabledOnReserve,
@@ -20,21 +20,21 @@ import { IERC20DetailedBytes } from '../generated/templates/LendingPoolConfigura
 import { DefaultReserveInterestRateStrategy } from '../generated/templates/LendingPoolConfigurator/DefaultReserveInterestRateStrategy';
 import { AToken as ATokenContract } from '../generated/templates';
 import {
+  createMapContractToPool,
   getOrInitAToken,
   getOrInitReserve,
   getOrInitReserveConfigurationHistoryItem,
   getPriceOracleAsset,
 } from '../initializers';
 import { Reserve } from '../generated/schema';
-import {
-  convertTokenAmountToDecimals,
-  convertValueFromRay,
-  exponentToBigDecimal,
-  exponentToBigInt,
-} from '../../utils/converters';
+import { exponentToBigInt, zeroAddress } from '../../utils/converters';
+import { MOCK_ETHEREUM_ADDRESS } from '../../utils/constants';
 
-function saveReserve(reserve: Reserve, timestamp: BigInt, txHash: Bytes): void {
-  reserve.lastUpdateTimestamp = timestamp.toI32();
+function saveReserve(reserve: Reserve, event: ethereum.Event): void {
+  let timestamp = event.block.timestamp.toI32();
+  let txHash = event.transaction.hash;
+
+  reserve.lastUpdateTimestamp = timestamp;
   reserve.save();
 
   let configurationHistoryItem = getOrInitReserveConfigurationHistoryItem(txHash, reserve);
@@ -46,23 +46,37 @@ function saveReserve(reserve: Reserve, timestamp: BigInt, txHash: Bytes): void {
   configurationHistoryItem.baseLTVasCollateral = reserve.baseLTVasCollateral;
   configurationHistoryItem.reserveLiquidationThreshold = reserve.reserveLiquidationThreshold;
   configurationHistoryItem.reserveLiquidationBonus = reserve.reserveLiquidationBonus;
-  configurationHistoryItem.timestamp = timestamp.toI32();
+  configurationHistoryItem.timestamp = timestamp;
   configurationHistoryItem.save();
 }
 
-export function handleReserveInitialized(event: ReserveInitialized): void {
-  ATokenContract.create(event.params._aToken);
-  let reserve = getOrInitReserve(event.params._reserve);
-  let aToken = getOrInitAToken(event.params._aToken);
-  let defaultReserveInterestRateStrategyContract = DefaultReserveInterestRateStrategy.bind(
-    event.params._interestRateStrategyAddress
-  );
+function updateInterestRateStrategy(
+  reserve: Reserve,
+  strategy: Bytes,
+  init: boolean = false
+): void {
+  let interestRateStrategyContract = DefaultReserveInterestRateStrategy.bind(strategy as Address);
 
-  reserve.aToken = aToken.id;
-  reserve.isActive = true;
-  if (event.params._reserve.toHexString() != '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
-    let ERC20ReserveContract = ERC20Detailed.bind(event.params._reserve);
-    let ERC20DetailedBytesContract = IERC20DetailedBytes.bind(event.params._reserve);
+  reserve.reserveInterestRateStrategy = strategy;
+  reserve.baseVariableBorrowRate = interestRateStrategyContract.getBaseVariableBorrowRate();
+  if (init) {
+    reserve.variableBorrowRate = reserve.baseVariableBorrowRate;
+  }
+  reserve.optimalUtilisationRate = interestRateStrategyContract.OPTIMAL_UTILIZATION_RATE();
+  reserve.variableRateSlope1 = interestRateStrategyContract.getVariableRateSlope1();
+  reserve.variableRateSlope2 = interestRateStrategyContract.getVariableRateSlope2();
+  reserve.stableRateSlope1 = interestRateStrategyContract.getStableRateSlope1();
+  reserve.stableRateSlope2 = interestRateStrategyContract.getStableRateSlope2();
+}
+
+export function handleReserveInitialized(event: ReserveInitialized): void {
+  let underlyingAssetAddress = event.params._reserve;
+  let reserve = getOrInitReserve(underlyingAssetAddress, event);
+
+  if (reserve.underlyingAsset.toHexString() != MOCK_ETHEREUM_ADDRESS) {
+    let ERC20ATokenContract = ERC20Detailed.bind(event.params._aToken);
+    let ERC20ReserveContract = ERC20Detailed.bind(underlyingAssetAddress);
+    let ERC20DetailedBytesContract = IERC20DetailedBytes.bind(underlyingAssetAddress);
 
     let nameStringCall = ERC20ReserveContract.try_name();
     if (nameStringCall.reverted) {
@@ -76,17 +90,7 @@ export function handleReserveInitialized(event: ReserveInitialized): void {
       reserve.name = nameStringCall.value;
     }
 
-    let symbolStringCall = ERC20ReserveContract.try_symbol();
-    if (symbolStringCall.reverted) {
-      let bytesSymbolCall = ERC20DetailedBytesContract.try_symbol();
-      if (bytesSymbolCall.reverted) {
-        reserve.symbol = '';
-      } else {
-        reserve.symbol = bytesSymbolCall.value.toString();
-      }
-    } else {
-      reserve.symbol = symbolStringCall.value;
-    }
+    reserve.symbol = ERC20ATokenContract.symbol().slice(1);
 
     reserve.decimals = ERC20ReserveContract.decimals();
   } else {
@@ -94,92 +98,111 @@ export function handleReserveInitialized(event: ReserveInitialized): void {
     reserve.symbol = 'ETH';
     reserve.decimals = 18;
 
-    let oracleAsset = getPriceOracleAsset(reserve.id);
+    let oracleAsset = getPriceOracleAsset(reserve.underlyingAsset.toHexString());
     oracleAsset.priceInEth = exponentToBigInt(18);
     oracleAsset.lastUpdateTimestamp = event.block.timestamp.toI32();
     oracleAsset.save();
   }
 
-  reserve.variableBorrowRate = defaultReserveInterestRateStrategyContract.getBaseVariableBorrowRate();
-  reserve.reserveInterestRateStrategy = event.params._interestRateStrategyAddress;
+  updateInterestRateStrategy(reserve, event.params._interestRateStrategyAddress, true);
 
-  aToken.underlyingAssetAddress = event.params._reserve;
+  ATokenContract.create(event.params._aToken);
+  createMapContractToPool(event.params._aToken, reserve.pool);
+  let aToken = getOrInitAToken(event.params._aToken);
+  aToken.underlyingAssetAddress = reserve.underlyingAsset;
   aToken.underlyingAssetDecimals = reserve.decimals;
+  aToken.pool = reserve.pool;
   aToken.save();
 
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  reserve.aToken = aToken.id;
+  reserve.isActive = true;
+  saveReserve(reserve, event);
 }
 
 export function handleReserveInterestRateStrategyChanged(
   event: ReserveInterestRateStrategyChanged
 ): void {
-  let reserve = getOrInitReserve(event.params._reserve);
-  reserve.reserveInterestRateStrategy = event.params._strategy;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  // TODO: remove it after ropsten redeployment
+  let interestRateStrategyContract = DefaultReserveInterestRateStrategy.bind(
+    event.params._strategy
+  );
+  let stableSlope1 = interestRateStrategyContract.try_getStableRateSlope1();
+  let stableSlope2 = interestRateStrategyContract.try_getStableRateSlope2();
+  if (stableSlope1.reverted || stableSlope2.reverted) {
+    return;
+  }
+  //////
+  let reserve = getOrInitReserve(event.params._reserve, event);
+  // if reserve is not initialize, needed to handle ropsten wrong deployment
+  if (reserve.aToken == zeroAddress().toHexString()) {
+    return;
+  }
+  updateInterestRateStrategy(reserve, event.params._strategy, false);
+  saveReserve(reserve, event);
 }
 
 export function handleReserveBaseLtvChanged(event: ReserveBaseLtvChanged): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.baseLTVasCollateral = event.params._ltv;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 
 export function handleReserveLiquidationBonusChanged(event: ReserveLiquidationBonusChanged): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.reserveLiquidationBonus = event.params._bonus;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 
 export function handleReserveLiquidationThresholdChanged(
   event: ReserveLiquidationThresholdChanged
 ): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.reserveLiquidationThreshold = event.params._threshold;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 
 export function handleBorrowingDisabledOnReserve(event: BorrowingDisabledOnReserve): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.borrowingEnabled = false;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 
 export function handleBorrowingEnabledOnReserve(event: BorrowingEnabledOnReserve): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.borrowingEnabled = true;
   reserve.stableBorrowRateEnabled = event.params._stableRateEnabled;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 export function handleStableRateDisabledOnReserve(event: StableRateDisabledOnReserve): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.stableBorrowRateEnabled = false;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 export function handleStableRateEnabledOnReserve(event: StableRateEnabledOnReserve): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.stableBorrowRateEnabled = true;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 export function handleReserveActivated(event: ReserveActivated): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.isActive = true;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 export function handleReserveDeactivated(event: ReserveDeactivated): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.isActive = false;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 export function handleReserveDisabledAsCollateral(event: ReserveDisabledAsCollateral): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.usageAsCollateralEnabled = false;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }
 export function handleReserveEnabledAsCollateral(event: ReserveEnabledAsCollateral): void {
-  let reserve = getOrInitReserve(event.params._reserve);
+  let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.usageAsCollateralEnabled = true;
   reserve.baseLTVasCollateral = event.params._ltv;
   reserve.reserveLiquidationThreshold = event.params._liquidationThreshold;
   reserve.reserveLiquidationBonus = event.params._liquidationBonus;
-  saveReserve(reserve, event.block.timestamp, event.transaction.hash);
+  saveReserve(reserve, event);
 }

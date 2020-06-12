@@ -1,4 +1,4 @@
-import { Address, Bytes } from '@graphprotocol/graph-ts/index';
+import { Address, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import {
   AToken,
   PriceOracle,
@@ -8,38 +8,60 @@ import {
   UserReserve,
   ReserveParamsHistoryItem,
   ReserveConfigurationHistoryItem,
-  LendingPoolConfiguration,
   Referrer,
   ChainlinkAggregator,
+  ContractToPoolMapping,
+  Protocol,
 } from './generated/schema';
-import { zeroAddress, zeroBD, zeroBI } from '../utils/converters';
+import {
+  PRICE_ORACLE_ASSET_PLATFORM_SIMPLE,
+  PRICE_ORACLE_ASSET_TYPE_SIMPLE,
+  zeroAddress,
+  zeroBD,
+  zeroBI,
+} from '../utils/converters';
+import { getAtokenId, getReserveId, getUserReserveId } from '../utils/id-generation';
 
-export function getUserReserveId(userAddress: Address, reserveAddress: Address): string {
-  return userAddress.toHexString() + reserveAddress.toHexString();
+export function getProtocol(): Protocol {
+  let protocolId = '1';
+  let protocol = Protocol.load(protocolId);
+  if (protocol == null) {
+    protocol = new Protocol(protocolId);
+    protocol.save();
+  }
+  return protocol as Protocol;
 }
 
-export function getOrInitLendingPoolConfiguration(): LendingPoolConfiguration {
-  let lendingPoolConfiguration = LendingPoolConfiguration.load('1');
-  if (!lendingPoolConfiguration) {
-    lendingPoolConfiguration = new LendingPoolConfiguration('1');
+export function getPoolByContract(event: ethereum.Event): string {
+  let contractAddress = event.address.toHexString();
+  let contractToPoolMapping = ContractToPoolMapping.load(contractAddress);
+  if (contractToPoolMapping === null) {
+    throw new Error(contractAddress + 'is not registered in ContractToPoolMapping');
   }
-  return lendingPoolConfiguration as LendingPoolConfiguration;
+  return contractToPoolMapping.pool;
 }
 
 export function getOrInitUser(address: Address): User {
   let user = User.load(address.toHexString());
   if (!user) {
     user = new User(address.toHexString());
+    user.borrowedReservesCount = 0;
     user.save();
   }
   return user as User;
 }
 
-export function getOrInitUserReserve(_user: Address, _poolReserve: Address): UserReserve {
-  let userReserveId = getUserReserveId(_user, _poolReserve);
+export function getOrInitUserReserve(
+  _user: Address,
+  _underlyingAsset: Address,
+  event: ethereum.Event
+): UserReserve {
+  let poolId = getPoolByContract(event);
+  let userReserveId = getUserReserveId(_user, _underlyingAsset, poolId);
   let userReserve = UserReserve.load(userReserveId);
   if (userReserve === null) {
     userReserve = new UserReserve(userReserveId);
+    userReserve.pool = poolId;
     userReserve.usageAsCollateralEnabledOnUser = true;
     userReserve.principalATokenBalance = zeroBI();
     userReserve.redirectedBalance = zeroBI();
@@ -56,17 +78,21 @@ export function getOrInitUserReserve(_user: Address, _poolReserve: Address): Use
     let user = getOrInitUser(_user);
     userReserve.user = user.id;
 
-    let poolReserve = getOrInitReserve(_poolReserve);
+    let poolReserve = getOrInitReserve(_underlyingAsset, event);
     userReserve.reserve = poolReserve.id;
   }
   return userReserve as UserReserve;
 }
 
-export function getOrInitReserve(id: Address): Reserve {
-  let reserve = Reserve.load(id.toHexString());
+export function getOrInitReserve(underlyingAsset: Address, event: ethereum.Event): Reserve {
+  let poolId = getPoolByContract(event);
+  let reserveId = getReserveId(underlyingAsset, poolId);
+  let reserve = Reserve.load(reserveId);
+
   if (reserve === null) {
-    reserve = new Reserve(id.toHexString());
-    reserve.pool = '1';
+    reserve = new Reserve(reserveId);
+    reserve.underlyingAsset = underlyingAsset;
+    reserve.pool = poolId;
     reserve.symbol = '';
     reserve.name = '';
     reserve.decimals = 0;
@@ -78,8 +104,15 @@ export function getOrInitReserve(id: Address): Reserve {
     reserve.reserveLiquidationThreshold = zeroBI();
     reserve.reserveLiquidationBonus = zeroBI();
     reserve.reserveInterestRateStrategy = new Bytes(1);
+    reserve.baseVariableBorrowRate = zeroBI();
+    reserve.optimalUtilisationRate = zeroBI();
+    reserve.variableRateSlope1 = zeroBI();
+    reserve.variableRateSlope2 = zeroBI();
+    reserve.stableRateSlope1 = zeroBI();
+    reserve.stableRateSlope2 = zeroBI();
     reserve.utilizationRate = zeroBD();
     reserve.totalLiquidity = zeroBI();
+    reserve.totalLiquidityAsCollateral = zeroBI();
     reserve.availableLiquidity = zeroBI();
     reserve.totalBorrows = zeroBI();
     reserve.totalBorrowsStable = zeroBI();
@@ -87,14 +120,26 @@ export function getOrInitReserve(id: Address): Reserve {
     reserve.liquidityRate = zeroBI();
     reserve.variableBorrowRate = zeroBI();
     reserve.stableBorrowRate = zeroBI();
+    reserve.averageStableBorrowRate = zeroBI();
     reserve.liquidityIndex = zeroBI();
     reserve.variableBorrowIndex = zeroBI();
     reserve.aToken = zeroAddress().toHexString();
 
-    let priceOracleAsset = getPriceOracleAsset(reserve.id);
+    reserve.lifetimeLiquidity = zeroBI();
+    reserve.lifetimeBorrows = zeroBI();
+    reserve.lifetimeBorrowsStable = zeroBI();
+    reserve.lifetimeBorrowsVariable = zeroBI();
+    reserve.lifetimeFeeOriginated = zeroBI();
+    reserve.lifetimeFeeCollected = zeroBI();
+    reserve.lifetimeRepayments = zeroBI();
+    reserve.lifetimeWithdrawals = zeroBI();
+    reserve.lifetimeLiquidated = zeroBI();
+    reserve.lifetimeFlashLoans = zeroBI();
+    reserve.lifetimeFlashloanDepositorsFee = zeroBI();
+    reserve.lifetimeFlashloanProtocolFee = zeroBI();
+
+    let priceOracleAsset = getPriceOracleAsset(underlyingAsset.toHexString());
     if (!priceOracleAsset.lastUpdateTimestamp) {
-      priceOracleAsset.oracle = getOrInitPriceOracle().id;
-      priceOracleAsset.lastUpdateTimestamp = 0;
       priceOracleAsset.save();
     }
     reserve.price = priceOracleAsset.id;
@@ -117,9 +162,10 @@ export function getPriceOracleAsset(id: string): PriceOracleAsset {
   if (!priceOracleReserve) {
     priceOracleReserve = new PriceOracleAsset(id);
     priceOracleReserve.oracle = getOrInitPriceOracle().id;
-    priceOracleReserve.priceSource = Bytes.fromHexString(
-      '0x0000000000000000000000000000000000000000'
-    ) as Bytes;
+    priceOracleReserve.priceSource = zeroAddress();
+    priceOracleReserve.dependentAssets = [];
+    priceOracleReserve.type = PRICE_ORACLE_ASSET_TYPE_SIMPLE;
+    priceOracleReserve.platform = PRICE_ORACLE_ASSET_PLATFORM_SIMPLE;
     priceOracleReserve.priceInEth = zeroBI();
     priceOracleReserve.isFallbackRequired = false;
     priceOracleReserve.lastUpdateTimestamp = 0;
@@ -132,20 +178,25 @@ export function getOrInitPriceOracle(): PriceOracle {
   let priceOracle = PriceOracle.load('1');
   if (!priceOracle) {
     priceOracle = new PriceOracle('1');
+    priceOracle.proxyPriceProvider = zeroAddress();
     priceOracle.usdPriceEth = zeroBI();
-    priceOracle.lastUpdateTimestamp = 0;
+    priceOracle.usdPriceEthMainSource = zeroAddress();
+    priceOracle.usdPriceEthFallbackRequired = false;
     priceOracle.fallbackPriceOracle = zeroAddress();
     priceOracle.tokensWithFallback = [];
+    priceOracle.lastUpdateTimestamp = 0;
     priceOracle.save();
   }
   return priceOracle as PriceOracle;
 }
 
-export function getOrInitAToken(id: Address): AToken {
-  let aToken = AToken.load(id.toHexString());
+export function getOrInitAToken(aTokenAddress: Address): AToken {
+  let aTokenId = getAtokenId(aTokenAddress);
+  let aToken = AToken.load(aTokenId);
   if (!aToken) {
-    aToken = new AToken(id.toHexString());
+    aToken = new AToken(aTokenId);
     aToken.underlyingAssetAddress = new Bytes(1);
+    aToken.pool = '';
     aToken.underlyingAssetDecimals = 18;
   }
   return aToken as AToken;
@@ -155,20 +206,25 @@ export function getOrInitReserveParamsHistoryItem(
   id: Bytes,
   reserve: Reserve
 ): ReserveParamsHistoryItem {
-  let reserveParamsHistoryItem = ReserveParamsHistoryItem.load(id.toHexString());
+  let itemId = id.toHexString() + reserve.id;
+  let reserveParamsHistoryItem = ReserveParamsHistoryItem.load(itemId);
   if (!reserveParamsHistoryItem) {
-    reserveParamsHistoryItem = new ReserveParamsHistoryItem(id.toHexString());
+    reserveParamsHistoryItem = new ReserveParamsHistoryItem(itemId);
     reserveParamsHistoryItem.variableBorrowRate = zeroBI();
     reserveParamsHistoryItem.variableBorrowIndex = zeroBI();
     reserveParamsHistoryItem.utilizationRate = zeroBD();
     reserveParamsHistoryItem.stableBorrowRate = zeroBI();
+    reserveParamsHistoryItem.averageStableBorrowRate = zeroBI();
     reserveParamsHistoryItem.liquidityIndex = zeroBI();
     reserveParamsHistoryItem.liquidityRate = zeroBI();
     reserveParamsHistoryItem.totalLiquidity = zeroBI();
     reserveParamsHistoryItem.availableLiquidity = zeroBI();
+    reserveParamsHistoryItem.totalLiquidityAsCollateral = zeroBI();
     reserveParamsHistoryItem.totalBorrows = zeroBI();
     reserveParamsHistoryItem.totalBorrowsVariable = zeroBI();
     reserveParamsHistoryItem.totalBorrowsStable = zeroBI();
+    reserveParamsHistoryItem.priceInEth = zeroBI();
+    reserveParamsHistoryItem.priceInUsd = zeroBD();
     reserveParamsHistoryItem.reserve = reserve.id;
   }
   return reserveParamsHistoryItem as ReserveParamsHistoryItem;
@@ -202,4 +258,17 @@ export function getOrInitReferrer(id: i32): Referrer {
     referrer.save();
   }
   return referrer as Referrer;
+}
+
+export function createMapContractToPool(_contractAddress: Address, pool: string): void {
+  let contractAddress = _contractAddress.toHexString();
+  let contractToPoolMapping = ContractToPoolMapping.load(contractAddress);
+
+  if (contractToPoolMapping) {
+    log.error('contract {} is already registered in the protocol', [contractAddress]);
+    throw new Error(contractAddress + 'is already registered in the protocol');
+  }
+  contractToPoolMapping = new ContractToPoolMapping(contractAddress);
+  contractToPoolMapping.pool = pool;
+  contractToPoolMapping.save();
 }

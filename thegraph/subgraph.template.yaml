@@ -5,15 +5,107 @@ schema:
   file: ./{{type}}/schema.graphql
 dataSources:
   - kind: ethereum/contract
+    name: AavePoolRegistrationHandler
+    network: {{network}}
+    source:
+      address: '{{aavePoolRegistrarAddress}}'
+      abi: LendingPoolAddressesProvider
+      startBlock: {{aavePoolRegistrarStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - LendingPoolAddressesProvider
+      abis:
+        - name: LendingPoolAddressesProvider
+          file: ../build/contracts/LendingPoolAddressesProvider.json
+      eventHandlers:
+        - event: LendingPoolManagerUpdated(indexed address)
+          handler: handleAavePoolRegistration
+      file: ./{{type}}/mapping/address-provider-registry.ts
+
+  - kind: ethereum/contract
+    name: LendingPoolAddressesProviderRegistry
+    network: {{network}}
+    source:
+      address: '{{addressesProviderRegistryAddress}}'
+      abi: LendingPoolAddressesProviderRegistry
+      startBlock: {{addressesProviderRegistryStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - LendingPoolAddressesProvider
+      abis:
+        - name: LendingPoolAddressesProviderRegistry
+          file: ../build/contracts/LendingPoolAddressesProviderRegistry.json
+      eventHandlers:
+        - event: AddressesProviderRegistered(indexed address)
+          handler: handleAddressesProviderRegistered
+      file: ./{{type}}/mapping/address-provider-registry.ts
+
+  - kind: ethereum/contract
+    name: ProxyPriceProvider
+    network: {{network}}
+    source:
+      address: '{{proxyPriceProviderAddress}}'
+      startBlock: {{proxyPriceProviderStartBlock}}
+      abi: ChainlinkProxyPriceProvider
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkAggregator
+        - PriceOracle
+        - PriceOracleAsset
+      abis:
+        - name: ChainlinkProxyPriceProvider
+          file: ../build/contracts/ChainlinkProxyPriceProvider.json
+        - name: GenericOracleI
+          file: ../build/contracts/GenericOracleI.json
+        - name: IExtendedPriceAggregator
+          file: ../build/contracts/IExtendedPriceAggregator.json
+      eventHandlers:
+        - event: AssetSourceUpdated(indexed address,indexed address)
+          handler: handleAssetSourceUpdated
+        - event: FallbackOracleUpdated(indexed address)
+          handler: handleFallbackOracleUpdated
+      file: ./{{type}}/mapping/proxy-price-provider.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkUSDETHOracle
+    network: {{network}}
+    source:
+      address: '{{chainlinkUSDETHOracleAddress}}'
+      startBlock: {{chainlinkUSDETHOracleStartBlock}}
+      abi: ChainlinkUSDETHOracleI
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - PriceOracle
+      abis:
+        - name: ChainlinkUSDETHOracleI
+          file: ../build/contracts/ChainlinkUSDETHOracleI.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256)
+          handler: handleChainlinkUSDETHPriceUpdated
+      file: ./{{type}}/mapping/price-oracle.ts
+
+
+templates:
+  - kind: ethereum/contract
     name: LendingPoolAddressesProvider
     network: {{network}}
     source:
-      address: '{{addressProviderAddress}}'
       abi: LendingPoolAddressesProvider
-      startBlock: {{addressProviderStartBlock}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - LendingPoolAddressesProvider
@@ -40,42 +132,13 @@ dataSources:
       file: ./{{type}}/mapping/lending-pool-address-provider.ts
 
   - kind: ethereum/contract
-    name: ProxyPriceProvider
-    network: {{network}}
-    source:
-      address: '{{proxyPriceProviderAddress}}'
-      startBlock: {{proxyPriceProviderStartBlock}}
-      abi: ChainlinkProxyPriceProvider
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - PriceOracle
-      abis:
-        - name: ChainlinkProxyPriceProvider
-          file: ../build/contracts/ChainlinkProxyPriceProvider.json
-        - name: GenericOracleI
-          file: ../build/contracts/GenericOracleI.json
-        - name: MockAggregatorBase
-          file: ../build/contracts/MockAggregatorBase.json
-      eventHandlers:
-        - event: AssetSourceUpdated(indexed address,indexed address)
-          handler: handleAssetSourceUpdated
-        - event: FallbackOracleUpdated(indexed address)
-          handler: handleFallbackOracleUpdated
-      file: ./{{type}}/mapping/proxy-price-provider.ts
-
-
-templates:
-  - kind: ethereum/contract
     name: LendingPoolConfigurator
     network: {{network}}
     source:
       abi: LendingPoolConfigurator
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - Reserve
@@ -124,7 +187,7 @@ templates:
       abi: LendingPoolCore
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - PoolReserve
@@ -133,8 +196,10 @@ templates:
         - name: LendingPoolCore
           file: ../build/contracts/LendingPoolCore.json
       eventHandlers:
-        - event: ReserveUpdated(indexed address,uint256,uint256,uint256,uint256,uint256)
+        - event: ReserveUpdated(indexed address,uint256,uint256,uint256,uint256,uint256) # deprecated
           handler: handleReserveUpdated
+        - event: ReserveDataUpdated(indexed address,uint256,uint256,uint256,uint256,uint256,uint256)  # new one
+          handler: handleReserveDataUpdated
       file: ./{{type}}/mapping/lending-pool-core.ts
   - kind: ethereum/contract
     name: AToken
@@ -143,7 +208,7 @@ templates:
       abi: AToken
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - AToken
@@ -175,7 +240,7 @@ templates:
       abi: LendingPool
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - ReserveOperation
@@ -218,7 +283,7 @@ templates:
       abi: GenericOracleI
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - PriceOracle
@@ -239,17 +304,46 @@ templates:
     name: ChainlinkAggregator
     network: {{network}}
     source:
-      abi: MockAggregatorBase
+      abi: IExtendedPriceAggregator
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - PriceOracleReserve
       abis:
-        - name: MockAggregatorBase
-          file: ../build/contracts/MockAggregatorBase.json
+        - name: IExtendedPriceAggregator
+          file: ../build/contracts/IExtendedPriceAggregator.json
+        - name: ChainlinkProxyPriceProvider
+          file: ../build/contracts/ChainlinkProxyPriceProvider.json
       eventHandlers:
         - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
           handler: handleChainlinkAnswerUpdated
       file: ./{{type}}/mapping/price-oracle.ts
+
+  - kind: ethereum/contract
+    name: UniswapExchange
+    network: {{network}}
+    source:
+      abi: IUniswapExchange
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - PriceOracleReserve
+      abis:
+        - name: IUniswapExchange
+          file: ../build/contracts/IUniswapExchange.json
+        - name: ChainlinkProxyPriceProvider
+          file: ../build/contracts/ChainlinkProxyPriceProvider.json
+      eventHandlers:
+        - event: TokenPurchase(indexed address,indexed uint256,indexed uint256)
+          handler: updateUniswapAssetPrice
+        - event: EthPurchase(indexed address,indexed uint256,indexed uint256)
+          handler: updateUniswapAssetPrice
+        - event: AddLiquidity(indexed address,indexed uint256,indexed uint256)
+          handler: updateUniswapAssetPrice
+        - event: RemoveLiquidity(indexed address,indexed uint256,indexed uint256)
+          handler: updateUniswapAssetPrice
+      file: ./{{type}}/mapping/uniswap-exchange.ts

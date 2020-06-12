@@ -1,59 +1,55 @@
-import { BigInt, BigDecimal, EthereumEvent } from '@graphprotocol/graph-ts';
+import { BigDecimal, BigInt, ethereum } from '@graphprotocol/graph-ts';
 
-import { zeroBD, zeroBI } from '../../utils/converters';
+import {
+  getBorrowRateMode,
+  zeroBD,
+  zeroBI,
+  BORROW_MODE_VARIABLE,
+  BORROW_MODE_STABLE,
+  getBorrowRateModeFromString,
+} from '../../utils/converters';
 import {
   Borrow,
   Deposit,
-  Repay,
   FlashLoan,
   LiquidationCall,
+  OriginationFeeLiquidated,
+  RebalanceStableBorrowRate,
   RedeemUnderlying,
+  Repay,
   ReserveUsedAsCollateralDisabled,
   ReserveUsedAsCollateralEnabled,
   Swap,
-  RebalanceStableBorrowRate,
-  OriginationFeeLiquidated,
 } from '../generated/templates/LendingPool/LendingPool';
 import {
+  getOrInitPriceOracle,
   getOrInitReferrer,
   getOrInitReserve,
   getOrInitReserveParamsHistoryItem,
+  getOrInitUser,
   getOrInitUserReserve,
-  getUserReserveId,
+  getPriceOracleAsset,
 } from '../initializers';
 import {
-  Reserve,
-  UserBorrowHistoryItem,
-  UserReserve,
-  Deposit as DepositAction,
   Borrow as BorrowAction,
-  RedeemUnderlying as RedeemUnderlyingAction,
-  Swap as SwapAction,
-  RebalanceStableBorrowRate as RebalanceStableBorrowRateAction,
-  Repay as RepayAction,
+  Deposit as DepositAction,
   FlashLoan as FlashLoanAction,
   LiquidationCall as LiquidationCallAction,
   OriginationFeeLiquidation as OriginationFeeLiquidationAction,
+  RebalanceStableBorrowRate as RebalanceStableBorrowRateAction,
+  RedeemUnderlying as RedeemUnderlyingAction,
+  Repay as RepayAction,
+  Reserve,
+  Swap as SwapAction,
+  UsageAsCollateral as UsageAsCollateralAction,
+  UserBorrowHistoryItem,
+  UserReserve,
 } from '../generated/schema';
-import { getHistoryId } from './id-generation';
-
-const BORROW_MODE_STABLE = 'Stable';
-const BORROW_MODE_VARIABLE = 'Variable';
-const BORROW_MODE_NONE = 'None';
-
-function getBorrowRateMode(_mode: BigInt): string {
-  if (_mode.equals(zeroBI())) {
-    return BORROW_MODE_NONE;
-  } else if (_mode.equals(BigInt.fromI32(1))) {
-    return BORROW_MODE_STABLE;
-  } else {
-    return BORROW_MODE_VARIABLE;
-  }
-}
+import { EventTypeRef, getHistoryId } from '../../utils/id-generation';
 
 function saveUserReserve(
   userReserve: UserReserve,
-  event: EthereumEvent,
+  event: ethereum.Event,
   borrowOperation: boolean
 ): void {
   if (borrowOperation) {
@@ -82,7 +78,7 @@ function calculateUtilizationRate(reserve: Reserve): BigDecimal {
     .truncate(8);
 }
 
-function saveReserve<T extends EthereumEvent>(reserve: Reserve, event: T): void {
+export function saveReserve(reserve: Reserve, event: ethereum.Event): void {
   reserve.save();
 
   let reserveParamsHistoryItem = getOrInitReserveParamsHistoryItem(event.transaction.hash, reserve);
@@ -91,19 +87,34 @@ function saveReserve<T extends EthereumEvent>(reserve: Reserve, event: T): void 
   reserveParamsHistoryItem.totalBorrows = reserve.totalBorrows;
   reserveParamsHistoryItem.availableLiquidity = reserve.availableLiquidity;
   reserveParamsHistoryItem.totalLiquidity = reserve.totalLiquidity;
+  reserveParamsHistoryItem.totalLiquidityAsCollateral = reserve.totalLiquidityAsCollateral;
   reserveParamsHistoryItem.utilizationRate = reserve.utilizationRate;
+  reserveParamsHistoryItem.variableBorrowRate = reserve.variableBorrowRate;
+  reserveParamsHistoryItem.variableBorrowIndex = reserve.variableBorrowIndex;
+  reserveParamsHistoryItem.stableBorrowRate = reserve.stableBorrowRate;
+  reserveParamsHistoryItem.liquidityIndex = reserve.liquidityIndex;
+  reserveParamsHistoryItem.liquidityRate = reserve.liquidityRate;
+
+  let priceOracleAsset = getPriceOracleAsset(reserve.price);
+  reserveParamsHistoryItem.priceInEth = priceOracleAsset.priceInEth;
+
+  let priceOracle = getOrInitPriceOracle();
+  reserveParamsHistoryItem.priceInUsd = reserveParamsHistoryItem.priceInEth
+    .toBigDecimal()
+    .div(priceOracle.usdPriceEth.toBigDecimal());
+
   reserveParamsHistoryItem.timestamp = event.block.timestamp.toI32();
   reserveParamsHistoryItem.save();
 }
 
-function genericBorrow(
+function borrowSideStateUpdate(
   userReserve: UserReserve,
   poolReserve: Reserve,
   borrowedAmount: BigInt,
   accruedBorrowInterest: BigInt,
   borrowRate: BigInt,
   _borrowRateMode: BigInt,
-  event: EthereumEvent
+  event: ethereum.Event
 ): void {
   let borrowRateMode = getBorrowRateMode(_borrowRateMode);
 
@@ -132,46 +143,59 @@ function genericBorrow(
   userReserve.borrowRate = borrowRate;
   userReserve.borrowRateMode = borrowRateMode;
   userReserve.principalBorrows = userReserve.principalBorrows
-    .plus(borrowedAmount)
-    .plus(accruedBorrowInterest);
+    .plus(accruedBorrowInterest)
+    .plus(borrowedAmount);
   saveUserReserve(userReserve, event, true);
 
   if (borrowRateMode == BORROW_MODE_VARIABLE) {
     poolReserve.totalBorrowsVariable = poolReserve.totalBorrowsVariable
-      .plus(borrowedAmount)
-      .plus(accruedBorrowInterest);
+      .plus(accruedBorrowInterest)
+      .plus(borrowedAmount);
   } else {
     poolReserve.totalBorrowsStable = poolReserve.totalBorrowsStable
-      .plus(borrowedAmount)
-      .plus(accruedBorrowInterest);
+      .plus(accruedBorrowInterest)
+      .plus(borrowedAmount);
   }
   poolReserve.totalBorrows = poolReserve.totalBorrows
-    .plus(borrowedAmount)
-    .plus(accruedBorrowInterest);
+    .plus(accruedBorrowInterest)
+    .plus(borrowedAmount);
 
   poolReserve.availableLiquidity = poolReserve.availableLiquidity.minus(borrowedAmount);
   poolReserve.totalLiquidity = poolReserve.totalLiquidity.plus(accruedBorrowInterest);
+  if (userReserve.usageAsCollateralEnabledOnUser) {
+    poolReserve.totalLiquidityAsCollateral = poolReserve.totalLiquidityAsCollateral.plus(
+      accruedBorrowInterest
+    );
+  }
   poolReserve.utilizationRate = calculateUtilizationRate(poolReserve);
   saveReserve(poolReserve, event);
 }
 
 export function handleDeposit(event: Deposit): void {
-  let poolReserve = getOrInitReserve(event.params._reserve);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
   let depositedAmount = event.params._amount;
 
   poolReserve.totalLiquidity = poolReserve.totalLiquidity.plus(depositedAmount);
+  if (userReserve.usageAsCollateralEnabledOnUser) {
+    poolReserve.totalLiquidityAsCollateral = poolReserve.totalLiquidityAsCollateral.plus(
+      depositedAmount
+    );
+  }
   poolReserve.availableLiquidity = poolReserve.availableLiquidity.plus(depositedAmount);
   poolReserve.utilizationRate = calculateUtilizationRate(poolReserve);
+
+  poolReserve.lifetimeLiquidity = poolReserve.lifetimeLiquidity.plus(depositedAmount);
   saveReserve(poolReserve, event);
 
-  let id = getHistoryId(event) + 'd';
+  let id = getHistoryId(event, EventTypeRef.Deposit);
   if (DepositAction.load(id)) {
     id = id + '0';
   }
   let deposit = new DepositAction(id);
-  deposit.pool = '1';
-  deposit.user = event.params._user.toHexString();
-  deposit.userReserve = getUserReserveId(event.params._user, event.params._reserve);
+  deposit.pool = poolReserve.pool;
+  deposit.user = userReserve.user;
+  deposit.userReserve = userReserve.id;
   deposit.reserve = poolReserve.id;
   deposit.amount = depositedAmount;
   deposit.timestamp = event.params._timestamp.toI32();
@@ -183,18 +207,27 @@ export function handleDeposit(event: Deposit): void {
 }
 
 export function handleRedeemUnderlying(event: RedeemUnderlying): void {
-  let poolReserve = getOrInitReserve(event.params._reserve);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
   let redeemedAmount = event.params._amount;
 
   poolReserve.availableLiquidity = poolReserve.availableLiquidity.minus(redeemedAmount);
   poolReserve.totalLiquidity = poolReserve.totalLiquidity.minus(redeemedAmount);
+  if (userReserve.usageAsCollateralEnabledOnUser) {
+    poolReserve.totalLiquidityAsCollateral = poolReserve.totalLiquidityAsCollateral.minus(
+      redeemedAmount
+    );
+  }
+
   poolReserve.utilizationRate = calculateUtilizationRate(poolReserve);
+
+  poolReserve.lifetimeWithdrawals = poolReserve.lifetimeWithdrawals.plus(redeemedAmount);
   saveReserve(poolReserve, event);
 
-  let redeemUnderlying = new RedeemUnderlyingAction(getHistoryId(event));
-  redeemUnderlying.pool = '1';
-  redeemUnderlying.user = event.params._user.toHexString();
-  redeemUnderlying.userReserve = getUserReserveId(event.params._user, event.params._reserve);
+  let redeemUnderlying = new RedeemUnderlyingAction(getHistoryId(event, EventTypeRef.Redeem));
+  redeemUnderlying.pool = poolReserve.pool;
+  redeemUnderlying.user = userReserve.user;
+  redeemUnderlying.userReserve = userReserve.id;
   redeemUnderlying.reserve = poolReserve.id;
   redeemUnderlying.amount = redeemedAmount;
   redeemUnderlying.timestamp = event.params._timestamp.toI32();
@@ -202,12 +235,28 @@ export function handleRedeemUnderlying(event: RedeemUnderlying): void {
 }
 
 export function handleBorrow(event: Borrow): void {
-  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
-  let poolReserve = getOrInitReserve(event.params._reserve);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
+  let user = getOrInitUser(event.params._user);
+  let originationFee = event.params._originationFee;
 
-  userReserve.originationFee = userReserve.originationFee.plus(event.params._originationFee);
+  if (userReserve.principalBorrows.equals(zeroBI())) {
+    user.borrowedReservesCount += 1;
+    user.save();
+  }
 
-  genericBorrow(
+  userReserve.originationFee = userReserve.originationFee.plus(originationFee);
+
+  let borrowedAmount = event.params._amount;
+  poolReserve.lifetimeBorrows = poolReserve.lifetimeBorrows.plus(borrowedAmount);
+  poolReserve.lifetimeFeeOriginated = poolReserve.lifetimeFeeOriginated.plus(originationFee);
+  if (getBorrowRateMode(event.params._borrowRateMode) === BORROW_MODE_VARIABLE) {
+    poolReserve.lifetimeBorrowsVariable = poolReserve.lifetimeBorrowsVariable.plus(borrowedAmount);
+  } else {
+    poolReserve.lifetimeBorrowsStable = poolReserve.lifetimeBorrowsStable.plus(borrowedAmount);
+  }
+
+  borrowSideStateUpdate(
     userReserve,
     poolReserve,
     event.params._amount,
@@ -217,9 +266,9 @@ export function handleBorrow(event: Borrow): void {
     event
   );
 
-  let borrow = new BorrowAction(getHistoryId(event));
-  borrow.pool = '1';
-  borrow.user = event.params._user.toHexString();
+  let borrow = new BorrowAction(getHistoryId(event, EventTypeRef.Borrow));
+  borrow.pool = poolReserve.pool;
+  borrow.user = user.id;
   borrow.userReserve = userReserve.id;
   borrow.reserve = poolReserve.id;
   borrow.amount = event.params._amount;
@@ -235,11 +284,11 @@ export function handleBorrow(event: Borrow): void {
 }
 
 export function handleSwap(event: Swap): void {
-  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
-  let poolReserve = getOrInitReserve(event.params._reserve);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
 
-  let swapHistoryItem = new SwapAction(getHistoryId(event));
-  swapHistoryItem.pool = '1';
+  let swapHistoryItem = new SwapAction(getHistoryId(event, EventTypeRef.Swap));
+  swapHistoryItem.pool = poolReserve.pool;
   swapHistoryItem.user = userReserve.user;
   swapHistoryItem.userReserve = userReserve.id;
   swapHistoryItem.reserve = poolReserve.id;
@@ -254,7 +303,7 @@ export function handleSwap(event: Swap): void {
   swapHistoryItem.timestamp = event.params._timestamp.toI32();
   swapHistoryItem.save();
 
-  genericBorrow(
+  borrowSideStateUpdate(
     userReserve,
     poolReserve,
     zeroBI(),
@@ -266,10 +315,12 @@ export function handleSwap(event: Swap): void {
 }
 
 export function handleRebalanceStableBorrowRate(event: RebalanceStableBorrowRate): void {
-  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
-  let poolReserve = getOrInitReserve(event.params._reserve);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
 
-  let rebalance = new RebalanceStableBorrowRateAction(getHistoryId(event));
+  let rebalance = new RebalanceStableBorrowRateAction(
+    getHistoryId(event, EventTypeRef.RebalanceStableBorrowRate)
+  );
   rebalance.userReserve = userReserve.id;
   rebalance.reserve = poolReserve.id;
   rebalance.accruedBorrowInterest = event.params._borrowBalanceIncrease;
@@ -278,7 +329,7 @@ export function handleRebalanceStableBorrowRate(event: RebalanceStableBorrowRate
   rebalance.timestamp = event.block.timestamp.toI32();
   rebalance.save();
 
-  genericBorrow(
+  borrowSideStateUpdate(
     userReserve,
     poolReserve,
     zeroBI(),
@@ -290,39 +341,34 @@ export function handleRebalanceStableBorrowRate(event: RebalanceStableBorrowRate
 }
 
 export function handleRepay(event: Repay): void {
-  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
-  let poolReserve = getOrInitReserve(event.params._reserve);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
 
   let repaidAmountAfterFee = event.params._amountMinusFees;
   let repaidFee = event.params._fees;
-
-  let accruedBorrowInterest = event.params._borrowBalanceIncrease;
   userReserve.originationFee = userReserve.originationFee.minus(repaidFee);
 
-  userReserve.principalBorrows = userReserve.principalBorrows
-    .plus(accruedBorrowInterest)
-    .minus(repaidAmountAfterFee);
-  saveUserReserve(userReserve, event, true);
+  poolReserve.lifetimeRepayments = poolReserve.lifetimeRepayments.plus(repaidAmountAfterFee);
+  poolReserve.lifetimeFeeCollected = poolReserve.lifetimeFeeCollected.plus(repaidFee);
 
-  poolReserve.totalBorrows = poolReserve.totalBorrows
-    .plus(accruedBorrowInterest)
-    .minus(repaidAmountAfterFee);
-  if (userReserve.borrowRateMode == BORROW_MODE_STABLE) {
-    poolReserve.totalBorrowsStable = poolReserve.totalBorrowsStable
-      .plus(accruedBorrowInterest)
-      .minus(repaidAmountAfterFee);
-  } else {
-    poolReserve.totalBorrowsVariable = poolReserve.totalBorrowsVariable
-      .plus(accruedBorrowInterest)
-      .minus(repaidAmountAfterFee);
+  borrowSideStateUpdate(
+    userReserve,
+    poolReserve,
+    event.params._amountMinusFees.times(BigInt.fromI32(-1)),
+    event.params._borrowBalanceIncrease,
+    userReserve.borrowRate,
+    getBorrowRateModeFromString(userReserve.borrowRateMode),
+    event
+  );
+
+  if (userReserve.principalBorrows.equals(zeroBI())) {
+    let user = getOrInitUser(event.params._user);
+    user.borrowedReservesCount -= 1;
+    user.save();
   }
-  poolReserve.availableLiquidity = poolReserve.availableLiquidity.plus(repaidAmountAfterFee);
-  poolReserve.totalLiquidity = poolReserve.totalLiquidity.plus(accruedBorrowInterest);
-  poolReserve.utilizationRate = calculateUtilizationRate(poolReserve);
-  saveReserve(poolReserve, event);
 
-  let repay = new RepayAction(getHistoryId(event));
-  repay.pool = '1';
+  let repay = new RepayAction(getHistoryId(event, EventTypeRef.Repay));
+  repay.pool = poolReserve.pool;
   repay.user = userReserve.user;
   repay.userReserve = userReserve.id;
   repay.reserve = poolReserve.id;
@@ -333,60 +379,70 @@ export function handleRepay(event: Repay): void {
 }
 
 export function handleLiquidationCall(event: LiquidationCall): void {
+  let user = getOrInitUser(event.params._user);
+
   // if liquidator don't want to receive ATokens - withdraw amount from the reserve
-  let collateralPoolReserve = getOrInitReserve(event.params._collateral);
+  let collateralPoolReserve = getOrInitReserve(event.params._collateral, event);
+  let collateralUserReserve = getOrInitUserReserve(
+    event.params._user,
+    event.params._collateral,
+    event
+  );
   let liquidatedCollateralAmount = event.params._liquidatedCollateralAmount;
+
+  collateralPoolReserve.lifetimeLiquidated = collateralPoolReserve.lifetimeLiquidated.plus(
+    liquidatedCollateralAmount
+  );
+
   if (!event.params._receiveAToken) {
     collateralPoolReserve.totalLiquidity = collateralPoolReserve.totalLiquidity.minus(
       liquidatedCollateralAmount
     );
+    if (collateralUserReserve.usageAsCollateralEnabledOnUser) {
+      collateralPoolReserve.totalLiquidityAsCollateral = collateralPoolReserve.totalLiquidityAsCollateral.minus(
+        liquidatedCollateralAmount
+      );
+    }
+
     collateralPoolReserve.availableLiquidity = collateralPoolReserve.availableLiquidity.minus(
       liquidatedCollateralAmount
     );
     collateralPoolReserve.utilizationRate = calculateUtilizationRate(collateralPoolReserve);
-    collateralPoolReserve.save();
   }
+  collateralPoolReserve.save();
 
-  let principalUserReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
-  let principalPoolReserve = getOrInitReserve(event.params._reserve);
+  let principalUserReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+  let principalPoolReserve = getOrInitReserve(event.params._reserve, event);
+
   let purchaseAmount = event.params._purchaseAmount;
   let accruedBorrowInterest = event.params._accruedBorrowInterest;
-  principalUserReserve.principalBorrows = principalUserReserve.principalBorrows
-    .minus(purchaseAmount)
-    .plus(accruedBorrowInterest);
-  saveUserReserve(principalUserReserve, event, true);
 
-  principalPoolReserve.availableLiquidity = principalPoolReserve.availableLiquidity.plus(
+  principalPoolReserve.lifetimeRepayments = principalPoolReserve.lifetimeRepayments.plus(
     purchaseAmount
   );
-  principalPoolReserve.totalLiquidity = principalPoolReserve.totalLiquidity.plus(
-    accruedBorrowInterest
+
+  borrowSideStateUpdate(
+    principalUserReserve,
+    principalPoolReserve,
+    purchaseAmount.times(BigInt.fromI32(-1)),
+    accruedBorrowInterest,
+    principalUserReserve.borrowRate,
+    getBorrowRateModeFromString(principalUserReserve.borrowRateMode),
+    event
   );
-  principalPoolReserve.utilizationRate = calculateUtilizationRate(principalPoolReserve);
 
-  if (principalUserReserve.borrowRateMode == BORROW_MODE_VARIABLE) {
-    principalPoolReserve.totalBorrowsVariable = principalPoolReserve.totalBorrowsVariable
-      .minus(purchaseAmount)
-      .plus(accruedBorrowInterest);
-  } else {
-    principalPoolReserve.totalBorrowsStable = principalPoolReserve.totalBorrowsStable
-      .minus(purchaseAmount)
-      .plus(accruedBorrowInterest);
+  if (principalUserReserve.principalBorrows.equals(zeroBI())) {
+    user.borrowedReservesCount -= 1;
+    user.save();
   }
-  principalPoolReserve.totalBorrows = principalPoolReserve.totalBorrows
-    .minus(purchaseAmount)
-    .plus(accruedBorrowInterest);
 
-  saveReserve(principalPoolReserve, event);
-
-  let liquidationCall = new LiquidationCallAction(getHistoryId(event));
-  liquidationCall.pool = '1';
-  liquidationCall.user = event.params._user.toHexString();
+  let liquidationCall = new LiquidationCallAction(
+    getHistoryId(event, EventTypeRef.LiquidationCall)
+  );
+  liquidationCall.pool = collateralPoolReserve.pool;
+  liquidationCall.user = user.id;
   liquidationCall.collateralReserve = collateralPoolReserve.id;
-  liquidationCall.collateralUserReserve = getOrInitUserReserve(
-    event.params._user,
-    event.params._collateral
-  ).id;
+  liquidationCall.collateralUserReserve = collateralUserReserve.id;
   liquidationCall.collateralAmount = liquidatedCollateralAmount;
   liquidationCall.principalReserve = principalPoolReserve.id;
   liquidationCall.principalUserReserve = principalUserReserve.id;
@@ -397,18 +453,28 @@ export function handleLiquidationCall(event: LiquidationCall): void {
 }
 
 export function handleFlashLoan(event: FlashLoan): void {
-  let poolReserve = getOrInitReserve(event.params._reserve);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
 
   let totalFee = event.params._totalFee;
   let protocolFee = event.params._protocolFee;
   let accumulatedFee = totalFee.minus(protocolFee);
+
   poolReserve.totalLiquidity = poolReserve.totalLiquidity.plus(accumulatedFee);
   poolReserve.availableLiquidity = poolReserve.availableLiquidity.plus(accumulatedFee);
   poolReserve.utilizationRate = calculateUtilizationRate(poolReserve);
+
+  poolReserve.lifetimeFlashLoans = poolReserve.lifetimeFlashLoans.plus(event.params._amount);
+  poolReserve.lifetimeFlashloanProtocolFee = poolReserve.lifetimeFlashloanProtocolFee.plus(
+    protocolFee
+  );
+  poolReserve.lifetimeFlashloanDepositorsFee = poolReserve.lifetimeFlashloanDepositorsFee.plus(
+    accumulatedFee
+  );
+
   saveReserve(poolReserve, event);
 
-  let flashLoan = new FlashLoanAction(getHistoryId(event));
-  flashLoan.pool = '1';
+  let flashLoan = new FlashLoanAction(getHistoryId(event, EventTypeRef.FlashLoan));
+  flashLoan.pool = poolReserve.pool;
   flashLoan.reserve = poolReserve.id;
   flashLoan.target = event.params._target;
   flashLoan.totalFee = totalFee;
@@ -419,28 +485,77 @@ export function handleFlashLoan(event: FlashLoan): void {
 }
 
 export function handleReserveUsedAsCollateralEnabled(event: ReserveUsedAsCollateralEnabled): void {
-  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+
+  if (!userReserve.usageAsCollateralEnabledOnUser) {
+    poolReserve.totalLiquidityAsCollateral = poolReserve.totalLiquidityAsCollateral.plus(
+      userReserve.principalATokenBalance
+    );
+  }
+
+  let usageAsCollateral = new UsageAsCollateralAction(
+    getHistoryId(event, EventTypeRef.UsageAsCollateral)
+  );
+  usageAsCollateral.pool = poolReserve.pool;
+  usageAsCollateral.fromState = userReserve.usageAsCollateralEnabledOnUser;
+  usageAsCollateral.toState = true;
+  usageAsCollateral.user = userReserve.user;
+  usageAsCollateral.userReserve = userReserve.id;
+  usageAsCollateral.reserve = poolReserve.id;
+  usageAsCollateral.timestamp = event.block.timestamp.toI32();
+  usageAsCollateral.save();
 
   userReserve.usageAsCollateralEnabledOnUser = true;
   saveUserReserve(userReserve, event, false);
 }
+
 export function handleReserveUsedAsCollateralDisabled(
   event: ReserveUsedAsCollateralDisabled
 ): void {
-  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
+  let poolReserve = getOrInitReserve(event.params._reserve, event);
+  let userReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+
+  if (userReserve.usageAsCollateralEnabledOnUser) {
+    poolReserve.totalLiquidityAsCollateral = poolReserve.totalLiquidityAsCollateral.minus(
+      userReserve.principalATokenBalance
+    );
+  }
+
+  let usageAsCollateral = new UsageAsCollateralAction(
+    getHistoryId(event, EventTypeRef.UsageAsCollateral)
+  );
+  usageAsCollateral.pool = poolReserve.pool;
+  usageAsCollateral.fromState = userReserve.usageAsCollateralEnabledOnUser;
+  usageAsCollateral.toState = false;
+  usageAsCollateral.user = userReserve.user;
+  usageAsCollateral.userReserve = userReserve.id;
+  usageAsCollateral.reserve = poolReserve.id;
+  usageAsCollateral.timestamp = event.block.timestamp.toI32();
+  usageAsCollateral.save();
 
   userReserve.usageAsCollateralEnabledOnUser = false;
   saveUserReserve(userReserve, event, false);
 }
 
 export function handleOriginationFeeLiquidated(event: OriginationFeeLiquidated): void {
-  let principalUserReserve = getOrInitUserReserve(event.params._user, event.params._reserve);
-  let principalPoolReserve = getOrInitReserve(event.params._reserve);
+  let principalUserReserve = getOrInitUserReserve(event.params._user, event.params._reserve, event);
+  let principalPoolReserve = getOrInitReserve(event.params._reserve, event);
   let feeLiquidated = event.params._feeLiquidated;
-  principalUserReserve.originationFee = principalUserReserve.originationFee.minus(feeLiquidated);
-  saveUserReserve(principalUserReserve, event, false);
 
-  let collateralPoolReserve = getOrInitReserve(event.params._collateral);
+  principalUserReserve.originationFee = principalUserReserve.originationFee.minus(feeLiquidated);
+  principalPoolReserve.lifetimeFeeCollected = principalPoolReserve.lifetimeFeeCollected.plus(
+    feeLiquidated
+  );
+  saveUserReserve(principalUserReserve, event, false);
+  principalPoolReserve.save();
+
+  let collateralPoolReserve = getOrInitReserve(event.params._collateral, event);
+  let collateralUserReserve = getOrInitUserReserve(
+    event.params._user,
+    event.params._collateral,
+    event
+  );
   let liquidatedCollateralForFee = event.params._liquidatedCollateralForFee;
   collateralPoolReserve.availableLiquidity = collateralPoolReserve.availableLiquidity.minus(
     liquidatedCollateralForFee
@@ -448,20 +563,31 @@ export function handleOriginationFeeLiquidated(event: OriginationFeeLiquidated):
   collateralPoolReserve.totalLiquidity = collateralPoolReserve.totalLiquidity.minus(
     liquidatedCollateralForFee
   );
+  if (collateralUserReserve.usageAsCollateralEnabledOnUser) {
+    collateralPoolReserve.totalLiquidityAsCollateral = collateralPoolReserve.totalLiquidityAsCollateral.minus(
+      liquidatedCollateralForFee
+    );
+  }
+
   collateralPoolReserve.utilizationRate = calculateUtilizationRate(collateralPoolReserve);
+
+  collateralPoolReserve.lifetimeLiquidated = collateralPoolReserve.lifetimeLiquidated.plus(
+    liquidatedCollateralForFee
+  );
+
   collateralPoolReserve.save();
 
-  let originationFeeLiquidation = new OriginationFeeLiquidationAction(getHistoryId(event));
-  originationFeeLiquidation.pool = '1';
+  let originationFeeLiquidation = new OriginationFeeLiquidationAction(
+    getHistoryId(event, EventTypeRef.OriginationFeeLiquidation)
+  );
+  originationFeeLiquidation.pool = principalPoolReserve.pool;
   originationFeeLiquidation.user = event.params._user.toHexString();
   originationFeeLiquidation.collateralReserve = collateralPoolReserve.id;
-  originationFeeLiquidation.collateralUserReserve = getOrInitUserReserve(
-    event.params._user,
-    event.params._collateral
-  ).id;
+  originationFeeLiquidation.collateralUserReserve = collateralUserReserve.id;
   originationFeeLiquidation.principalReserve = principalPoolReserve.id;
   originationFeeLiquidation.principalUserReserve = principalUserReserve.id;
   originationFeeLiquidation.feeLiquidated = feeLiquidated;
+  originationFeeLiquidation.liquidatedCollateralForFee = liquidatedCollateralForFee;
   originationFeeLiquidation.timestamp = event.block.timestamp.toI32();
   originationFeeLiquidation.save();
 }

@@ -12,7 +12,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class LendingPoolConfigurationHistoryItem extends Entity {
+export class Protocol extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -20,23 +20,17 @@ export class LendingPoolConfigurationHistoryItem extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(
-      id !== null,
-      "Cannot save LendingPoolConfigurationHistoryItem entity without an ID"
-    );
+    assert(id !== null, "Cannot save Protocol entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save LendingPoolConfigurationHistoryItem entity with non-string ID. " +
+      "Cannot save Protocol entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("LendingPoolConfigurationHistoryItem", id.toString(), this);
+    store.set("Protocol", id.toString(), this);
   }
 
-  static load(id: string): LendingPoolConfigurationHistoryItem | null {
-    return store.get(
-      "LendingPoolConfigurationHistoryItem",
-      id
-    ) as LendingPoolConfigurationHistoryItem | null;
+  static load(id: string): Protocol | null {
+    return store.get("Protocol", id) as Protocol | null;
   }
 
   get id(): string {
@@ -48,13 +42,105 @@ export class LendingPoolConfigurationHistoryItem extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get provider(): string {
-    let value = this.get("provider");
+  get pools(): Array<string> {
+    let value = this.get("pools");
+    return value.toStringArray();
+  }
+
+  set pools(value: Array<string>) {
+    this.set("pools", Value.fromStringArray(value));
+  }
+}
+
+export class ContractToPoolMapping extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id !== null,
+      "Cannot save ContractToPoolMapping entity without an ID"
+    );
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save ContractToPoolMapping entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("ContractToPoolMapping", id.toString(), this);
+  }
+
+  static load(id: string): ContractToPoolMapping | null {
+    return store.get(
+      "ContractToPoolMapping",
+      id
+    ) as ContractToPoolMapping | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
     return value.toString();
   }
 
-  set provider(value: string) {
-    this.set("provider", Value.fromString(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+}
+
+export class PoolConfigurationHistoryItem extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id !== null,
+      "Cannot save PoolConfigurationHistoryItem entity without an ID"
+    );
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save PoolConfigurationHistoryItem entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("PoolConfigurationHistoryItem", id.toString(), this);
+  }
+
+  static load(id: string): PoolConfigurationHistoryItem | null {
+    return store.get(
+      "PoolConfigurationHistoryItem",
+      id
+    ) as PoolConfigurationHistoryItem | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
   }
 
   get lendingPool(): Bytes | null {
@@ -243,7 +329,7 @@ export class LendingPoolConfigurationHistoryItem extends Entity {
   }
 }
 
-export class LendingPoolConfiguration extends Entity {
+export class Pool extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -251,23 +337,17 @@ export class LendingPoolConfiguration extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(
-      id !== null,
-      "Cannot save LendingPoolConfiguration entity without an ID"
-    );
+    assert(id !== null, "Cannot save Pool entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save LendingPoolConfiguration entity with non-string ID. " +
+      "Cannot save Pool entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("LendingPoolConfiguration", id.toString(), this);
+    store.set("Pool", id.toString(), this);
   }
 
-  static load(id: string): LendingPoolConfiguration | null {
-    return store.get(
-      "LendingPoolConfiguration",
-      id
-    ) as LendingPoolConfiguration | null;
+  static load(id: string): Pool | null {
+    return store.get("Pool", id) as Pool | null;
   }
 
   get id(): string {
@@ -277,6 +357,15 @@ export class LendingPoolConfiguration extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get protocol(): string {
+    let value = this.get("protocol");
+    return value.toString();
+  }
+
+  set protocol(value: string) {
+    this.set("protocol", Value.fromString(value));
   }
 
   get lendingPool(): Bytes | null {
@@ -516,6 +605,15 @@ export class LendingPoolConfiguration extends Entity {
 
   set swapHistory(value: Array<string>) {
     this.set("swapHistory", Value.fromStringArray(value));
+  }
+
+  get usageAsCollateralHistory(): Array<string> {
+    let value = this.get("usageAsCollateralHistory");
+    return value.toStringArray();
+  }
+
+  set usageAsCollateralHistory(value: Array<string>) {
+    this.set("usageAsCollateralHistory", Value.fromStringArray(value));
   }
 
   get rebalanceStableBorrowRateHistory(): Array<string> {
@@ -792,6 +890,33 @@ export class PriceOracleAsset extends Entity {
     this.set("isFallbackRequired", Value.fromBoolean(value));
   }
 
+  get type(): string {
+    let value = this.get("type");
+    return value.toString();
+  }
+
+  set type(value: string) {
+    this.set("type", Value.fromString(value));
+  }
+
+  get platform(): string {
+    let value = this.get("platform");
+    return value.toString();
+  }
+
+  set platform(value: string) {
+    this.set("platform", Value.fromString(value));
+  }
+
+  get dependentAssets(): Array<string> {
+    let value = this.get("dependentAssets");
+    return value.toStringArray();
+  }
+
+  set dependentAssets(value: Array<string>) {
+    this.set("dependentAssets", Value.fromStringArray(value));
+  }
+
   get lastUpdateTimestamp(): i32 {
     let value = this.get("lastUpdateTimestamp");
     return value.toI32();
@@ -841,6 +966,15 @@ export class PriceOracle extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get proxyPriceProvider(): Bytes {
+    let value = this.get("proxyPriceProvider");
+    return value.toBytes();
+  }
+
+  set proxyPriceProvider(value: Bytes) {
+    this.set("proxyPriceProvider", Value.fromBytes(value));
+  }
+
   get usdPriceEth(): BigInt {
     let value = this.get("usdPriceEth");
     return value.toBigInt();
@@ -848,6 +982,24 @@ export class PriceOracle extends Entity {
 
   set usdPriceEth(value: BigInt) {
     this.set("usdPriceEth", Value.fromBigInt(value));
+  }
+
+  get usdPriceEthMainSource(): Bytes {
+    let value = this.get("usdPriceEthMainSource");
+    return value.toBytes();
+  }
+
+  set usdPriceEthMainSource(value: Bytes) {
+    this.set("usdPriceEthMainSource", Value.fromBytes(value));
+  }
+
+  get usdPriceEthFallbackRequired(): boolean {
+    let value = this.get("usdPriceEthFallbackRequired");
+    return value.toBoolean();
+  }
+
+  set usdPriceEthFallbackRequired(value: boolean) {
+    this.set("usdPriceEthFallbackRequired", Value.fromBoolean(value));
   }
 
   get fallbackPriceOracle(): Bytes {
@@ -924,6 +1076,15 @@ export class AToken extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
   }
 
   get underlyingAssetAddress(): Bytes {
@@ -1419,6 +1580,100 @@ export class Swap extends Entity {
 
   set accruedBorrowInterest(value: BigInt) {
     this.set("accruedBorrowInterest", Value.fromBigInt(value));
+  }
+
+  get timestamp(): i32 {
+    let value = this.get("timestamp");
+    return value.toI32();
+  }
+
+  set timestamp(value: i32) {
+    this.set("timestamp", Value.fromI32(value));
+  }
+}
+
+export class UsageAsCollateral extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save UsageAsCollateral entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save UsageAsCollateral entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("UsageAsCollateral", id.toString(), this);
+  }
+
+  static load(id: string): UsageAsCollateral | null {
+    return store.get("UsageAsCollateral", id) as UsageAsCollateral | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get pool(): string {
+    let value = this.get("pool");
+    return value.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
+  get user(): string {
+    let value = this.get("user");
+    return value.toString();
+  }
+
+  set user(value: string) {
+    this.set("user", Value.fromString(value));
+  }
+
+  get reserve(): string {
+    let value = this.get("reserve");
+    return value.toString();
+  }
+
+  set reserve(value: string) {
+    this.set("reserve", Value.fromString(value));
+  }
+
+  get userReserve(): string {
+    let value = this.get("userReserve");
+    return value.toString();
+  }
+
+  set userReserve(value: string) {
+    this.set("userReserve", Value.fromString(value));
+  }
+
+  get fromState(): boolean {
+    let value = this.get("fromState");
+    return value.toBoolean();
+  }
+
+  set fromState(value: boolean) {
+    this.set("fromState", Value.fromBoolean(value));
+  }
+
+  get toState(): boolean {
+    let value = this.get("toState");
+    return value.toBoolean();
+  }
+
+  set toState(value: boolean) {
+    this.set("toState", Value.fromBoolean(value));
   }
 
   get timestamp(): i32 {
@@ -1948,6 +2203,15 @@ export class OriginationFeeLiquidation extends Entity {
     this.set("feeLiquidated", Value.fromBigInt(value));
   }
 
+  get liquidatedCollateralForFee(): BigInt {
+    let value = this.get("liquidatedCollateralForFee");
+    return value.toBigInt();
+  }
+
+  set liquidatedCollateralForFee(value: BigInt) {
+    this.set("liquidatedCollateralForFee", Value.fromBigInt(value));
+  }
+
   get timestamp(): i32 {
     let value = this.get("timestamp");
     return value.toI32();
@@ -2166,6 +2430,15 @@ export class ReserveParamsHistoryItem extends Entity {
     this.set("stableBorrowRate", Value.fromBigInt(value));
   }
 
+  get averageStableBorrowRate(): BigInt {
+    let value = this.get("averageStableBorrowRate");
+    return value.toBigInt();
+  }
+
+  set averageStableBorrowRate(value: BigInt) {
+    this.set("averageStableBorrowRate", Value.fromBigInt(value));
+  }
+
   get liquidityIndex(): BigInt {
     let value = this.get("liquidityIndex");
     return value.toBigInt();
@@ -2191,6 +2464,15 @@ export class ReserveParamsHistoryItem extends Entity {
 
   set totalLiquidity(value: BigInt) {
     this.set("totalLiquidity", Value.fromBigInt(value));
+  }
+
+  get totalLiquidityAsCollateral(): BigInt {
+    let value = this.get("totalLiquidityAsCollateral");
+    return value.toBigInt();
+  }
+
+  set totalLiquidityAsCollateral(value: BigInt) {
+    this.set("totalLiquidityAsCollateral", Value.fromBigInt(value));
   }
 
   get availableLiquidity(): BigInt {
@@ -2227,6 +2509,24 @@ export class ReserveParamsHistoryItem extends Entity {
 
   set totalBorrowsStable(value: BigInt) {
     this.set("totalBorrowsStable", Value.fromBigInt(value));
+  }
+
+  get priceInEth(): BigInt {
+    let value = this.get("priceInEth");
+    return value.toBigInt();
+  }
+
+  set priceInEth(value: BigInt) {
+    this.set("priceInEth", Value.fromBigInt(value));
+  }
+
+  get priceInUsd(): BigDecimal {
+    let value = this.get("priceInUsd");
+    return value.toBigDecimal();
+  }
+
+  set priceInUsd(value: BigDecimal) {
+    this.set("priceInUsd", Value.fromBigDecimal(value));
   }
 
   get timestamp(): i32 {
@@ -2267,6 +2567,15 @@ export class Reserve extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get underlyingAsset(): Bytes {
+    let value = this.get("underlyingAsset");
+    return value.toBytes();
+  }
+
+  set underlyingAsset(value: Bytes) {
+    this.set("underlyingAsset", Value.fromBytes(value));
   }
 
   get pool(): string {
@@ -2359,6 +2668,60 @@ export class Reserve extends Entity {
     this.set("reserveInterestRateStrategy", Value.fromBytes(value));
   }
 
+  get optimalUtilisationRate(): BigInt {
+    let value = this.get("optimalUtilisationRate");
+    return value.toBigInt();
+  }
+
+  set optimalUtilisationRate(value: BigInt) {
+    this.set("optimalUtilisationRate", Value.fromBigInt(value));
+  }
+
+  get variableRateSlope1(): BigInt {
+    let value = this.get("variableRateSlope1");
+    return value.toBigInt();
+  }
+
+  set variableRateSlope1(value: BigInt) {
+    this.set("variableRateSlope1", Value.fromBigInt(value));
+  }
+
+  get variableRateSlope2(): BigInt {
+    let value = this.get("variableRateSlope2");
+    return value.toBigInt();
+  }
+
+  set variableRateSlope2(value: BigInt) {
+    this.set("variableRateSlope2", Value.fromBigInt(value));
+  }
+
+  get stableRateSlope1(): BigInt {
+    let value = this.get("stableRateSlope1");
+    return value.toBigInt();
+  }
+
+  set stableRateSlope1(value: BigInt) {
+    this.set("stableRateSlope1", Value.fromBigInt(value));
+  }
+
+  get stableRateSlope2(): BigInt {
+    let value = this.get("stableRateSlope2");
+    return value.toBigInt();
+  }
+
+  set stableRateSlope2(value: BigInt) {
+    this.set("stableRateSlope2", Value.fromBigInt(value));
+  }
+
+  get baseVariableBorrowRate(): BigInt {
+    let value = this.get("baseVariableBorrowRate");
+    return value.toBigInt();
+  }
+
+  set baseVariableBorrowRate(value: BigInt) {
+    this.set("baseVariableBorrowRate", Value.fromBigInt(value));
+  }
+
   get baseLTVasCollateral(): BigInt {
     let value = this.get("baseLTVasCollateral");
     return value.toBigInt();
@@ -2402,6 +2765,15 @@ export class Reserve extends Entity {
 
   set totalLiquidity(value: BigInt) {
     this.set("totalLiquidity", Value.fromBigInt(value));
+  }
+
+  get totalLiquidityAsCollateral(): BigInt {
+    let value = this.get("totalLiquidityAsCollateral");
+    return value.toBigInt();
+  }
+
+  set totalLiquidityAsCollateral(value: BigInt) {
+    this.set("totalLiquidityAsCollateral", Value.fromBigInt(value));
   }
 
   get availableLiquidity(): BigInt {
@@ -2467,6 +2839,15 @@ export class Reserve extends Entity {
     this.set("stableBorrowRate", Value.fromBigInt(value));
   }
 
+  get averageStableBorrowRate(): BigInt {
+    let value = this.get("averageStableBorrowRate");
+    return value.toBigInt();
+  }
+
+  set averageStableBorrowRate(value: BigInt) {
+    this.set("averageStableBorrowRate", Value.fromBigInt(value));
+  }
+
   get liquidityIndex(): BigInt {
     let value = this.get("liquidityIndex");
     return value.toBigInt();
@@ -2503,6 +2884,114 @@ export class Reserve extends Entity {
     this.set("lastUpdateTimestamp", Value.fromI32(value));
   }
 
+  get lifetimeLiquidity(): BigInt {
+    let value = this.get("lifetimeLiquidity");
+    return value.toBigInt();
+  }
+
+  set lifetimeLiquidity(value: BigInt) {
+    this.set("lifetimeLiquidity", Value.fromBigInt(value));
+  }
+
+  get lifetimeBorrows(): BigInt {
+    let value = this.get("lifetimeBorrows");
+    return value.toBigInt();
+  }
+
+  set lifetimeBorrows(value: BigInt) {
+    this.set("lifetimeBorrows", Value.fromBigInt(value));
+  }
+
+  get lifetimeBorrowsStable(): BigInt {
+    let value = this.get("lifetimeBorrowsStable");
+    return value.toBigInt();
+  }
+
+  set lifetimeBorrowsStable(value: BigInt) {
+    this.set("lifetimeBorrowsStable", Value.fromBigInt(value));
+  }
+
+  get lifetimeBorrowsVariable(): BigInt {
+    let value = this.get("lifetimeBorrowsVariable");
+    return value.toBigInt();
+  }
+
+  set lifetimeBorrowsVariable(value: BigInt) {
+    this.set("lifetimeBorrowsVariable", Value.fromBigInt(value));
+  }
+
+  get lifetimeRepayments(): BigInt {
+    let value = this.get("lifetimeRepayments");
+    return value.toBigInt();
+  }
+
+  set lifetimeRepayments(value: BigInt) {
+    this.set("lifetimeRepayments", Value.fromBigInt(value));
+  }
+
+  get lifetimeWithdrawals(): BigInt {
+    let value = this.get("lifetimeWithdrawals");
+    return value.toBigInt();
+  }
+
+  set lifetimeWithdrawals(value: BigInt) {
+    this.set("lifetimeWithdrawals", Value.fromBigInt(value));
+  }
+
+  get lifetimeLiquidated(): BigInt {
+    let value = this.get("lifetimeLiquidated");
+    return value.toBigInt();
+  }
+
+  set lifetimeLiquidated(value: BigInt) {
+    this.set("lifetimeLiquidated", Value.fromBigInt(value));
+  }
+
+  get lifetimeFeeOriginated(): BigInt {
+    let value = this.get("lifetimeFeeOriginated");
+    return value.toBigInt();
+  }
+
+  set lifetimeFeeOriginated(value: BigInt) {
+    this.set("lifetimeFeeOriginated", Value.fromBigInt(value));
+  }
+
+  get lifetimeFeeCollected(): BigInt {
+    let value = this.get("lifetimeFeeCollected");
+    return value.toBigInt();
+  }
+
+  set lifetimeFeeCollected(value: BigInt) {
+    this.set("lifetimeFeeCollected", Value.fromBigInt(value));
+  }
+
+  get lifetimeFlashLoans(): BigInt {
+    let value = this.get("lifetimeFlashLoans");
+    return value.toBigInt();
+  }
+
+  set lifetimeFlashLoans(value: BigInt) {
+    this.set("lifetimeFlashLoans", Value.fromBigInt(value));
+  }
+
+  get lifetimeFlashloanDepositorsFee(): BigInt {
+    let value = this.get("lifetimeFlashloanDepositorsFee");
+    return value.toBigInt();
+  }
+
+  set lifetimeFlashloanDepositorsFee(value: BigInt) {
+    this.set("lifetimeFlashloanDepositorsFee", Value.fromBigInt(value));
+  }
+
+  get lifetimeFlashloanProtocolFee(): BigInt {
+    let value = this.get("lifetimeFlashloanProtocolFee");
+    return value.toBigInt();
+  }
+
+  set lifetimeFlashloanProtocolFee(value: BigInt) {
+    this.set("lifetimeFlashloanProtocolFee", Value.fromBigInt(value));
+  }
+
   get userReserves(): Array<string> {
     let value = this.get("userReserves");
     return value.toStringArray();
@@ -2537,6 +3026,15 @@ export class Reserve extends Entity {
 
   set borrowHistory(value: Array<string>) {
     this.set("borrowHistory", Value.fromStringArray(value));
+  }
+
+  get usageAsCollateralHistory(): Array<string> {
+    let value = this.get("usageAsCollateralHistory");
+    return value.toStringArray();
+  }
+
+  set usageAsCollateralHistory(value: Array<string>) {
+    this.set("usageAsCollateralHistory", Value.fromStringArray(value));
   }
 
   get swapHistory(): Array<string> {
@@ -2833,6 +3331,15 @@ export class UserReserve extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get pool(): string {
+    let value = this.get("pool");
+    return value.toString();
+  }
+
+  set pool(value: string) {
+    this.set("pool", Value.fromString(value));
+  }
+
   get reserve(): string {
     let value = this.get("reserve");
     return value.toString();
@@ -2977,6 +3484,15 @@ export class UserReserve extends Entity {
     this.set("borrowStateHistory", Value.fromStringArray(value));
   }
 
+  get usageAsCollateralHistory(): Array<string> {
+    let value = this.get("usageAsCollateralHistory");
+    return value.toStringArray();
+  }
+
+  set usageAsCollateralHistory(value: Array<string>) {
+    this.set("usageAsCollateralHistory", Value.fromStringArray(value));
+  }
+
   get depositHistory(): Array<string> {
     let value = this.get("depositHistory");
     return value.toStringArray();
@@ -3080,6 +3596,15 @@ export class User extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get borrowedReservesCount(): i32 {
+    let value = this.get("borrowedReservesCount");
+    return value.toI32();
+  }
+
+  set borrowedReservesCount(value: i32) {
+    this.set("borrowedReservesCount", Value.fromI32(value));
+  }
+
   get reserves(): Array<string> {
     let value = this.get("reserves");
     return value.toStringArray();
@@ -3105,6 +3630,15 @@ export class User extends Entity {
 
   set redeemUnderlyingHistory(value: Array<string>) {
     this.set("redeemUnderlyingHistory", Value.fromStringArray(value));
+  }
+
+  get usageAsCollateralHistory(): Array<string> {
+    let value = this.get("usageAsCollateralHistory");
+    return value.toStringArray();
+  }
+
+  set usageAsCollateralHistory(value: Array<string>) {
+    this.set("usageAsCollateralHistory", Value.fromStringArray(value));
   }
 
   get borrowHistory(): Array<string> {

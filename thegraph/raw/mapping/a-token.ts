@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
+import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts';
 
 import {
   BalanceTransfer,
@@ -11,43 +11,47 @@ import {
 } from '../generated/templates/AToken/AToken';
 import { ATokenBalanceHistoryItem, UserReserve } from '../generated/schema';
 import { getOrInitAToken, getOrInitUserReserve } from '../initializers';
+import { zeroBI } from '../../utils/converters';
 
-function saveUserReserve(userReserve: UserReserve, timestamp: BigInt, txHash: Bytes): void {
+function saveUserReserve(userReserve: UserReserve, event: ethereum.Event): void {
+  userReserve.lastUpdateTimestamp = event.block.timestamp.toI32();
   userReserve.save();
 
   let aTokenBalanceHistoryItem = new ATokenBalanceHistoryItem(
-    userReserve.id + txHash.toHexString()
+    userReserve.id + event.transaction.hash.toHexString()
   );
   aTokenBalanceHistoryItem.balance = userReserve.principalATokenBalance;
   aTokenBalanceHistoryItem.userBalanceIndex = userReserve.userBalanceIndex;
   aTokenBalanceHistoryItem.interestRedirectionAddress = userReserve.interestRedirectionAddress;
   aTokenBalanceHistoryItem.redirectedBalance = userReserve.redirectedBalance;
   aTokenBalanceHistoryItem.userReserve = userReserve.id;
-  aTokenBalanceHistoryItem.timestamp = timestamp.toI32();
+  aTokenBalanceHistoryItem.timestamp = event.block.timestamp.toI32();
   aTokenBalanceHistoryItem.save();
 }
 
 function genericBurn(
-  aTokenAddress: Address,
   from: Address,
   value: BigInt,
   balanceIncrease: BigInt,
   userBalanceIndex: BigInt,
-  timestamp: BigInt,
-  txHash: Bytes
+  event: ethereum.Event
 ): void {
+  let aTokenAddress = event.address;
   let aToken = getOrInitAToken(aTokenAddress);
-  let userReserve = getOrInitUserReserve(from, aToken.underlyingAssetAddress as Address);
+  let userReserve = getOrInitUserReserve(from, aToken.underlyingAssetAddress as Address, event);
 
   userReserve.principalATokenBalance = userReserve.principalATokenBalance
     .plus(balanceIncrease)
     .minus(value);
   userReserve.userBalanceIndex = userBalanceIndex;
-  saveUserReserve(userReserve, timestamp, txHash);
+
+  if (userReserve.principalATokenBalance.equals(zeroBI())) {
+    userReserve.usageAsCollateralEnabledOnUser = true;
+  }
+  saveUserReserve(userReserve, event);
 }
 
 function genericTransfer(
-  aTokenAddress: Address,
   from: Address,
   to: Address,
   value: BigInt,
@@ -55,31 +59,38 @@ function genericTransfer(
   toBalanceIncrease: BigInt,
   fromIndex: BigInt,
   toIndex: BigInt,
-  timestamp: BigInt,
-  txHash: Bytes
+  event: ethereum.Event
 ): void {
+  let aTokenAddress = event.address;
   let aToken = getOrInitAToken(aTokenAddress);
-  let userFromReserve = getOrInitUserReserve(from, aToken.underlyingAssetAddress as Address);
+  let userFromReserve = getOrInitUserReserve(from, aToken.underlyingAssetAddress as Address, event);
 
   userFromReserve.principalATokenBalance = userFromReserve.principalATokenBalance
     .plus(fromBalanceIncrease)
     .minus(value);
+  if (userFromReserve.principalATokenBalance.equals(zeroBI())) {
+    userFromReserve.usageAsCollateralEnabledOnUser = true;
+  }
   userFromReserve.userBalanceIndex = fromIndex;
-  saveUserReserve(userFromReserve, timestamp, txHash);
+  saveUserReserve(userFromReserve, event);
 
-  let userToReserve = getOrInitUserReserve(to, aToken.underlyingAssetAddress as Address);
+  let userToReserve = getOrInitUserReserve(to, aToken.underlyingAssetAddress as Address, event);
+  if (userToReserve.principalATokenBalance.equals(zeroBI())) {
+    userToReserve.usageAsCollateralEnabledOnUser = false;
+  }
   userToReserve.principalATokenBalance = userToReserve.principalATokenBalance
     .plus(value)
     .plus(toBalanceIncrease);
   userToReserve.userBalanceIndex = toIndex;
-  saveUserReserve(userToReserve, timestamp, txHash);
+  saveUserReserve(userToReserve, event);
 }
 
 export function handleMintOnDeposit(event: MintOnDeposit): void {
   let aToken = getOrInitAToken(event.address);
   let userReserve = getOrInitUserReserve(
     event.params._from,
-    aToken.underlyingAssetAddress as Address
+    aToken.underlyingAssetAddress as Address,
+    event
   );
 
   userReserve.principalATokenBalance = userReserve.principalATokenBalance
@@ -87,36 +98,31 @@ export function handleMintOnDeposit(event: MintOnDeposit): void {
     .plus(event.params._fromBalanceIncrease);
   userReserve.userBalanceIndex = event.params._fromIndex;
 
-  saveUserReserve(userReserve, event.block.timestamp, event.transaction.hash);
+  saveUserReserve(userReserve, event);
 }
 
 export function handleRedeem(event: Redeem): void {
   genericBurn(
-    event.address,
     event.params._from,
     event.params._value,
     event.params._fromBalanceIncrease,
     event.params._fromIndex,
-    event.block.timestamp,
-    event.transaction.hash
+    event
   );
 }
 
 export function handleBurnOnLiquidation(event: BurnOnLiquidation): void {
   genericBurn(
-    event.address,
     event.params._from,
     event.params._value,
     event.params._fromBalanceIncrease,
     event.params._fromIndex,
-    event.block.timestamp,
-    event.transaction.hash
+    event
   );
 }
 
 export function handleBalanceTransfer(event: BalanceTransfer): void {
   genericTransfer(
-    event.address,
     event.params._from,
     event.params._to,
     event.params._value,
@@ -124,8 +130,7 @@ export function handleBalanceTransfer(event: BalanceTransfer): void {
     event.params._toBalanceIncrease,
     event.params._fromIndex,
     event.params._toIndex,
-    event.block.timestamp,
-    event.transaction.hash
+    event
   );
 }
 
@@ -133,7 +138,8 @@ export function handleInterestStreamRedirected(event: InterestStreamRedirected):
   let aToken = getOrInitAToken(event.address);
   let userReserve = getOrInitUserReserve(
     event.params._from,
-    aToken.underlyingAssetAddress as Address
+    aToken.underlyingAssetAddress as Address,
+    event
   );
 
   userReserve.interestRedirectionAddress = event.params._to;
@@ -142,26 +148,28 @@ export function handleInterestStreamRedirected(event: InterestStreamRedirected):
     event.params._fromBalanceIncrease
   );
 
-  saveUserReserve(userReserve, event.block.timestamp, event.transaction.hash);
+  saveUserReserve(userReserve, event);
 }
 
 export function handleRedirectedBalanceUpdated(event: RedirectedBalanceUpdated): void {
   let aToken = getOrInitAToken(event.address);
-  let decimals = aToken.underlyingAssetDecimals;
 
   let userReserve = getOrInitUserReserve(
     event.params._targetAddress,
-    aToken.underlyingAssetAddress as Address
+    aToken.underlyingAssetAddress as Address,
+    event
   );
 
   userReserve.redirectedBalance = userReserve.redirectedBalance
-    .plus(event.params._targetBalanceIncrease)
     .plus(event.params._redirectedBalanceAdded)
     .minus(event.params._redirectedBalanceRemoved);
 
+  userReserve.principalATokenBalance = userReserve.principalATokenBalance.plus(
+    event.params._targetBalanceIncrease
+  );
   userReserve.userBalanceIndex = event.params._targetIndex;
 
-  saveUserReserve(userReserve, event.block.timestamp, event.transaction.hash);
+  saveUserReserve(userReserve, event);
 }
 
 export function handleInterestRedirectionAllowanceChanged(
@@ -171,10 +179,11 @@ export function handleInterestRedirectionAllowanceChanged(
 
   let userReserve = getOrInitUserReserve(
     event.params._from,
-    aToken.underlyingAssetAddress as Address
+    aToken.underlyingAssetAddress as Address,
+    event
   );
 
   userReserve.interestRedirectionAllowance = event.params._to;
 
-  saveUserReserve(userReserve, event.block.timestamp, event.transaction.hash);
+  saveUserReserve(userReserve, event);
 }
