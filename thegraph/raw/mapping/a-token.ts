@@ -10,8 +10,9 @@ import {
   InterestStreamRedirected,
 } from '../generated/templates/AToken/AToken';
 import { ATokenBalanceHistoryItem, UserReserve } from '../generated/schema';
-import { getOrInitAToken, getOrInitUserReserve } from '../initializers';
+import { getOrInitAToken, getOrInitReserve, getOrInitUserReserve } from '../initializers';
 import { zeroBI } from '../../utils/converters';
+import { saveReserve } from "./lending-pool"
 
 function saveUserReserve(userReserve: UserReserve, event: ethereum.Event): void {
   userReserve.lastUpdateTimestamp = event.block.timestamp.toI32();
@@ -83,6 +84,21 @@ function genericTransfer(
     .plus(toBalanceIncrease);
   userToReserve.userBalanceIndex = toIndex;
   saveUserReserve(userToReserve, event);
+
+  let reserve = getOrInitReserve(aToken.underlyingAssetAddress as Address, event);
+  if (
+    userFromReserve.usageAsCollateralEnabledOnUser &&
+    !userToReserve.usageAsCollateralEnabledOnUser
+  ) {
+    reserve.totalLiquidityAsCollateral = reserve.totalLiquidityAsCollateral.minus(value);
+    saveReserve(reserve, event);
+  } else if (
+    !userFromReserve.usageAsCollateralEnabledOnUser &&
+    userToReserve.usageAsCollateralEnabledOnUser
+  ) {
+    reserve.totalLiquidityAsCollateral = reserve.totalLiquidityAsCollateral.plus(value);
+    saveReserve(reserve, event);
+  }
 }
 
 export function handleMintOnDeposit(event: MintOnDeposit): void {
