@@ -24,7 +24,7 @@ The source code included is the final production version of the protocol. Eventu
 
 The bug bounty program is live! 
 
- We want Aave protocol to be the best it can be, so we’re calling on our community to help us find any bugs or     vulnerabilities. Submit a bug here and earn a reward of up to USD 25,000$.
+ We want Aave protocol to be the best it can be, so we’re calling on our community to help us find any bugs or     vulnerabilities. Submit a bug here and earn a reward of up to USD 250,000$.
  
  More details about the bounty program and how to apply can be found here https://aave.com/bug-bounty.
 
