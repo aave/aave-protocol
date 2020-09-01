@@ -100,6 +100,7 @@ export function getOrInitReserve(underlyingAsset: Address, event: ethereum.Event
     reserve.borrowingEnabled = false;
     reserve.stableBorrowRateEnabled = false;
     reserve.isActive = false;
+    reserve.isFreezed = false;
     reserve.baseLTVasCollateral = zeroBI();
     reserve.reserveLiquidationThreshold = zeroBI();
     reserve.reserveLiquidationBonus = zeroBI();

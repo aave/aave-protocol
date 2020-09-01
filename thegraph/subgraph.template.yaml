@@ -96,7 +96,6 @@ dataSources:
           handler: handleChainlinkUSDETHPriceUpdated
       file: ./{{type}}/mapping/price-oracle.ts
 
-
 templates:
   - kind: ethereum/contract
     name: LendingPoolAddressesProvider
@@ -172,6 +171,10 @@ templates:
           handler: handleStableRateEnabledOnReserve
         - event: ReserveActivated(indexed address)
           handler: handleReserveActivated
+        - event: ReserveFreezed(indexed address)
+          handler: handleReserveFreezed
+        - event: ReserveUnfreezed(indexed address)
+          handler: handleReserveUnfreezed
         - event: ReserveDeactivated(indexed address)
           handler: handleReserveDeactivated
         - event: ReserveEnabledAsCollateral(indexed address,uint256,uint256,uint256)

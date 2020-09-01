@@ -2303,6 +2303,15 @@ export class ReserveConfigurationHistoryItem extends Entity {
     this.set("isActive", Value.fromBoolean(value));
   }
 
+  get isFreezed(): boolean {
+    let value = this.get("isFreezed");
+    return value.toBoolean();
+  }
+
+  set isFreezed(value: boolean) {
+    this.set("isFreezed", Value.fromBoolean(value));
+  }
+
   get reserveInterestRateStrategy(): Bytes {
     let value = this.get("reserveInterestRateStrategy");
     return value.toBytes();
@@ -2648,6 +2657,15 @@ export class Reserve extends Entity {
 
   set isActive(value: boolean) {
     this.set("isActive", Value.fromBoolean(value));
+  }
+
+  get isFreezed(): boolean {
+    let value = this.get("isFreezed");
+    return value.toBoolean();
+  }
+
+  set isFreezed(value: boolean) {
+    this.set("isFreezed", Value.fromBoolean(value));
   }
 
   get price(): string {

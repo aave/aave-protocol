@@ -73,10 +73,23 @@ export function handleFallbackOracleUpdated(event: FallbackOracleUpdated): void 
 export function handleAssetSourceUpdated(event: AssetSourceUpdated): void {
   let assetAddress = event.params.asset;
   let sAssetAddress = assetAddress.toHexString();
+
+  // because of the bug with wrong assets addresses submission
+  if (sAssetAddress.split('0').length > 38) {
+    log.warning('skipping wrong asset registration {}', [sAssetAddress]);
+    return;
+  }
+
   let priceOracle = getOrInitPriceOracle();
 
   let proxyPriceProvider = ChainlinkProxyPriceProvider.bind(event.address);
-  let priceFromProxy = proxyPriceProvider.getAssetPrice(assetAddress);
+
+  //needed because of one wrong handleAssetSourceUpdated event deployed on the mainnet
+  let priceFromProxy = zeroBI();
+  let priceFromProxyCall = proxyPriceProvider.try_getAssetPrice(assetAddress);
+  if (!priceFromProxyCall.reverted) {
+    priceFromProxy = priceFromProxyCall.value;
+  }
 
   let assetOracleAddress = event.params.source;
   let priceOracleAsset = getPriceOracleAsset(sAssetAddress);
@@ -97,7 +110,9 @@ export function handleAssetSourceUpdated(event: AssetSourceUpdated): void {
       ChainlinkAggregatorContract.create(assetOracleAddress);
 
       // fallback is not required if oracle works fine
-      priceOracleAsset.isFallbackRequired = !priceAggregatorInstance.latestAnswer().gt(zeroBI());
+      let priceAggregatorlatestAnswerCall = priceAggregatorInstance.try_latestAnswer();
+      priceOracleAsset.isFallbackRequired =
+        priceAggregatorlatestAnswerCall.reverted || priceAggregatorlatestAnswerCall.value.isZero();
     } else {
       // composite assets don't need fallback, it will work out of the box
       priceOracleAsset.isFallbackRequired = false;

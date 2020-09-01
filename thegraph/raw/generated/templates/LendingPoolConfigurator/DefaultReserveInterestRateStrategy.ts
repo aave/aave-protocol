@@ -38,6 +38,29 @@ export class DefaultReserveInterestRateStrategy extends ethereum.SmartContract {
     );
   }
 
+  EXCESS_UTILIZATION_RATE(): BigInt {
+    let result = super.call(
+      "EXCESS_UTILIZATION_RATE",
+      "EXCESS_UTILIZATION_RATE():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_EXCESS_UTILIZATION_RATE(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "EXCESS_UTILIZATION_RATE",
+      "EXCESS_UTILIZATION_RATE():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   OPTIMAL_UTILIZATION_RATE(): BigInt {
     let result = super.call(
       "OPTIMAL_UTILIZATION_RATE",
@@ -84,6 +107,136 @@ export class DefaultReserveInterestRateStrategy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  baseVariableBorrowRate(): BigInt {
+    let result = super.call(
+      "baseVariableBorrowRate",
+      "baseVariableBorrowRate():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_baseVariableBorrowRate(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "baseVariableBorrowRate",
+      "baseVariableBorrowRate():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  reserve(): Address {
+    let result = super.call("reserve", "reserve():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_reserve(): ethereum.CallResult<Address> {
+    let result = super.tryCall("reserve", "reserve():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  stableRateSlope1(): BigInt {
+    let result = super.call(
+      "stableRateSlope1",
+      "stableRateSlope1():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_stableRateSlope1(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "stableRateSlope1",
+      "stableRateSlope1():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  stableRateSlope2(): BigInt {
+    let result = super.call(
+      "stableRateSlope2",
+      "stableRateSlope2():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_stableRateSlope2(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "stableRateSlope2",
+      "stableRateSlope2():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  variableRateSlope1(): BigInt {
+    let result = super.call(
+      "variableRateSlope1",
+      "variableRateSlope1():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_variableRateSlope1(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "variableRateSlope1",
+      "variableRateSlope1():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  variableRateSlope2(): BigInt {
+    let result = super.call(
+      "variableRateSlope2",
+      "variableRateSlope2():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_variableRateSlope2(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "variableRateSlope2",
+      "variableRateSlope2():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   getBaseVariableBorrowRate(): BigInt {
     let result = super.call(
       "getBaseVariableBorrowRate",
@@ -98,52 +251,6 @@ export class DefaultReserveInterestRateStrategy extends ethereum.SmartContract {
     let result = super.tryCall(
       "getBaseVariableBorrowRate",
       "getBaseVariableBorrowRate():(uint256)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getStableRateSlope1(): BigInt {
-    let result = super.call(
-      "getStableRateSlope1",
-      "getStableRateSlope1():(uint256)",
-      []
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_getStableRateSlope1(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getStableRateSlope1",
-      "getStableRateSlope1():(uint256)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getStableRateSlope2(): BigInt {
-    let result = super.call(
-      "getStableRateSlope2",
-      "getStableRateSlope2():(uint256)",
-      []
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_getStableRateSlope2(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "getStableRateSlope2",
-      "getStableRateSlope2():(uint256)",
       []
     );
     if (result.reverted) {
@@ -190,6 +297,52 @@ export class DefaultReserveInterestRateStrategy extends ethereum.SmartContract {
     let result = super.tryCall(
       "getVariableRateSlope2",
       "getVariableRateSlope2():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getStableRateSlope1(): BigInt {
+    let result = super.call(
+      "getStableRateSlope1",
+      "getStableRateSlope1():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getStableRateSlope1(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getStableRateSlope1",
+      "getStableRateSlope1():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getStableRateSlope2(): BigInt {
+    let result = super.call(
+      "getStableRateSlope2",
+      "getStableRateSlope2():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getStableRateSlope2(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getStableRateSlope2",
+      "getStableRateSlope2():(uint256)",
       []
     );
     if (result.reverted) {
@@ -276,28 +429,32 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _provider(): Address {
+  get _reserve(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _baseVariableBorrowRate(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+  get _provider(): Address {
+    return this._call.inputValues[1].value.toAddress();
   }
 
-  get _variableRateSlope1(): BigInt {
+  get _baseVariableBorrowRate(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 
-  get _variableRateSlope2(): BigInt {
+  get _variableRateSlope1(): BigInt {
     return this._call.inputValues[3].value.toBigInt();
   }
 
-  get _stableRateSlope1(): BigInt {
+  get _variableRateSlope2(): BigInt {
     return this._call.inputValues[4].value.toBigInt();
   }
 
-  get _stableRateSlope2(): BigInt {
+  get _stableRateSlope1(): BigInt {
     return this._call.inputValues[5].value.toBigInt();
+  }
+
+  get _stableRateSlope2(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
   }
 }
 

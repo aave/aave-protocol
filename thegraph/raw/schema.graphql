@@ -279,6 +279,7 @@ type ReserveConfigurationHistoryItem @entity {
   borrowingEnabled: Boolean!
   stableBorrowRateEnabled: Boolean!
   isActive: Boolean!
+  isFreezed: Boolean!
   reserveInterestRateStrategy: Bytes!
   baseLTVasCollateral: BigInt!
   reserveLiquidationThreshold: BigInt!
@@ -322,6 +323,7 @@ type Reserve @entity {
   borrowingEnabled: Boolean! # defalt false
   stableBorrowRateEnabled: Boolean! # defalt false
   isActive: Boolean! # defalt false
+  isFreezed: Boolean! # defalt false
   price: PriceOracleAsset!
   reserveInterestRateStrategy: Bytes!
   optimalUtilisationRate: BigInt!

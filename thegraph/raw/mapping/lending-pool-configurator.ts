@@ -42,6 +42,7 @@ function saveReserve(reserve: Reserve, event: ethereum.Event): void {
   configurationHistoryItem.borrowingEnabled = reserve.borrowingEnabled;
   configurationHistoryItem.stableBorrowRateEnabled = reserve.stableBorrowRateEnabled;
   configurationHistoryItem.isActive = reserve.isActive;
+  configurationHistoryItem.isFreezed = reserve.isFreezed;
   configurationHistoryItem.reserveInterestRateStrategy = reserve.reserveInterestRateStrategy;
   configurationHistoryItem.baseLTVasCollateral = reserve.baseLTVasCollateral;
   configurationHistoryItem.reserveLiquidationThreshold = reserve.reserveLiquidationThreshold;
@@ -183,6 +184,7 @@ export function handleStableRateEnabledOnReserve(event: StableRateEnabledOnReser
   reserve.stableBorrowRateEnabled = true;
   saveReserve(reserve, event);
 }
+
 export function handleReserveActivated(event: ReserveActivated): void {
   let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.isActive = true;
@@ -193,6 +195,18 @@ export function handleReserveDeactivated(event: ReserveDeactivated): void {
   reserve.isActive = false;
   saveReserve(reserve, event);
 }
+
+export function handleReserveFreezed(event: ReserveActivated): void {
+  let reserve = getOrInitReserve(event.params._reserve, event);
+  reserve.isFreezed = true;
+  saveReserve(reserve, event);
+}
+export function handleReserveUnfreezed(event: ReserveDeactivated): void {
+  let reserve = getOrInitReserve(event.params._reserve, event);
+  reserve.isFreezed = false;
+  saveReserve(reserve, event);
+}
+
 export function handleReserveDisabledAsCollateral(event: ReserveDisabledAsCollateral): void {
   let reserve = getOrInitReserve(event.params._reserve, event);
   reserve.usageAsCollateralEnabled = false;
