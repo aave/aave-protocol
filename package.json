@@ -1,0 +1,19 @@
+{
+  "name": "Aave",
+  "author": "Aave",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "description": "",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "bignumber.js": "^9.0.0",
+    "near-web3-provider": "near/near-web3-provider#precompile-package-json",
+    "openzeppelin-solidity": "^2.1.0",
+    "truffle": "^5.1.43",
+    "typescript": "^4.0.2"
+  },
+  "devDependencies": {
+    "babel-register": "^6.26.0"
+  }
+}
