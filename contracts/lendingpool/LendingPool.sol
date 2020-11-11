@@ -268,7 +268,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
 
     uint256 public constant UINT_MAX_VALUE = uint256(-1);
 
-    uint256 public constant LENDINGPOOL_REVISION = 0x2;
+    uint256 public constant LENDINGPOOL_REVISION = 0x3;
 
     function getRevision() internal pure returns (uint256) {
         return LENDINGPOOL_REVISION;
@@ -614,7 +614,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         if(vars.originationFee > 0) {
             core.transferToFeeCollectionAddress.value(vars.isETH ? vars.originationFee : 0)(
                 _reserve,
-                _onBehalfOf,
+                msg.sender,
                 vars.originationFee,
                 addressesProvider.getTokenDistributor()
             );
