@@ -77,7 +77,7 @@ contract LendingPoolCore is VersionedInitializable {
 
     address[] public reservesList;
 
-    uint256 public constant CORE_REVISION = 0x4;
+    uint256 public constant CORE_REVISION = 0x6;
 
     /**
     * @dev returns the revision number of the contract
@@ -1361,7 +1361,7 @@ contract LendingPoolCore is VersionedInitializable {
         uint256 _balanceIncrease
     ) internal {
         CoreLibrary.ReserveData storage reserve = reserves[_reserve];
-        CoreLibrary.UserReserveData storage user = usersReserveData[_reserve][_user];
+        CoreLibrary.UserReserveData storage user = usersReserveData[_user][_reserve];
 
         CoreLibrary.InterestRateMode borrowRateMode = getUserCurrentBorrowRateMode(_reserve, _user);
 
@@ -1747,7 +1747,9 @@ contract LendingPoolCore is VersionedInitializable {
         if (_token != EthAddressLib.ethAddress()) {
             ERC20(_token).safeTransfer(receiver, _amount);
         } else {
-            receiver.transfer(_amount);
+            //solium-disable-next-line
+            (bool result, ) = receiver.call.value(_amount)("");
+            require(result, "Transfer to token distributor failed");
         }
     }
 
