@@ -614,7 +614,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
         if(vars.originationFee > 0) {
             core.transferToFeeCollectionAddress.value(vars.isETH ? vars.originationFee : 0)(
                 _reserve,
-                _onBehalfOf,
+                msg.sender,
                 vars.originationFee,
                 addressesProvider.getTokenDistributor()
             );
