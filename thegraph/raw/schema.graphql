@@ -98,6 +98,7 @@ type PriceOracleAsset @entity {
   dependentAssets: [PriceOracleAsset!]!
   lastUpdateTimestamp: Int!
   priceHistory: [PriceHistoryItem!]! @derivedFrom(field: "asset")
+  fromChainlinkSourcesRegistry: Boolean!
 }
 
 type PriceOracle @entity {

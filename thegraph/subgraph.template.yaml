@@ -96,6 +96,34 @@ dataSources:
           handler: handleChainlinkUSDETHPriceUpdated
       file: ./{{type}}/mapping/price-oracle.ts
 
+  - kind: ethereum/contract
+    name: ChainlinkSourcesRegistry
+    network: {{network}}
+    source:
+      address: '{{chainlinkSourcesRegistryAddress}}'
+      startBlock: {{chainlinkSourcesRegistryStartBlock}}
+      abi: ChainlinkSourcesRegistry
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - PriceOracle
+      abis:
+        - name: ChainlinkSourcesRegistry
+          file: ./abis/ChainlinkSourcesRegistry.json
+        - name: ChainlinkProxyPriceProvider
+          file: ../build/contracts/ChainlinkProxyPriceProvider.json
+        - name: IExtendedPriceAggregator
+          file: ../build/contracts/IExtendedPriceAggregator.json
+        - name: GenericOracleI
+          file: ../build/contracts/GenericOracleI.json
+      eventHandlers:
+        - event: AggregatorUpdated(address,address)
+          handler: handleChainlinkAggregatorUpdated
+      file: ./{{type}}/mapping/proxy-price-provider.ts
+
+
 templates:
   - kind: ethereum/contract
     name: LendingPoolAddressesProvider
@@ -219,6 +247,8 @@ templates:
       abis:
         - name: AToken
           file: ../build/contracts/AToken.json
+        - name: LendingPoolCore
+          file: ../build/contracts/LendingPoolCore.json
       eventHandlers:
         - event: MintOnDeposit(indexed address,uint256,uint256,uint256)
           handler: handleMintOnDeposit

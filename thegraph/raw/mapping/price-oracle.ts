@@ -72,7 +72,7 @@ function genericHandleChainlinkUSDETHPrice(
 // Ropsten and Mainnet
 export function handleChainlinkAnswerUpdated(event: AnswerUpdated): void {
   let priceOracle = getOrInitPriceOracle();
-  let proxyPriceProvider = ChainlinkProxyPriceProvider.bind(event.address);
+  let proxyPriceProvider = ChainlinkProxyPriceProvider.bind(Address.fromString(priceOracle.proxyPriceProvider.toHexString()));
   let chainlinkAggregator = getChainlinkAggregator(event.address.toHexString());
 
   if (priceOracle.usdPriceEthMainSource.equals(event.address)) {
@@ -100,12 +100,21 @@ export function handleChainlinkAnswerUpdated(event: AnswerUpdated): void {
       } else {
         // oracle answer invalid, start using fallback oracle
         oracleAsset.isFallbackRequired = true;
-        genericPriceUpdate(
-          oracleAsset,
-          proxyPriceProvider.getAssetPrice(Bytes.fromHexString(oracleAsset.id) as Address),
-          event
-        );
+        let assetPrice = proxyPriceProvider.try_getAssetPrice(Bytes.fromHexString(oracleAsset.id) as Address);
 
+        if(!assetPrice.reverted) {
+          genericPriceUpdate(
+            oracleAsset,
+            assetPrice.value,
+            event
+          );
+        } else {
+          log.error(
+            'OracleAssetId: {} | ProxyPriceProvider: {} | EventParamsCurrent: {} | EventAddress: {}',
+            [oracleAsset.id, priceOracle.proxyPriceProvider.toHexString(), event.params.current.toString(), event.address.toHexString()]
+          );
+        }
+        
         if (!priceOracle.tokensWithFallback.includes(oracleAsset.id)) {
           let updatedTokensWithFallback = priceOracle.tokensWithFallback;
           updatedTokensWithFallback.push(oracleAsset.id);

@@ -1,5 +1,4 @@
 import { BigDecimal, BigInt, ethereum } from '@graphprotocol/graph-ts';
-
 import {
   getBorrowRateMode,
   zeroBD,

@@ -13,8 +13,7 @@
     "deploy-remote": "npm run prepare && graph deploy aave/${NAME:-null} --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-multy-ropsten-raw": "NETWORK=ropsten TYPE=raw NAME=protocol-multy-ropsten-raw npm run deploy-remote",
     "deploy-multy-kovan-raw": "NETWORK=kovan TYPE=raw NAME=protocol-multy-kovan-raw npm run deploy-remote",
-    "deploy-multy-main-raw": "NETWORK=mainnet TYPE=raw NAME=protocol-multy-raw npm run deploy-remote",
-    "deploy-all-multy-remote": "npm run deploy-multy-main-raw && npm run deploy-multy-ropsten-raw && npm run deploy-multy-kovan-raw"
+    "deploy-multy-main-raw": "NETWORK=mainnet TYPE=raw NAME=protocol-multy-raw npm run deploy-remote"
   },
   "repository": {
     "type": "git",

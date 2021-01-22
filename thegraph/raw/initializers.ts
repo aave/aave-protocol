@@ -62,7 +62,7 @@ export function getOrInitUserReserve(
   if (userReserve === null) {
     userReserve = new UserReserve(userReserveId);
     userReserve.pool = poolId;
-    userReserve.usageAsCollateralEnabledOnUser = true;
+    userReserve.usageAsCollateralEnabledOnUser = false;
     userReserve.principalATokenBalance = zeroBI();
     userReserve.redirectedBalance = zeroBI();
     userReserve.interestRedirectionAddress = zeroAddress();
@@ -170,6 +170,7 @@ export function getPriceOracleAsset(id: string): PriceOracleAsset {
     priceOracleReserve.priceInEth = zeroBI();
     priceOracleReserve.isFallbackRequired = false;
     priceOracleReserve.lastUpdateTimestamp = 0;
+    priceOracleReserve.fromChainlinkSourcesRegistry = false;
     priceOracleReserve.save();
   }
   return priceOracleReserve as PriceOracleAsset;

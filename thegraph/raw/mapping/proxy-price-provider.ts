@@ -1,4 +1,4 @@
-import { Bytes, Address, log } from '@graphprotocol/graph-ts';
+import { Bytes, Address, log, ethereum } from '@graphprotocol/graph-ts';
 
 import {
   AssetSourceUpdated,
@@ -7,6 +7,7 @@ import {
 } from '../generated/ProxyPriceProvider/ChainlinkProxyPriceProvider';
 import { IExtendedPriceAggregator } from '../generated/ProxyPriceProvider/IExtendedPriceAggregator';
 import { GenericOracleI as FallbackPriceOracle } from '../generated/ProxyPriceProvider/GenericOracleI';
+import { AggregatorUpdated } from '../generated/ChainlinkSourcesRegistry/ChainlinkSourcesRegistry';
 
 import {
   ChainlinkAggregator as ChainlinkAggregatorContract,
@@ -25,6 +26,7 @@ import {
 } from '../../utils/converters';
 import { MOCK_ETHEREUM_ADDRESS, MOCK_USD_ADDRESS } from '../../utils/constants';
 import { genericPriceUpdate, usdEthPriceUpdate } from '../price-updates';
+import { PriceOracle, PriceOracleAsset } from '../generated/schema';
 
 export function handleFallbackOracleUpdated(event: FallbackOracleUpdated): void {
   let priceOracle = getOrInitPriceOracle();
@@ -73,16 +75,63 @@ export function handleFallbackOracleUpdated(event: FallbackOracleUpdated): void 
 export function handleAssetSourceUpdated(event: AssetSourceUpdated): void {
   let assetAddress = event.params.asset;
   let sAssetAddress = assetAddress.toHexString();
+  let assetOracleAddress = event.params.source;
+
+  if (assetOracleAddress.equals(zeroAddress())) {
+    log.warning('skipping wrong price source registration {}', [assetOracleAddress.toHexString()]);
+    return;
+  }
 
   // because of the bug with wrong assets addresses submission
   if (sAssetAddress.split('0').length > 38) {
     log.warning('skipping wrong asset registration {}', [sAssetAddress]);
     return;
   }
+  let priceOracle = getOrInitPriceOracle();
+  if (priceOracle.proxyPriceProvider.equals(zeroAddress())) {
+    priceOracle.proxyPriceProvider = event.address;
+  }
+
+  let priceOracleAsset = getPriceOracleAsset(assetAddress.toHexString());
+  if (!priceOracleAsset.fromChainlinkSourcesRegistry) {
+    chainLinkAggregatorUpdated(
+      event,
+      assetAddress,
+      assetOracleAddress,
+      priceOracleAsset,
+      priceOracle
+    );
+  }
+}
+
+export function handleChainlinkAggregatorUpdated(event: AggregatorUpdated): void {
+  let assetAddress = event.params.token;
+  let assetOracleAddress = event.params.aggregator;
 
   let priceOracle = getOrInitPriceOracle();
+  let priceOracleAsset = getPriceOracleAsset(assetAddress.toHexString());
+  priceOracleAsset.fromChainlinkSourcesRegistry = true;
+  chainLinkAggregatorUpdated(
+    event,
+    assetAddress,
+    assetOracleAddress,
+    priceOracleAsset,
+    priceOracle
+  );
+}
 
-  let proxyPriceProvider = ChainlinkProxyPriceProvider.bind(event.address);
+function chainLinkAggregatorUpdated(
+  event: ethereum.Event,
+  assetAddress: Address,
+  assetOracleAddress: Address,
+  priceOracleAsset: PriceOracleAsset,
+  priceOracle: PriceOracle
+): void {
+  let sAssetAddress = assetAddress.toHexString();
+
+  let proxyPriceProvider = ChainlinkProxyPriceProvider.bind(
+    Address.fromString(priceOracle.proxyPriceProvider.toHexString())
+  );
 
   //needed because of one wrong handleAssetSourceUpdated event deployed on the mainnet
   let priceFromProxy = zeroBI();
@@ -91,8 +140,6 @@ export function handleAssetSourceUpdated(event: AssetSourceUpdated): void {
     priceFromProxy = priceFromProxyCall.value;
   }
 
-  let assetOracleAddress = event.params.source;
-  let priceOracleAsset = getPriceOracleAsset(sAssetAddress);
   priceOracleAsset.isFallbackRequired = true;
 
   // if it's valid oracle address
@@ -162,7 +209,7 @@ export function handleAssetSourceUpdated(event: AssetSourceUpdated): void {
       !priceOracleAsset.isFallbackRequired
     ) {
       priceOracle.tokensWithFallback = priceOracle.tokensWithFallback.filter(
-        token => token != event.params.asset.toHexString()
+        token => token != assetAddress.toHexString()
       );
     }
 

@@ -934,6 +934,15 @@ export class PriceOracleAsset extends Entity {
   set priceHistory(value: Array<string>) {
     this.set("priceHistory", Value.fromStringArray(value));
   }
+
+  get fromChainlinkSourcesRegistry(): boolean {
+    let value = this.get("fromChainlinkSourcesRegistry");
+    return value.toBoolean();
+  }
+
+  set fromChainlinkSourcesRegistry(value: boolean) {
+    this.set("fromChainlinkSourcesRegistry", Value.fromBoolean(value));
+  }
 }
 
 export class PriceOracle extends Entity {

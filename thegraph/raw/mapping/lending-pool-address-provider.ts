@@ -107,7 +107,7 @@ export function handleLendingPoolParametersProviderUpdated(
 }
 
 export function handleLendingPoolManagerUpdated(event: LendingPoolManagerUpdated): void {
-  genericAddressProviderUpdate('lendingPoolManager', event.params.newAddress, event);
+  genericAddressProviderUpdate('lendingPoolManager', event.params.newAddress, event, false);
 }
 
 export function handleLendingPoolLiquidationManagerUpdated(

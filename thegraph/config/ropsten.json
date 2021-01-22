@@ -1,12 +1,14 @@
 {
-    "type": "{{type}}",
-    "network": "ropsten",
-    "aavePoolRegistrarAddress": "0x43cd3224f8c81b096f4c9862ef6817e66c5b70b9",
-    "aavePoolRegistrarStartBlock": 7070915,
-    "addressesProviderRegistryAddress": "0x84D3638AF869cA413702192E5AB9481C083A216a",
-    "addressesProviderRegistryStartBlock": 7932245,
-    "proxyPriceProviderAddress": "0x657372A559c30d236F011239fF9fbB6D76718271",
-    "proxyPriceProviderStartBlock": 7079740,
-    "chainlinkUSDETHOracleAddress": "0x0000000000000000000000000000000000000000",
-    "chainlinkUSDETHOracleStartBlock": 7079740
+  "type": "{{type}}",
+  "network": "ropsten",
+  "aavePoolRegistrarAddress": "0x43cd3224f8c81b096f4c9862ef6817e66c5b70b9",
+  "aavePoolRegistrarStartBlock": 7070915,
+  "addressesProviderRegistryAddress": "0x84D3638AF869cA413702192E5AB9481C083A216a",
+  "addressesProviderRegistryStartBlock": 7932245,
+  "proxyPriceProviderAddress": "0x657372A559c30d236F011239fF9fbB6D76718271",
+  "proxyPriceProviderStartBlock": 7079740,
+  "chainlinkUSDETHOracleAddress": "0x0000000000000000000000000000000000000000",
+  "chainlinkUSDETHOracleStartBlock": 7079740,
+  "chainlinkSourcesRegistryAddress": "0x0000000000000000000000000000000000000000",
+  "chainlinkSourcesRegistryStartBlock": 0
 }

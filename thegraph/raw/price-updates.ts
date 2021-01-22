@@ -8,6 +8,7 @@ import {
 } from './generated/schema';
 import { getOrInitPriceOracle, getPriceOracleAsset } from './initializers';
 import { ChainlinkProxyPriceProvider } from './generated/templates/ChainlinkAggregator/ChainlinkProxyPriceProvider';
+import { AAVE_ADDRESS, LEND_ADDRESS } from '../utils/constants';
 
 export function usdEthPriceUpdate(
   priceOracle: PriceOracle,
@@ -44,6 +45,14 @@ export function genericPriceUpdate(
   oracleAsset.priceInEth = price;
   oracleAsset.lastUpdateTimestamp = event.block.timestamp.toI32();
   oracleAsset.save();
+  if (oracleAsset.id == AAVE_ADDRESS) {
+    let lendOracleAsset = getPriceOracleAsset(LEND_ADDRESS);
+    lendOracleAsset.priceInEth = price.div(BigInt.fromI32(100));
+    lendOracleAsset.lastUpdateTimestamp = event.block.timestamp.toI32();
+    lendOracleAsset.save();
+    // add new price to history
+    savePriceToHistory(lendOracleAsset, event);
+  }
   // add new price to history
   savePriceToHistory(oracleAsset, event);
 
@@ -54,9 +63,15 @@ export function genericPriceUpdate(
   for (let i = 0; i < dependentAssets.length; i += 1) {
     let dependentAsset = dependentAssets[i];
     let dependentOracleAsset = getPriceOracleAsset(dependentAsset);
-    dependentOracleAsset.priceInEth = proxyPriceProvider.getAssetPrice(
+    let assetPrice = proxyPriceProvider.try_getAssetPrice(
       Address.fromString(dependentOracleAsset.id)
     );
+    if (!assetPrice.reverted) {
+      dependentOracleAsset.priceInEth = assetPrice.value;
+    } else {
+      log.error('DependentAsset: {} | OracleAssetId: {} | proxyPriceProvider: {} | EventAddress: {}', 
+        [dependentAsset, dependentOracleAsset.id, proxyPriceProviderAddress.toHexString(), event.address.toHexString()]);
+    }
     dependentOracleAsset.save();
     savePriceToHistory(dependentOracleAsset, event);
   }

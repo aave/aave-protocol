@@ -13,7 +13,7 @@ https://thegraph.com/explorer/subgraph/aave/protocol-raw - mainnet
 https://thegraph.com/explorer/subgraph/aave/protocol-ropsten-raw - ropsten
 
 ### formatted
-Data formatted to big units with floating point (deprecated), deployed at:
+Data formatted to big units with floating point, deployed at:
 
 https://thegraph.com/explorer/subgraph/aave/protocol - mainnet
 

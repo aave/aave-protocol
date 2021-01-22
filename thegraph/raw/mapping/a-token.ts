@@ -1,18 +1,18 @@
-import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts';
+import { Address, BigInt, ethereum, log } from '@graphprotocol/graph-ts';
 
 import {
   BalanceTransfer,
   BurnOnLiquidation,
+  InterestRedirectionAllowanceChanged,
+  InterestStreamRedirected,
   MintOnDeposit,
   Redeem,
-  InterestRedirectionAllowanceChanged,
   RedirectedBalanceUpdated,
-  InterestStreamRedirected,
 } from '../generated/templates/AToken/AToken';
-import { ATokenBalanceHistoryItem, UserReserve } from '../generated/schema';
+import { ATokenBalanceHistoryItem, Pool, UserReserve } from '../generated/schema';
 import { getOrInitAToken, getOrInitReserve, getOrInitUserReserve } from '../initializers';
 import { zeroBI } from '../../utils/converters';
-import { saveReserve } from "./lending-pool"
+import { saveReserve } from './lending-pool';
 
 function saveUserReserve(userReserve: UserReserve, event: ethereum.Event): void {
   userReserve.lastUpdateTimestamp = event.block.timestamp.toI32();
@@ -46,9 +46,11 @@ function genericBurn(
     .minus(value);
   userReserve.userBalanceIndex = userBalanceIndex;
 
+  // on every withdraw if userBalance we set usage as collateral to false
   if (userReserve.principalATokenBalance.equals(zeroBI())) {
-    userReserve.usageAsCollateralEnabledOnUser = true;
+    userReserve.usageAsCollateralEnabledOnUser = false;
   }
+
   saveUserReserve(userReserve, event);
 }
 
@@ -69,16 +71,11 @@ function genericTransfer(
   userFromReserve.principalATokenBalance = userFromReserve.principalATokenBalance
     .plus(fromBalanceIncrease)
     .minus(value);
-  if (userFromReserve.principalATokenBalance.equals(zeroBI())) {
-    userFromReserve.usageAsCollateralEnabledOnUser = true;
-  }
   userFromReserve.userBalanceIndex = fromIndex;
   saveUserReserve(userFromReserve, event);
 
   let userToReserve = getOrInitUserReserve(to, aToken.underlyingAssetAddress as Address, event);
-  if (userToReserve.principalATokenBalance.equals(zeroBI())) {
-    userToReserve.usageAsCollateralEnabledOnUser = false;
-  }
+
   userToReserve.principalATokenBalance = userToReserve.principalATokenBalance
     .plus(value)
     .plus(toBalanceIncrease);
@@ -108,6 +105,11 @@ export function handleMintOnDeposit(event: MintOnDeposit): void {
     aToken.underlyingAssetAddress as Address,
     event
   );
+
+  // on every deposit if userBalance we set usage as collateral to true
+  if (userReserve.principalATokenBalance.equals(zeroBI())) {
+    userReserve.usageAsCollateralEnabledOnUser = true;
+  }
 
   userReserve.principalATokenBalance = userReserve.principalATokenBalance
     .plus(event.params._value)

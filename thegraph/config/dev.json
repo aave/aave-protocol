@@ -8,5 +8,7 @@
   "proxyPriceProviderAddress": "0xD543a0D2136427253230d4fa21F0751E93bBad10",
   "proxyPriceProviderStartBlock": 0,
   "chainlinkUSDETHOracleAddress": "0x0000000000000000000000000000000000000000",
-  "chainlinkUSDETHOracleStartBlock": 0
+  "chainlinkUSDETHOracleStartBlock": 0,
+  "chainlinkSourcesRegistryAddress": "0x0000000000000000000000000000000000000000",
+  "chainlinkSourcesRegistryStartBlock": 0
 }
