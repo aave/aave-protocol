@@ -351,7 +351,7 @@ contract AToken is ERC20, ERC20Detailed {
         if(interestRedirectionAddresses[_user] == address(0)){
 
             //accruing for himself means that both the principal balance and
-            //the redirected balance partecipate in the interest
+            //the redirected balance participate in the interest
             return calculateCumulatedBalanceInternal(
                 _user,
                 currentPrincipalBalance.add(redirectedBalance)
