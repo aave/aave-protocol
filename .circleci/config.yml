@@ -1,0 +1,30 @@
+version: 2.1
+jobs:
+  semgrep-scan:
+    parameters:
+      repo_path:
+        type: string
+        default: faceyacc/aave-protocol
+      default_branch:
+        type: string
+        default: main
+    environment:
+      SEMGREP_RULES: >- # more at semgrep.dev/explore
+        p/security-audit
+        p/secrets
+        p/ci
+
+      # Scan changed files in PRs, block on new issues only (existing issues ignored)
+      # SEMGREP_BASELINE_REF: << parameters.default_branch >>
+
+    docker:
+      - image: returntocorp/semgrep-agent:v1
+    steps:
+      - checkout
+      - run:
+          name: "Semgrep scan"
+          command: semgrep-agent
+workflows:
+  main:
+    jobs:
+      - semgrep-scan
