@@ -6,3 +6,5 @@ dist/
 coverage/
 
 thegraph/subgraph.yaml
+
+.env
