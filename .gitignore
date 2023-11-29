@@ -1,5 +1,5 @@
 node_modules/
-build/
+thegraph/build/
 dist/
 .idea
 .vscode
