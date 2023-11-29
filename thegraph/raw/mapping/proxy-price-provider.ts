@@ -147,9 +147,12 @@ function chainLinkAggregatorUpdated(
     let priceAggregatorInstance = IExtendedPriceAggregator.bind(assetOracleAddress);
 
     // check is it composite or simple asset
+    // In case it is a chainlink aggregator source, this call will revert, and oracle type is updated to simple, which is the default
     let tokenTypeCall = priceAggregatorInstance.try_getTokenType();
     if (!tokenTypeCall.reverted) {
       priceOracleAsset.type = getPriceOracleAssetType(tokenTypeCall.value);
+    } else {
+      priceOracleAsset.type = PRICE_ORACLE_ASSET_TYPE_SIMPLE;
     }
 
     if (priceOracleAsset.type == PRICE_ORACLE_ASSET_TYPE_SIMPLE) {
