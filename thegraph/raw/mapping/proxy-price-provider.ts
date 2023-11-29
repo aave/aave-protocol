@@ -30,45 +30,55 @@ import { PriceOracle, PriceOracleAsset } from '../generated/schema';
 
 export function handleFallbackOracleUpdated(event: FallbackOracleUpdated): void {
   let priceOracle = getOrInitPriceOracle();
-  if (priceOracle.fallbackPriceOracle) {
-    // TODO: add logic to remove old one, was not possible with TheGraph
-    // FallbackPriceOracle.delete(priceOracle.fallbackPriceOracle)
-  }
 
   priceOracle.fallbackPriceOracle = event.params.fallbackOracle;
-  FallbackPriceOracleContract.create(event.params.fallbackOracle);
+  if (event.params.fallbackOracle != zeroAddress()) {
+    FallbackPriceOracleContract.create(event.params.fallbackOracle);
 
-  // update prices on assets which use fallback
-  priceOracle.tokensWithFallback.forEach(token => {
-    let priceOracleAsset = getPriceOracleAsset(token);
-    if (priceOracleAsset.priceSource.equals(zeroAddress()) || priceOracleAsset.isFallbackRequired) {
+    // update prices on assets which use fallback
+    priceOracle.tokensWithFallback.forEach(token => {
       let proxyPriceProvider = ChainlinkProxyPriceProvider.bind(event.address);
-      genericPriceUpdate(
-        priceOracleAsset,
-        proxyPriceProvider.getAssetPrice(Bytes.fromHexString(priceOracleAsset.id) as Address),
-        event
-      );
-    }
-  });
+      let priceOracleAsset = getPriceOracleAsset(token);
+      if (
+        priceOracleAsset.priceSource.equals(zeroAddress()) ||
+        priceOracleAsset.isFallbackRequired
+      ) {
+        let price = proxyPriceProvider.try_getAssetPrice(Address.fromString(priceOracleAsset.id));
+        if (!price.reverted) {
+          genericPriceUpdate(priceOracleAsset, price.value, event);
+        } else {
+          log.error(
+            'OracleAssetId: {} | ProxyPriceProvider: {} | FallbackOracle: {} | EventAddress: {}',
+            [
+              priceOracleAsset.id,
+              event.address.toHexString(),
+              event.params.fallbackOracle.toHexString(),
+              event.address.toHexString(),
+            ]
+          );
+        }
+      }
+    })
 
-  // update USDETH price
-  let fallbackOracle = FallbackPriceOracle.bind(event.params.fallbackOracle);
-  let ethUsdPrice = zeroBI();
-  // try method for dev networks
-  let ethUsdPriceCall = fallbackOracle.try_getEthUsdPrice();
-  if (ethUsdPriceCall.reverted) {
-    // try method for ropsten and mainnet
-    ethUsdPrice = formatUsdEthChainlinkPrice(
-      fallbackOracle.getAssetPrice(Address.fromString(MOCK_USD_ADDRESS))
-    );
-  } else {
-    ethUsdPrice = ethUsdPriceCall.value;
-  }
-  if (
-    priceOracle.usdPriceEthFallbackRequired ||
-    priceOracle.usdPriceEthMainSource.equals(zeroAddress())
-  ) {
-    usdEthPriceUpdate(priceOracle, ethUsdPrice, event);
+    // update USDETH price
+    let fallbackOracle = FallbackPriceOracle.bind(event.params.fallbackOracle);
+    let ethUsdPrice = zeroBI();
+    // try method for dev networks
+    let ethUsdPriceCall = fallbackOracle.try_getEthUsdPrice();
+    if (ethUsdPriceCall.reverted) {
+      // try method for ropsten and mainnet
+      ethUsdPrice = formatUsdEthChainlinkPrice(
+        fallbackOracle.getAssetPrice(Address.fromString(MOCK_USD_ADDRESS))
+      );
+    } else {
+      ethUsdPrice = ethUsdPriceCall.value;
+    }
+    if (
+      priceOracle.usdPriceEthFallbackRequired ||
+      priceOracle.usdPriceEthMainSource.equals(zeroAddress())
+    ) {
+      usdEthPriceUpdate(priceOracle, ethUsdPrice, event);
+    }
   }
 }
 
@@ -147,9 +157,12 @@ function chainLinkAggregatorUpdated(
     let priceAggregatorInstance = IExtendedPriceAggregator.bind(assetOracleAddress);
 
     // check is it composite or simple asset
+    // In case it is a chainlink aggregator source, this call will revert, and oracle type is updated to simple, which is the default
     let tokenTypeCall = priceAggregatorInstance.try_getTokenType();
     if (!tokenTypeCall.reverted) {
       priceOracleAsset.type = getPriceOracleAssetType(tokenTypeCall.value);
+    } else {
+      priceOracleAsset.type = PRICE_ORACLE_ASSET_TYPE_SIMPLE;
     }
 
     if (priceOracleAsset.type == PRICE_ORACLE_ASSET_TYPE_SIMPLE) {

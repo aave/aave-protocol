@@ -1,8 +1,10 @@
 node_modules/
-build/
+thegraph/build/
 dist/
 .idea
 .vscode
 coverage/
 
 thegraph/subgraph.yaml
+
+.env

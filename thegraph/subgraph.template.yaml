@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Aave protocol subgraph with all pool data
 repository: https://github.com/graphprotocol/aave-protocol
 schema:
