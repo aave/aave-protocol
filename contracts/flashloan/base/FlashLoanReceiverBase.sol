@@ -18,7 +18,8 @@ contract FlashLoanReceiverBase is IFlashLoanReceiver {
         addressesProvider = _provider;
     }
 
-    function () external payable {
+    fallback() external payable {
+
     }
 
     function transferFundsBackToPoolInternal(address _reserve, uint256 _amount) internal {
