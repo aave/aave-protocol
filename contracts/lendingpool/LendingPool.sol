@@ -642,7 +642,7 @@ contract LendingPool is ReentrancyGuard, VersionedInitializable {
     }
 
     /**
-    * @dev borrowers can user this function to swap between stable and variable borrow rate modes.
+    * @dev borrowers can use this function to swap between stable and variable borrow rate modes.
     * @param _reserve the address of the reserve on which the user borrowed
     **/
     function swapBorrowRateMode(address _reserve)
