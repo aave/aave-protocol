@@ -1,3 +1,4 @@
+[CONTRIBUTING.md](https://github.com/user-attachments/files/16434739/CONTRIBUTING.md)
 # [Aave Protocol](https://aave.com/) &middot; [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 Open source implementation of the Aave Decentralized Lending Pools protocol. Version 1.0
@@ -8,7 +9,14 @@ Open source implementation of the Aave Decentralized Lending Pools protocol. Ver
 It is possible to find documention to integrate the Aave Protocol on [developers.aave.com](https://developers.aave.com)
 
 For a deep explanation of the Aave Protocol, read the [White Paper](./docs/Aave_Protocol_Whitepaper_v1_0.pdf)
-
+---
+aliases: algorithms
+display_name: Algorithm
+short_description: Algorithms are self-contained sequences that carry out a variety of tasks.
+topic: algorithm
+wikipedia_url: https://en.wikipedia.org/wiki/Algorithm
+---
+Algorithms are detailed sets of guidelines created for a computer program to complete tasks efficiently and thoroughly.
 
 ## Source code
 
