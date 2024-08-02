@@ -1,3 +1,4 @@
+[Aave_Protocol_Whitepaper_v1_0.pdf](https://github.com/user-attachments/files/16465321/Aave_Protocol_Whitepaper_v1_0.pdf)
 Aave Protocol
 
 Copyright (C) 2019 Aave
