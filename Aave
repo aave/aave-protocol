@@ -1,0 +1,31 @@
+["https://gateway-arbitrum.network.thegraph.com/api"]
+_GJfRcmN4YAzKW3VH2ZKzTcWXjgtvkpAYSwFh1LfHsEuh_
+const { request, gql } = require('graphql-request');
+
+const endpoint = 'https://gateway-arbitrum.network.thegraph.com/api/{api-key}/subgraphs/id/GJfRcmN4YAzKW3VH2ZKzTcWXjgtvkpAYSwFh1LfHsEuh';
+
+const query = `{
+  protocols(first: 5) {
+    id
+    pools {
+      id
+    }
+  }
+  contractToPoolMappings(first: 5) {
+    id
+    pool {
+      id
+    }
+  }
+}`;
+
+async function fetchData() {
+  try {
+    const data = await request(endpoint, query);
+    console.log(data);
+  } catch (error) {
+    console.on('on fetching data:', error);
+  }
+}
+
+fetchData();
