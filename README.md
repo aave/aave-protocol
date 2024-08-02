@@ -1,65 +1,123 @@
-# [Aave Protocol](https://aave.com/) &middot; [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+Palkeoramix decompiler. 
 
-Open source implementation of the Aave Decentralized Lending Pools protocol. Version 1.0
+const proxyType = 2
 
+def storage:
+  stor99 is mapping of struct at storage 99
+  stor546D is uint128 at storage 0x546d617469632e6e6574776f726b2e70726f78792e696d706c656d656e746174696f offset 160
+  implementationAddress is address at storage 0x546d617469632e6e6574776f726b2e70726f78792e696d706c656d656e746174696f
+  stor546D is uint256 at storage 0x546d617469632e6e6574776f726b2e70726f78792e696d706c656d656e746174696f
 
-## Documentation
+def proxyOwner(): # not payable
+  return address(stor[sha3('matic.network.proxy.owner')].field_0)
 
-It is possible to find documention to integrate the Aave Protocol on [developers.aave.com](https://developers.aave.com)
+def implementation(): # not payable
+  return implementationAddress
 
-For a deep explanation of the Aave Protocol, read the [White Paper](./docs/Aave_Protocol_Whitepaper_v1_0.pdf)
+#
+#  Regular functions
+#
 
+def _fallback(?) payable: # default function
+  delegate uint256(stor546D.field_0) with:
+     funct call.data[0 len 4]
+       gas gas_remaining - 10000 wei
+      args call.data[4 len calldata.size - 4]
+  if not delegate.return_code:
+      revert with ext_call.return_data[0 len return_data.size]
+  return ext_call.return_data[0 len return_data.size]
 
-## Source code
+def transferProxyOwnership(address newOwner): # not payable
+  require calldata.size - 4 >= 32
+  if address(stor[sha3('matic.network.proxy.owner')].field_0) != caller:
+      revert with 0, 'NOT_OWNER'
+  if not newOwner:
+      revert with 0, 'ZERO_ADDRESS'
+  log ProxyOwnerUpdate(
+        address _new=address(newOwner),
+        address _old=address(stor[sha3('matic.network.proxy.owner')].field_0))
+  address(stor[sha3('matic.network.proxy.owner')].field_0) = newOwner
+  Mask(96, 0, stor[sha3('matic.network.proxy.owner')].field_160) = 0
 
-The source code included is the final production version of the protocol. Eventual changes (smart contracts updates, bug fixes, etc.) will be applied through subsequent merge requests.
+def updateImplementation(address _newProxyTo): # not payable
+  require calldata.size - 4 >= 32
+  if address(stor[sha3('matic.network.proxy.owner')].field_0) != caller:
+      revert with 0, 'NOT_OWNER'
+  if not _newProxyTo:
+      revert with 0, 'INVALID_PROXY_ADDRESS'
+  if ext_code.size(_newProxyTo) <= 0:
+      revert with 0x8c379a000000000000000000000000000000000000000000000000000000000, 
+                  32,
+                  37,
+                  0xfe44455354494e4154494f4e5f414444524553535f49535f4e4f545f415f434f4e54524143,
+                  mem[201 len 27]
+  log ProxyUpdated(
+        address _new=_newProxyTo,
+        address _old=implementationAddress)
+  implementationAddress = _newProxyTo
+  Mask(96, 0, stor546D.field_160) = 0
 
-## Audits report
+def updateAndCall(address _newProxyTo, bytes data) payable: 
+  require calldata.size - 4 >= 64
+  require data <= unknown10000000()
+  require data + 36 <= calldata.size
+  require data.length <= unknown10000000() and data + data.length + 36 <= calldata.size
+  mem[128 len data.length] = data[all]
+  mem[data.length + 128] = 0
+  if address(stor[sha3(Mask(200, -(8 * ceil32(data.length) + -data.length + 25) + 256, 0) >> 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff38 + (8 * -ceil32(data.length)) + (8 * data.length) + 256)].field_0) != caller:
+      revert with 0, 'NOT_OWNER'
+  if address(stor[sha3(Mask(200, -(8 * ceil32(data.length) + -data.length + 25) + 256, 0) >> 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff38 + (8 * -ceil32(data.length)) + (8 * data.length) + 256)].field_0) != caller:
+      revert with 0, 'NOT_OWNER'
+  if not _newProxyTo:
+      revert with 0, 'INVALID_PROXY_ADDRESS'
+  if ext_code.size(_newProxyTo) <= 0:
+      revert with 0, 
+                  32,
+                  37,
+                  0xfe44455354494e4154494f4e5f414444524553535f49535f4e4f545f415f434f4e54524143,
+                  mem[ceil32(data.length) + 233 len 27]
+  log ProxyUpdated(
+        address _new=_newProxyTo,
+        address _old=address(stor[Mask(8 * -data.length + ceil32(data.length) + 2, 0, 0x546d617469632e6e6574776f726b2e70726f78792e696d706c656d656e746174696f)][Mask(8 * -ceil32(data.length) + data.length + 32, 0, 0)].field_0))
+  mem[ceil32(data.length) + 128 len 34] = 0x546d617469632e6e6574776f726b2e70726f78792e696d706c656d656e746174696f
+  address(stor[Mask(8 * -data.length + ceil32(data.length) + 2, 0, 0x546d617469632e6e6574776f726b2e70726f78792e696d706c656d656e746174696f)][Mask(8 * -ceil32(data.length) + data.length + 32, 0, 0)].field_0) = _newProxyTo
+  Mask(96, 0, stor[Mask(8 * -data.length + ceil32(data.length) + 2, 0, 0x546d617469632e6e6574776f726b2e70726f78792e696d706c656d656e746174696f)][Mask(8 * -ceil32(data.length) + data.length + 32, 0, 0)].field_160) = 0
+  mem[ceil32(data.length) + 128 len floor32(data.length)] = call.data[data + 36 len floor32(data.length)]
+  mem[ceil32(data.length) + floor32(data.length) + -(data.length % 32) + 160 len data.length % 32] = mem[-(data.length % 32) + floor32(data.length) + 160 len data.length % 32]
+  call this.address with:
+     funct Mask(32, -(8 * ceil32(data.length) + -data.length + 4) + 256, 0) >> -(8 * ceil32(data.length) + -data.length + 4) + 256
+     value call.value wei
+       gas gas_remaining wei
+      args mem[ceil32(data.length) + 132 len data.length - 4]
+  if ext_call.success:
+      stop
+  if return_data.size:
+      mem[ceil32(data.length) + ceil32(return_data.size) + 197 len ceil32(return_data.size)] = ext_call.return_data[0 len return_data.size], Mask(8 * ceil32(return_data.size) - return_data.size, -(8 * ceil32(return_data.size) + -ceil32(return_data.size) + 27) + 256, 32) >> -(8 * ceil32(return_data.size) + -ceil32(return_data.size) + 27) + 256
+      if not return_data.size % 32:
+          revert with 0, 
+                      32,
+                      return_data.size,
+                      Mask(8 * return_data.size, -(8 * return_data.size) + 256, ext_call.return_data[0 len return_data.size], Mask(8 * ceil32(return_data.size) - return_data.size, -(8 * ceil32(return_data.size) + -ceil32(return_data.size) + 27) + 256, 32) >> -(8 * ceil32(return_data.size) + -ceil32(return_data.size) + 27) + 256) << (8 * return_data.size) - 256
+      mem[floor32(return_data.size) + ceil32(data.length) + ceil32(return_data.size) + 197] = mem[floor32(return_data.size) + ceil32(data.length) + ceil32(return_data.size) + -(return_data.size % 32) + 229 len return_data.size % 32]
+      revert with 0, 
+                  32,
+                  return_data.size,
+                  Mask(8 * ceil32(return_data.size), -(8 * ceil32(return_data.size)) + 256, ext_call.return_data[0 len return_data.size], Mask(8 * ceil32(return_data.size) - return_data.size, -(8 * ceil32(return_data.size) + -ceil32(return_data.size) + 27) + 256, 32) >> -(8 * ceil32(return_data.size) + -ceil32(return_data.size) + 27) + 256) << (8 * ceil32(return_data.size)) - 256,
+                  mem[ceil32(data.length) + ceil32(return_data.size) + ceil32(return_data.size) + 197 len floor32(return_data.size) + -ceil32(return_data.size) + 32]
+  mem[ceil32(data.length) + 128] = 0x8c379a000000000000000000000000000000000000000000000000000000000
+  mem[ceil32(data.length) + 196 len ceil32(data.length)] = data[all], mem[data.length + 128 len ceil32(data.length) - data.length]
+  if not data.length % 32:
+      revert with 0, 
+                  32,
+                  data.length,
+                  Mask(8 * data.length, -(8 * data.length) + 256, data[all], mem[data.length + 128 len ceil32(data.length) - data.length]) << (8 * data.length) - 256
+  mem[floor32(data.length) + ceil32(data.length) + 196] = mem[floor32(data.length) + ceil32(data.length) + -(data.length % 32) + 228 len data.length % 32]
+  revert with 0, 
+              32,
+              data.length,
+              Mask(8 * ceil32(data.length), -(8 * ceil32(data.length)) + 256, data[all], mem[data.length + 128 len ceil32(data.length) - data.length]) << (8 * ceil32(data.length)) - 256,
+              mem[(2 * ceil32(data.length)) + 196 len floor32(data.length) + -ceil32(data.length) + 32]
 
-- [Trails of Bits Smart Contracts audit](./docs/ToB_aave_protocol_final_report.pdf)
+Decompilation generated by Panoramix.
 
-- [Open Zeppelin Smart Contracts](https://blog.openzeppelin.com/aave-protocol-audit/)
-
-## Bug bounty
-
-The bug bounty program is live! 
-
- We want Aave protocol to be the best it can be, so we’re calling on our community to help us find any bugs or     vulnerabilities.
- 
- More details about the bounty program and how to apply can be found here https://aave.com/bug-bounty.
-
-## Responsible disclosure
-
-At Aave, we consider the security of our systems a top priority. But even putting top priority status and maximum effort, there is still possibility that vulnerabilities can exist. 
-
-In case you discover a vulnerability, we would like to know about it immediately so we can take steps to address it as quickly as possible.  
-
-If you discover a vulnerability, please do the following: 
-
-    E-mail your findings to wecare@aave.com; 
-
-    Do not take advantage of the vulnerability or problem you have discovered; 
-
-    Do not reveal the problem to others until it has been resolved; 
-
-    Do not use attacks on physical security, social engineering, distributed denial of service, spam or applications of third parties; and 
-
-    Do provide sufficient information to reproduce the problem, so we will be able to resolve it as quickly as possible. Complex vulnerabilities may require further explanation so we might ask you for additional information. 
-
-We will promise the following: 
-
-    We will respond to your report within 3 business days with our evaluation of the report and an expected resolution date; 
-
-    If you have followed the instructions above, we will not take any legal action against you in regard to the report; 
-
-    We will handle your report with strict confidentiality, and not pass on your personal details to third parties without your permission; 
-
-    If you so wish we will keep you informed of the progress towards resolving the problem; 
-
-    In the public information concerning the problem reported, we will give your name as the discoverer of the problem (unless you desire otherwise); and 
-
-    As a token of our gratitude for your assistance, we offer a reward for every report of a security problem that was not yet known to us. The amount of the reward will be determined based on the severity of the leak, the quality of the report and any additional assistance you provide.  
-
-## License
-
-The Aave Protocol is under [the AGPL v3 license](LICENSE.md)
+Raw bytecode
