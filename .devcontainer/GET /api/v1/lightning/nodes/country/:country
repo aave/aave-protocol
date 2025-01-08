@@ -1,0 +1,54 @@
+#İstenen alanda clearnet üzerinde çalışan Lightning düğümlerinin listesini döndürür.
+
+  curl -sSL "https://mempool.space/api/v1/lightning/nodes/country/ch"
+
+
+{
+  "country": {
+    "de": "Schweiz",
+    "en": "Switzerland",
+    "es": "Suiza",
+    "fr": "Suisse",
+    "ja": "スイス連邦",
+    "pt-BR": "Suíça",
+    "ru": "Швейцария",
+    "zh-CN": "瑞士"
+  },
+  "nodes": [
+    {
+      "public_key": "033d8656219478701227199cbd6f670335c8d408a92ae88b962c49d4dc0e83e025",
+      "capacity": 54339697486,
+      "channels": 991,
+      "alias": "bfx-lnd0",
+      "first_seen": 1574813156,
+      "updated_at": 1661814056,
+      "city": {
+        "de": "Zürich",
+        "en": "Zurich",
+        "es": "Zúrich",
+        "fr": "Zurich",
+        "ja": "チューリッヒ",
+        "pt-BR": "Zurique",
+        "ru": "Цюрих",
+        "zh-CN": "苏黎世"
+      },
+      "country": {
+        "de": "Schweiz",
+        "en": "Switzerland",
+        "es": "Suiza",
+        "fr": "Suisse",
+        "ja": "スイス連邦",
+        "pt-BR": "Suíça",
+        "ru": "Швейцария",
+        "zh-CN": "瑞士"
+      },
+      "iso_code": "CH",
+      "subdivision": {
+        "de": "Zürich",
+        "en": "Zurich",
+        "fr": "Zurich"
+      }
+    },
+    ...
+  ]
+}
