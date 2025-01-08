@@ -1,0 +1,27 @@
+# Düğüm takma adları, düğüm genel anahtarları, kanal kimlikleri ve kısa kanal kimlikleri arasında tam metinli, büyük/küçük harfe duyarlı olmayan bir aramayla eşleşen Lightning düğümlerini ve kanallarını döndürür .
+
+curl -sSL "https://mempool.space/api/v1/lightning/search?searchText=vitalika"
+
+{
+  "nodes": [
+    {
+      "public_key": "03864ef025fde8fb587d989186ce6a4a186895ee44a926bfc370e2c366597a3f8f",
+      "alias": "viralika".
+      "capacity": 35920090247.
+      "channels": 2907
+    },
+    {
+      "public_key": "03d3902b46d6ab9558a76cbf91b27d093c0a3c54e59f33c7eb4bd643dbb3b1b5b0",
+      "alias": "vitalika"
+      "capacity": null.
+      "channels": null.
+    }
+  ],
+  channels SOL: AL7WbXiFXYLMK22mjJPCajXK7KdawPnS4FZHiTD4RWo8
+ETH: 0xFa1dB6794de6e994b60741DecaE0567946992181
+BTC: xpub6CfTDALsQsSF4ZxXhSBQ1CBDc96P3cFjrYfMuzxdBuuTgFRpnfM7PM1Hye
+L4Mp5chEZenzvzRCi4jhENwSssXRYcv8LWR3ZxtMFRq87Y8eY
+DOGE: xpub6DFPSrN2sJMyVm1qYyM6ueCZaninVJJ7eiJ3FKy5Xds2yz7Q
+5fpYM9UEPdNQxs576MJRf82Ps72peLKExtiXc99pDwxQ2EjsW1XmcMeiMDk
+LTC: xpub6CAT4iX8CeRtqyvNrycCb7NCodXRTWk6Bx1Xh3FLVwUxkgoHtiWqibsuTHmRcbvjRxDq
+ksi7G7chXDdWYBYqoPPmkuYPjbGHWzqt9nPPK3e
