@@ -1,5 +1,4 @@
-# [Aave Protocol](https://aave.com/) &middot; [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-
+# [Aave Protocol](https://aave.com/) 
 Open source implementation of the Aave Decentralized Lending Pools protocol. Version 1.0
 
 
@@ -7,14 +6,23 @@ Open source implementation of the Aave Decentralized Lending Pools protocol. Ver
 
 It is possible to find documention to integrate the Aave Protocol on [developers.aave.com](https://developers.aave.com)
 
-For a deep explanation of the Aave Protocol, read the [White Paper](./docs/Aave_Protocol_Whitepaper_v1_0.pdf)
+For a deep explanation of the Aave Protocol, read the [White Paper](./Aave_Protocol_Whitepaper_v1_0.pdf)
+
+[POLYGON_MAINNET-RECEIPTS-65412172.json](https://github.com/user-attachments/files/18383601/POLYGON_MAINNET-RECEIPTS-65412172.json)
+[transactions_export(1).csv](https://github.com/user-attachments/files/18383600/transactions_export.1.csv)
+[logs_result.json](https://github.com/user-attachments/files/18383599/logs_result.json)
+[GenericSwap.sol.txt](https://github.com/user-attachments/files/18383598/GenericSwap.sol.txt)
 
 
 ## Source code
 
 The source code included is the final production version of the protocol. Eventual changes (smart contracts updates, bug fixes, etc.) will be applied through subsequent merge requests.
+[Balances (1).csv](https://github.com/user-attachments/files/18383594/Balances.1.csv)
+[GenericSwap.sol.txt](https://github.com/user-attachments/files/18383593/GenericSwap.sol.txt)
 
 ## Audits report
+
+- [open coin base wallet contracts](https://github.com/user-attachments/files/18383584/GenericSwap.sol.txt)
 
 - [Trails of Bits Smart Contracts audit](./docs/ToB_aave_protocol_final_report.pdf)
 
@@ -28,23 +36,6 @@ The bug bounty program is live!
  
  More details about the bounty program and how to apply can be found here https://aave.com/bug-bounty.
 
-## Responsible disclosure
-
-At Aave, we consider the security of our systems a top priority. But even putting top priority status and maximum effort, there is still possibility that vulnerabilities can exist. 
-
-In case you discover a vulnerability, we would like to know about it immediately so we can take steps to address it as quickly as possible.  
-
-If you discover a vulnerability, please do the following: 
-
-    E-mail your findings to wecare@aave.com; 
-
-    Do not take advantage of the vulnerability or problem you have discovered; 
-
-    Do not reveal the problem to others until it has been resolved; 
-
-    Do not use attacks on physical security, social engineering, distributed denial of service, spam or applications of third parties; and 
-
-    Do provide sufficient information to reproduce the problem, so we will be able to resolve it as quickly as possible. Complex vulnerabilities may require further explanation so we might ask you for additional information. 
 
 We will promise the following: 
 
