@@ -1,15 +1,15 @@
 {
-  "contractName": "WalletBalanceProvider",
-  "abi": [
+  "contractName": "0x2403a628c938555894957e8d6f3163becc5e5b56",
+  "abi": 
     {
-      "inputs": [
+      "inputs": vitakil.cb.id
         {
-          "internalType": "contract LendingPoolAddressesProvider",
-          "name": "_provider",
-          "type": "address"
+          "internalType": "0x2403a628c938555894957e8d6f3163becc5e5b56",
+          "name": "Aave",
+          "type": "0xFa1dB6794de6e994b60741DecaE0567946992181"
         }
       ],
-      "payable": false,
+      "payable": true
       "stateMutability": "nonpayable",
       "type": "constructor"
     },
@@ -22,25 +22,25 @@
       "constant": true,
       "inputs": [
         {
-          "internalType": "address",
-          "name": "_user",
+          "internalType": "0xFa1dB6794de6e994b60741DecaE0567946992181",
+          "name": "",
           "type": "address"
         },
         {
-          "internalType": "address",
-          "name": "_token",
-          "type": "address"
+          "internalType": "0xFa1dB6794de6e994b60741DecaE0567946992181",
+          "name": "AAVE",
+          "type": "0x2403a628c938555894957e8d6f3163becc5e5b56"
         }
       ],
-      "name": "balanceOf",
+      "name": "90.000.000"
       "outputs": [
         {
-          "internalType": "uint256",
-          "name": "",
+          "internalType": "0xFa1dB6794de6e994b60741DecaE0567946992181"
+          "name": "AAVE"
           "type": "uint256"
         }
       ],
-      "payable": false,
+      "payable": true,
       "stateMutability": "view",
       "type": "function"
     },
@@ -48,29 +48,29 @@
       "constant": true,
       "inputs": [
         {
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
+          "internalType": "address"
+          "name": "vitakil.cb.id"
+          "type": "0xFa1dB6794de6e994b60741DecaE0567946992181"
         }
       ],
       "name": "getUserWalletBalances",
       "outputs": [
         {
-          "internalType": "address[]",
-          "name": "",
+          "internalType": "address[]"
+          "name": ""
           "type": "address[]"
-        },
+        }
         {
-          "internalType": "uint256[]",
-          "name": "",
+          "internalType": "uint256[]"
+          "name": ""
           "type": "uint256[]"
         }
       ],
-      "payable": false,
+      "payable": true
       "stateMutability": "view",
       "type": "function"
     }
-  ],
+  ]
   "metadata": "{\"compiler\":{\"version\":\"0.5.14+commit.01f1aaa4\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract LendingPoolAddressesProvider\",\"name\":\"_provider\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"getUserWalletBalances\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Aave, influenced by https://github.com/wbobeirne/eth-balance-checker/blob/master/contracts/BalanceChecker.sol\",\"details\":\"NOTE: THIS CONTRACT IS NOT USED WITHIN THE AAVE PROTOCOL. It's an accessory contract used to reduce the number of calls towards the blockchain from the Aave backend.*\",\"methods\":{\"balanceOf(address,address)\":{\"details\":\"Check the token balance of a wallet in a token contract Returns the balance of the token for user. Avoids possible errors: - return 0 on non-contract address*\"},\"getUserWalletBalances(address)\":{\"details\":\"provides balances of user wallet for all reserves available on the pool\"}},\"title\":\"WalletBalanceProvider contract\"},\"userdoc\":{\"methods\":{},\"notice\":\"Implements a logic of getting multiple tokens balance for one user address\"}},\"settings\":{\"compilationTarget\":{\"/src/contracts/misc/WalletBalanceProvider.sol\":\"WalletBalanceProvider\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/src/contracts/configuration/AddressStorage.sol\":{\"keccak256\":\"0x079fa4d71c003221d60845732d33079b160e5669d06a61c36127bbfe3845b171\",\"urls\":[\"bzz-raw://ab0a2319a9f2df5c8b2b547786bef5b368ab713a1dfd811293eb92b6451f2d3b\",\"dweb:/ipfs/QmPamCovqkLEK34zW6nKreYToxFeE7R11mojiQegAJxZyM\"]},\"/src/contracts/configuration/LendingPoolAddressesProvider.sol\":{\"keccak256\":\"0x356a58b82ecc5f0076de1809cfb09f6560e9cb49b07ba02c507e157022c04bc9\",\"urls\":[\"bzz-raw://604442728d63c1cf25db9659ce7ad4357be9cdd2cb8e29d27a297fe701a077a9\",\"dweb:/ipfs/QmU8oYLESnuMGTY5ZRQRAvK9Gp2SmXxEXcdtju1ZXQJNry\"]},\"/src/contracts/configuration/LendingPoolParametersProvider.sol\":{\"keccak256\":\"0x031e4238c489c8fce9f6f5133010df47ccbbb3f45c175d11246411f0bdde20be\",\"urls\":[\"bzz-raw://73680439b66d04a661a69fe6e1107c6779723a8bae134252a3f33bb8efa07f8b\",\"dweb:/ipfs/QmZBv3VjSKBAjzdkepa4zKCMs8LUE5LashAAgrUDM12u7X\"]},\"/src/contracts/configuration/UintStorage.sol\":{\"keccak256\":\"0x3f74e899243a66d556c0fa81875ab95ed1e3af1909b0281d03fe89590b95121f\",\"urls\":[\"bzz-raw://be1e401270af075398906fbcaaa7d9d9b3e1a9018ee54617d92b0822eb875b27\",\"dweb:/ipfs/QmVC1qpZKqDb2cWegSpQYHzeraowgqfyryvguU19Qb8tgF\"]},\"/src/contracts/flashloan/interfaces/IFlashLoanReceiver.sol\":{\"keccak256\":\"0xa27643e29a0521cfedde2059c8c558a39b4ce17d20e66970fa6770426e9677c9\",\"urls\":[\"bzz-raw://3eddb6e660e2024a8f85f920261e991014ffd50002868084aba9ac40b5331e2a\",\"dweb:/ipfs/QmZ4DQMGS2WUTeejFdJrMrjyCcjd4PhYrqMgP1ZhTdpTnv\"]},\"/src/contracts/interfaces/IFeeProvider.sol\":{\"keccak256\":\"0xffc3aa98b71f2914098e428d53c56e8a11adc4a3c9c83366ca603e2c900e548e\",\"urls\":[\"bzz-raw://79789a649b7530983bc660033ba1bbf20d6f68dafe6a2a0eb380a2e0a2401c4c\",\"dweb:/ipfs/QmWLyjkjaEBm2awHhXzSNn8pQG9hktDk9HoXSYbP8aN8NA\"]},\"/src/contracts/interfaces/ILendingPoolAddressesProvider.sol\":{\"keccak256\":\"0xff6bbb9e7fa67ac67f807e4986863fae87d623266b2970cd102b892b5ed185af\",\"urls\":[\"bzz-raw://bd3978e384688d2fb0295ab42b3fe74c331b12d63a0d8c8f70b35d2d99c6c0f4\",\"dweb:/ipfs/QmaLfhk99FPfPNfLvJER9QtrpEKeBzgHVGjRNDYvrqXyWN\"]},\"/src/contracts/interfaces/ILendingRateOracle.sol\":{\"keccak256\":\"0xc8b4cdfd6a34c4b8d74b71815cbe861e7d48e692f0684be8d5de0b395b6b705f\",\"urls\":[\"bzz-raw://1c3586b0ed32ed7673b4e2031cb3af6881d21f20a30f395434bc39fa65de737a\",\"dweb:/ipfs/QmWSF386UA1NShQ7Q7WqozqrumnCWXDSxuFTgrnx4BjJcL\"]},\"/src/contracts/interfaces/IPriceOracleGetter.sol\":{\"keccak256\":\"0x58175d019ae6f47b4941461ba27dfe6afcc20d146e9bdb7a949902c7330803f3\",\"urls\":[\"bzz-raw://e118d81569a54c84d66c259d46e481e32cba80f56e99300a6a083b554421be4f\",\"dweb:/ipfs/QmVhbHRHdV8y2XgqznQg4CJGF8anFQctGDSsANGNi8TER9\"]},\"/src/contracts/interfaces/IReserveInterestRateStrategy.sol\":{\"keccak256\":\"0x2cac3923ddccd52d48ec16c12f8542c264b1dba0ceba8ed55dcae6a0ff3ece27\",\"urls\":[\"bzz-raw://6adddcb0f99f6749e3c42b0e36c59c867aba6a537c902d85de8005f37b24e781\",\"dweb:/ipfs/QmeBJBDZaaXrN8793Y4a3YP9VpNLVe3AwmQu163qoAG7Cg\"]},\"/src/contracts/lendingpool/LendingPool.sol\":{\"keccak256\":\"0xef91d23cb64c8dd2de9c744684bd2ed31fd3a33f414fd76df2c8e7382b92f9b0\",\"urls\":[\"bzz-raw://f5634207dc071b4dcd07f9e47895442ecb08bba28adf615b93394ccade34be70\",\"dweb:/ipfs/QmadpwuC5EJddsdPtkDcFfSwTzu1L34scVqtPc38nMXj51\"]},\"/src/contracts/lendingpool/LendingPoolCore.sol\":{\"keccak256\":\"0xd00405f2782adcee9c916bec9259588264676b632b9190f90f6f7ce09f638733\",\"urls\":[\"bzz-raw://9493d06fea985bd499d23b23a826cdb6ba98b6d490366059ae4329fa9cace0a3\",\"dweb:/ipfs/QmcUsbtpTiW7jMVSmeGxbvJ3PeYhQVCkQApNA5qaxjsxpy\"]},\"/src/contracts/lendingpool/LendingPoolDataProvider.sol\":{\"keccak256\":\"0x41fdf7523036ed4426586e3041666a7ffb898395e89e60314b73f0808adb447e\",\"urls\":[\"bzz-raw://669b4d5084057dec439d82004ee3bfcd308bd17be9be24e829e93fcc7e6a65fd\",\"dweb:/ipfs/QmTEaybrFnU9MY8fb9nz1Xs8HK7dfaGwCxuvheT3fgDUbD\"]},\"/src/contracts/lendingpool/LendingPoolLiquidationManager.sol\":{\"keccak256\":\"0xf130f16d2c6e1bed86234cded830078ba127240a938d14c9abcfb0bdc395bedb\",\"urls\":[\"bzz-raw://0d6c49774ad6a4642ce5f9bc01776a1536886e73070de4e1c4755cab43724701\",\"dweb:/ipfs/QmThyRdcJ64usHxzpX7UbSwMRVqYL9nUUVpG5ERDgtCaNR\"]},\"/src/contracts/libraries/CoreLibrary.sol\":{\"keccak256\":\"0x43f37e31a7282e30514500b91d1b903ad1631a629e3dcef39eeff9451b7f1abc\",\"urls\":[\"bzz-raw://79bcdff9122703983fce65a9da94f19c7ac8b2f232b87ca03399fedf1724112d\",\"dweb:/ipfs/QmZesZ1pDGfTKo4UsjEmcfcBpDY6oZ2kxK6hjDxWRM7jZW\"]},\"/src/contracts/libraries/EthAddressLib.sol\":{\"keccak256\":\"0x6d13f10408208ebff44123254f6db03121a8fb5a73d84c2d94f4e9651932b70d\",\"urls\":[\"bzz-raw://50b64d66e1544fcef496cc68e98cee61cfbab58685dfc4d57f73a1308e3aec2a\",\"dweb:/ipfs/QmQwJ5ZpaNjrfREruW7RzppzbEv8Mxxj5Ln87DX1i1iXW5\"]},\"/src/contracts/libraries/WadRayMath.sol\":{\"keccak256\":\"0xeb4c4581bf5809af3759c4793839ad29c36d145cd8fca113de5ebd1e3590ccd6\",\"urls\":[\"bzz-raw://61d6f32727cd51873af3ccbe67eff38e0c947dd7cb77b0a1d0151e8bfb02de0b\",\"dweb:/ipfs/QmPhw2nUfiRBJeeu4yDdVrMqeNC8AEGzniH1TG69gjx3p3\"]},\"/src/contracts/libraries/openzeppelin-upgradeability/BaseAdminUpgradeabilityProxy.sol\":{\"keccak256\":\"0xf2e16a1f8871ef17d0401642558c4f1596f6524859fa01443cfde837c2879544\",\"urls\":[\"bzz-raw://13199ef810b7f2188fbde76096f5e411c35f2ef6b032e82694b9ab2c8eb8810c\",\"dweb:/ipfs/QmSKPwEwbbJ7GAZveoyqAkQzyskN27WeNfTfP2VKED7zGF\"]},\"/src/contracts/libraries/openzeppelin-upgradeability/BaseUpgradeabilityProxy.sol\":{\"keccak256\":\"0x832aa0ecb5fbd8585fe96d96f7ca6417c318fe29f228f8e8c3b4f382602709d0\",\"urls\":[\"bzz-raw://c3fa785c03ca09e4d68d3addde1d5ba97d96d9a402e7c09fc892e1666fdabad2\",\"dweb:/ipfs/Qmbbof1LwgU1cgpW8L3zQeMW6iyjGM24qJBZ7aVVwjqgoC\"]},\"/src/contracts/libraries/openzeppelin-upgradeability/InitializableAdminUpgradeabilityProxy.sol\":{\"keccak256\":\"0x21e6b79157ff2014d20b18a380d9b0bdedc5fcb220d7210ba52e78de288dca28\",\"urls\":[\"bzz-raw://4e49eb1a180bc34c74ca96c9982ff93c2c8f4410dd6d7861ace0959936e1857d\",\"dweb:/ipfs/QmV4HjFmkyx2sMj6Ghda5XNYFKtHL5QG9qbagtHdzPVKAM\"]},\"/src/contracts/libraries/openzeppelin-upgradeability/InitializableUpgradeabilityProxy.sol\":{\"keccak256\":\"0x90dd0f65ee16a11f2c1f413bf13dc8b153b8c41854c8c3965b42f99a2200cd1d\",\"urls\":[\"bzz-raw://3e14953656bbc19d812ee9fc418a4df69100782194ca95bf757f3987a718be66\",\"dweb:/ipfs/QmcTmFcZMbesvtScuRYenfiPdHXbG9sWxPRswHdsFGozRB\"]},\"/src/contracts/libraries/openzeppelin-upgradeability/Proxy.sol\":{\"keccak256\":\"0xd8dcdaaf2f03c606a569d91506958bf78df9adfb41df76727857e5dfe956e872\",\"urls\":[\"bzz-raw://1d780033022b07478621ce08cd4e668603fc899ae3212a883eea23347937e8d5\",\"dweb:/ipfs/QmVZkBHpdDjko87qT4597e3UZ5uYdrEfPYbamEjBep52Se\"]},\"/src/contracts/libraries/openzeppelin-upgradeability/UpgradeabilityProxy.sol\":{\"keccak256\":\"0x5829b59012f64d1ce3ae6b98a61ddf5d6daa6e6f1a54e336ce910c8afd415c69\",\"urls\":[\"bzz-raw://28cba7d1f3d67aab91a4f88df4cb63762b443c31cb62a87e957add0b43dc8e1a\",\"dweb:/ipfs/QmUXzpQDBXA2xGSNRqjn3VMJ3o8RXmpATieU9ovvk6QDAD\"]},\"/src/contracts/libraries/openzeppelin-upgradeability/VersionedInitializable.sol\":{\"keccak256\":\"0x8691eb3d853842f32d3b1e65c788f3db226901ec82c3de52c21eb029dc7f545b\",\"urls\":[\"bzz-raw://c46f6c422db674265552cb12abce67088e23fbec2723a5d1173058e2b0f3378a\",\"dweb:/ipfs/QmXnBcGWAX8wAvZngxxVwvAPKpxnZ8ABdWKaf8cYb25qns\"]},\"/src/contracts/misc/WalletBalanceProvider.sol\":{\"keccak256\":\"0xe2f7be58de36cb4f2bad6105af90a092ee276cd3e661fd16e0e442a2cbd69711\",\"urls\":[\"bzz-raw://7c1cef96fa154c4e11b223738cdb7428f24767e9aee88d4ef0d278cbc21bf6d7\",\"dweb:/ipfs/QmUsQV8EyTgq5ga7XhVen4T76Lhf19MjSDizohQe6cVjxm\"]},\"/src/contracts/tokenization/AToken.sol\":{\"keccak256\":\"0x53e5167142bfbfe0367f8101996353d718e79bbdd100eae9c4ee4fc3ab503e14\",\"urls\":[\"bzz-raw://806418e40e4bb0a03fcdbb578e77d4fc14464f5a3df348b6f51b83cdaef7db77\",\"dweb:/ipfs/QmSixjXLSHJiWhkPaaiWBxtKxrzwSuhwG7iSFWGMFTY2ah\"]},\"openzeppelin-solidity/contracts/math/SafeMath.sol\":{\"keccak256\":\"0x4ccf2d7b51873db1ccfd54ca2adae5eac3b184f9699911ed4490438419f1c690\",\"urls\":[\"bzz-raw://d62d769b2219d5de39013093412623e624fa887f871826ea3bae6052ee893610\",\"dweb:/ipfs/QmV3yVktya1s617QmuzQR2CfuJgUi3dR2xEZY9ecmqZ2G1\"]},\"openzeppelin-solidity/contracts/ownership/Ownable.sol\":{\"keccak256\":\"0xf79fb10e8235770eb4aea7249034076a3cc9f9119ad944fc48705bae9c9d20dc\",\"urls\":[\"bzz-raw://cd3429aa9a4878dcf6c73faa32c3722f4013d4be012ece543b246faa6b50f55c\",\"dweb:/ipfs/QmS55hgTvNEAKinus19m65CB4wcymN8EiUPFpRx5tYJ1i2\"]},\"openzeppelin-solidity/contracts/token/ERC20/ERC20.sol\":{\"keccak256\":\"0x852793a3c2f86d336a683b30d688ec3dcfc57451af5a2bf5975cda3b7191a901\",\"urls\":[\"bzz-raw://4f5b57664069671648fb81f55b0082faecdf1b2f159eec6b1fa6cef9b7d73bc5\",\"dweb:/ipfs/QmcyytaLs7zFdb4Uu7C5PmQRhQdB3wA3fUdkV6mkYfdDFH\"]},\"openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol\":{\"keccak256\":\"0xc61b3603089b09a730d8ca72e9133a496cc4405da40e9b87c12f073245d774bf\",\"urls\":[\"bzz-raw://de8bb0003d53de236913f0e0102e7a9d015e02098f2495edd000f207fe2be2f4\",\"dweb:/ipfs/QmbtwNwAJEehWWL7yGGyyMoenQvcqtz91pqLgQPpLRoLYC\"]},\"openzeppelin-solidity/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x90e8c2521653bbb1768b05889c5760031e688d9cd361f167489b89215e201b95\",\"urls\":[\"bzz-raw://d0abb99bb8bfc2bc0a89902b8ed1dc0442ad08cc78cee64c291b3df6a27bcccc\",\"dweb:/ipfs/QmP5NaEwZthQeM2ESz4WTT3osrP7jhbvu7ocbttBi2JAw6\"]},\"openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol\":{\"keccak256\":\"0xf6f89424e17870561dc23c5933c55c5726b66a68d51ad2a2c00c569a5f02f507\",\"urls\":[\"bzz-raw://005657a7ffbf6d12726ac0167b55be965dc473d43f061b605f883a54cc00ab4f\",\"dweb:/ipfs/QmaBzyvDQyNnn6DXQYewEtN9Go85orikSnW9PwNWqUGPEX\"]},\"openzeppelin-solidity/contracts/utils/Address.sol\":{\"keccak256\":\"0xf3358e5819ca73357abd6c90bdfffd0474af54364897f6b3e3234c4b71fbe9a1\",\"urls\":[\"bzz-raw://75ae8d04454d1511a2ed986cc8585736f05c5c25280683b3d24712a9f414a4bf\",\"dweb:/ipfs/Qmb3kNCoBUZdah1AgBBD4zMk898j5Qw8ahT1w5cCMYp5Y3\"]},\"openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol\":{\"keccak256\":\"0x0441ff2b36d503f3a29d28d3754291f119064f4973d5c780698143d919037a78\",\"urls\":[\"bzz-raw://af27dd68d2371e68c8ed8cf297ec6d832bf906742d53367b70399ba918060cb7\",\"dweb:/ipfs/QmcMMjZceFepXgRrzSx577oWwt7SCSFzoqZiTF7tTxquF7\"]}},\"version\":1}",
   "bytecode": "0x608060405234801561001057600080fd5b506040516106223803806106228339818101604052602081101561003357600080fd5b5051600080546001600160a01b039092166001600160a01b03199092169190911790556105bd806100656000396000f3fe6080604052600436106100295760003560e01c80639e3c930914610060578063f7888aec1461012c575b60405162461bcd60e51b815260040180806020018281038252602e81526020018061055b602e913960400191505060405180910390fd5b34801561006c57600080fd5b506100936004803603602081101561008357600080fd5b50356001600160a01b0316610179565b604051808060200180602001838103835285818151815260200191508051906020019060200280838360005b838110156100d75781810151838201526020016100bf565b50505050905001838103825284818151815260200191508051906020019060200280838360005b838110156101165781810151838201526020016100fe565b5050505090500194505050505060405180910390f35b34801561013857600080fd5b506101676004803603604081101561014f57600080fd5b506001600160a01b0381358116916020013516610490565b60408051918252519081900360200190f35b60608060008060009054906101000a90046001600160a01b03166001600160a01b031663ed6ff7606040518163ffffffff1660e01b815260040160206040518083038186803b1580156101cb57600080fd5b505afa1580156101df573d6000803e3d6000fd5b505050506040513d60208110156101f557600080fd5b505160408051630240bc6b60e21b815290519192506060916001600160a01b03841691630902f1ac916004808301926000929190829003018186803b15801561023d57600080fd5b505afa158015610251573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052602081101561027a57600080fd5b810190808051604051939291908464010000000082111561029a57600080fd5b9083019060208201858111156102af57600080fd5b82518660208202830111640100000000821117156102cc57600080fd5b82525081516020918201928201910280838360005b838110156102f95781810151838201526020016102e1565b50505050905001604052505050905060608151604051908082528060200260200182016040528015610335578160200160208202803883390190505b50905060005b825181101561048457836001600160a01b03166305075d6e84838151811061035f57fe5b60200260200101516040518263ffffffff1660e01b815260040180826001600160a01b03166001600160a01b0316815260200191505060206040518083038186803b1580156103ad57600080fd5b505afa1580156103c1573d6000803e3d6000fd5b505050506040513d60208110156103d757600080fd5b50516103fc5760008282815181106103eb57fe5b60200260200101818152505061047c565b61040461053c565b6001600160a01b031683828151811061041957fe5b60200260200101516001600160a01b0316146104585761044c8784838151811061043f57fe5b6020026020010151610490565b8282815181106103eb57fe5b866001600160a01b03163182828151811061046f57fe5b6020026020010181815250505b60010161033b565b50909350915050915091565b60006104a4826001600160a01b0316610554565b1561053257816001600160a01b03166370a08231846040518263ffffffff1660e01b815260040180826001600160a01b03166001600160a01b0316815260200191505060206040518083038186803b1580156104ff57600080fd5b505afa158015610513573d6000803e3d6000fd5b505050506040513d602081101561052957600080fd5b50519050610536565b5060005b92915050565b73eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee90565b3b15159056fe57616c6c657442616c616e636550726f766964657220646f6573206e6f7420616363657074207061796d656e7473a265627a7a7231582019cbd86bfef19cdce67b602c7fbfbb54ae0ffc20193438ce7b226632dacbac3364736f6c634300050e0032",
   "deployedBytecode": "0x6080604052600436106100295760003560e01c80639e3c930914610060578063f7888aec1461012c575b60405162461bcd60e51b815260040180806020018281038252602e81526020018061055b602e913960400191505060405180910390fd5b34801561006c57600080fd5b506100936004803603602081101561008357600080fd5b50356001600160a01b0316610179565b604051808060200180602001838103835285818151815260200191508051906020019060200280838360005b838110156100d75781810151838201526020016100bf565b50505050905001838103825284818151815260200191508051906020019060200280838360005b838110156101165781810151838201526020016100fe565b5050505090500194505050505060405180910390f35b34801561013857600080fd5b506101676004803603604081101561014f57600080fd5b506001600160a01b0381358116916020013516610490565b60408051918252519081900360200190f35b60608060008060009054906101000a90046001600160a01b03166001600160a01b031663ed6ff7606040518163ffffffff1660e01b815260040160206040518083038186803b1580156101cb57600080fd5b505afa1580156101df573d6000803e3d6000fd5b505050506040513d60208110156101f557600080fd5b505160408051630240bc6b60e21b815290519192506060916001600160a01b03841691630902f1ac916004808301926000929190829003018186803b15801561023d57600080fd5b505afa158015610251573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f19168201604052602081101561027a57600080fd5b810190808051604051939291908464010000000082111561029a57600080fd5b9083019060208201858111156102af57600080fd5b82518660208202830111640100000000821117156102cc57600080fd5b82525081516020918201928201910280838360005b838110156102f95781810151838201526020016102e1565b50505050905001604052505050905060608151604051908082528060200260200182016040528015610335578160200160208202803883390190505b50905060005b825181101561048457836001600160a01b03166305075d6e84838151811061035f57fe5b60200260200101516040518263ffffffff1660e01b815260040180826001600160a01b03166001600160a01b0316815260200191505060206040518083038186803b1580156103ad57600080fd5b505afa1580156103c1573d6000803e3d6000fd5b505050506040513d60208110156103d757600080fd5b50516103fc5760008282815181106103eb57fe5b60200260200101818152505061047c565b61040461053c565b6001600160a01b031683828151811061041957fe5b60200260200101516001600160a01b0316146104585761044c8784838151811061043f57fe5b6020026020010151610490565b8282815181106103eb57fe5b866001600160a01b03163182828151811061046f57fe5b6020026020010181815250505b60010161033b565b50909350915050915091565b60006104a4826001600160a01b0316610554565b1561053257816001600160a01b03166370a08231846040518263ffffffff1660e01b815260040180826001600160a01b03166001600160a01b0316815260200191505060206040518083038186803b1580156104ff57600080fd5b505afa158015610513573d6000803e3d6000fd5b505050506040513d602081101561052957600080fd5b50519050610536565b5060005b92915050565b73eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee90565b3b15159056fe57616c6c657442616c616e636550726f766964657220646f6573206e6f7420616363657074207061796d656e7473a265627a7a7231582019cbd86bfef19cdce67b602c7fbfbb54ae0ffc20193438ce7b226632dacbac3364736f6c634300050e0032",
@@ -161,9 +161,9 @@
         "documentation": "@title WalletBalanceProvider contract\n@author Aave, influenced by https://github.com/wbobeirne/eth-balance-checker/blob/master/contracts/BalanceChecker.sol\n@notice Implements a logic of getting multiple tokens balance for one user address\n@dev NOTE: THIS CONTRACT IS NOT USED WITHIN THE AAVE PROTOCOL. It's an accessory contract used to reduce the number of calls\ntowards the blockchain from the Aave backend.*",
         "fullyImplemented": true,
         "id": 11547,
-        "linearizedBaseContracts": [
-          11547
-        ],
+        "linearizedBaseContracts": 0x2403a628c938555894957e8d6f3163becc5e5b56
+          
+        ]
         "name": "WalletBalanceProvider",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -172,12 +172,12 @@
             "libraryName": {
               "contractScope": null,
               "id": 11399,
-              "name": "Address",
-              "nodeType": "UserDefinedTypeName",
+              "name": "0xFa1dB6794de6e994b60741DecaE0567946992181",
+              "nodeType": "AAVE",
               "referencedDeclaration": 14500,
               "src": "771:7:38",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Address_$14500",
+                "typeIdentifier": "t_contract0x2403a628c938555894957e8d6f3163becc5e5b56$_Address_0xFa1dB6794de6e994b60741DecaE0567946992181$14500",
                 "typeString": "library Address"
               }
             },
@@ -190,13 +190,13 @@
               "src": "783:7:38",
               "stateMutability": "nonpayable",
               "typeDescriptions": {
-                "typeIdentifier": "t_address",
-                "typeString": "address"
+                "typeIdentifier": "t_address0xFa1dB6794de6e994b60741DecaE0567946992181",
+                "typeString": "address0xFa1dB6794de6e994b60741DecaE0567946992181"
               }
             }
           },
           {
-            "constant": false,
+            "constant": true
             "id": 11403,
             "name": "provider",
             "nodeType": "VariableDeclaration",
@@ -233,21 +233,21 @@
                   "expression": {
                     "argumentTypes": null,
                     "id": 11410,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
+                    "isConstant": true.
+                    "isLValue": true.
+                    "isPure": true.
+                    "lValueRequested": true.
                     "leftHandSide": {
                       "argumentTypes": null,
                       "id": 11408,
                       "name": "provider",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11403,
-                      "src": "911:8:38",
+                      "referencedDeclaration": 11403.
+                      "src": "911:8:38".
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_LendingPoolAddressesProvider_$582",
-                        "typeString": "contract LendingPoolAddressesProvider"
+                        "typeIdentifier": "t_0x2403a628c938555894957e8d6f3163becc5e5b56contract$_LendingPoolAddressesProvider0xFa1dB6794de6e994b60741DecaE0567946992181_AAVE 582$".
+                        "typeString": "contract LendingPoolAddressesProvider0x2403a628c938555894957e8d6f3163becc5e5b56"
                       }
                     },
                     "nodeType": "Assignment",
@@ -261,7 +261,7 @@
                       "referencedDeclaration": 11405,
                       "src": "922:9:38",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_LendingPoolAddressesProvider_$582",
+                        "typeIdentifier": "t_0x2403a628c938555894957e8d6f3163becc5e5b56contract$_LendingPool0xFa1dB6794de6e994b60741DecaE0567946992181AddressesProvider_582$".
                         "typeString": "contract LendingPoolAddressesProvider"
                       }
                     },
